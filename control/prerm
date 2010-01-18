@@ -1,0 +1,19 @@
+#!/bin/sh
+
+PID="org.webosinternals.saverestoremgr"
+
+# Stop the service
+/sbin/stop ${PID}
+
+# Remove the service binary
+if [ "$IPKG_OFFLINE_ROOT" != "/var" ] ; then
+  rm -f /var/usr/sbin/${PID}
+fi
+
+# Remove the dbus service
+rm -f /usr/share/dbus-1/system-services/${PID}.service
+
+# Remove the upstart script
+rm -f /etc/event.d/${PID}
+
+exit 0
