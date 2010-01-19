@@ -1,5 +1,4 @@
 /*=============================================================================
- Copyright (C) 2009 Ryan Hope <rmh3093@gmail.com>
  Copyright (C) 2010 WebOS Internals <support@webos-internals.org>
 
  This program is free software; you can redistribute it and/or
@@ -27,7 +26,9 @@
 
 #define ALLOWED_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-"
 
-bool dummy_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+static char *scriptdir = "/var/svc/org.webosinternals.saverestore";
+
+bool status_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 
   bool returnVal = true;
 
@@ -64,11 +65,18 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 
   json_t *response = json_new_object();
 
-  FILE *fp = popen("/bin/ls -1 /var/saverestore/", "r");
+  char command[128];
+
+  // %%% IGNORING RETURN ALERT %%%
+  sprintf((char *)&command, "/bin/ls -1 %s/ 2>&1", scriptdir);
+
+  FILE *fp = popen(command, "r");
   if (fp) {
     json_t *array = json_new_array();
     while ( fgets( line, sizeof line, fp)) {
-      if (sscanf(line, "%128s\n", (char*)&name) == 1) {
+      // %%% MAGIC NUMBERS ALERT %%%
+      if (sscanf(line, "%127s\n", (char*)&name) == 1) {
+	// %%% IGNORING RETURN ALERT %%%
 	json_insert_child(array, json_new_string(name));
       }
     }
@@ -76,8 +84,12 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
       // %%% IGNORING RETURN ALERT %%%
       json_insert_pair_into_object(response, "returnValue", json_new_true());
       json_insert_pair_into_object(response, "scripts", array);
-      json_tree_to_string(response, &jsonResponse);
     }
+    else {
+      // %%% IGNORING RETURN ALERT %%%
+      json_insert_pair_into_object(response, "returnValue", json_new_false());
+    }
+    json_tree_to_string(response, &jsonResponse);
   }
 
   if (jsonResponse) {
@@ -92,11 +104,83 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   return returnVal;
 }
 
+bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char *action) {
+
+  bool returnVal = true;
+  char line[MAXLINELEN];
+  // %%% MAGIC NUMBERS ALERT %%%
+  char name[128];
+
+  LSError lserror;
+  LSErrorInit(&lserror);
+
+  char *jsonResponse = 0;
+  int len = 0;
+
+  json_t *object = LSMessageGetPayloadJSON(message);
+
+  json_t *id = json_find_first_label(object, "id");               
+  if (strspn(id->child->text, ALLOWED_CHARS) != strlen(id->child->text)) {
+    LSMessageReply(lshandle, message, "{\"returnValue\":false,\"errorCode\":-1,\"errorText\":\"Invalid id\"}", &lserror);
+    LSErrorFree(&lserror);
+    return true;
+  }
+
+  // %%% MAGIC NUMBERS ALERT %%%
+  char command[128];
+
+  // %%% IGNORING RETURN ALERT %%%
+  sprintf((char *)&command, "%s/%s %s 2>&1", scriptdir, id->child->text, action);
+
+  json_t *response = json_new_object();
+
+  FILE *fp = popen(command, "r");
+  if (fp) {
+    json_t *array = json_new_array();
+    while ( fgets( line, sizeof line, fp)) {
+      // %%% MAGIC NUMBERS ALERT %%%
+      if (sscanf(line, "%127s\n", (char*)&name) == 1) {
+	// %%% IGNORING RETURN ALERT %%%
+	json_insert_child(array, json_new_string(name));
+      }
+    }
+    if (!pclose(fp)) {
+      // %%% IGNORING RETURN ALERT %%%
+      json_insert_pair_into_object(response, "returnValue", json_new_true());
+    }
+    else {
+      // %%% IGNORING RETURN ALERT %%%
+      json_insert_pair_into_object(response, "returnValue", json_new_false());
+    }
+    json_insert_pair_into_object(response, "output", array);
+    json_tree_to_string(response, &jsonResponse);
+  }
+
+  if (jsonResponse) {
+    LSMessageReply(lshandle, message, jsonResponse, &lserror);
+    free(jsonResponse);
+  } else
+    LSMessageReply(lshandle, message, "{\"returnValue\":false,\"errorCode\":-1,\"errorText\":\"Generic error\"}", &lserror);
+ 
+  json_free_value(&response);
+  LSErrorFree(&lserror);
+
+  return returnVal;
+}
+
+bool save_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+  return saverestore_method(lshandle, message, ctx, "save");
+}
+
+bool restore_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+  return saverestore_method(lshandle, message, ctx, "restore");
+}
+
 LSMethod luna_methods[] = {
-  { "version",	dummy_method },
+  { "status",	status_method },
   { "list",	list_method },
-  { "save",	dummy_method },
-  { "restore",	dummy_method },
+  { "save",	save_method },
+  { "restore",	restore_method },
   { 0, 0 }
 };
 

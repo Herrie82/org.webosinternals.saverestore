@@ -1,5 +1,4 @@
 /*=============================================================================
- Copyright (C) 2009 Ryan Hope <rmh3093@gmail.com>
  Copyright (C) 2010 WebOS Internals <support@webos-internals.org>
 
  This program is free software; you can redistribute it and/or
