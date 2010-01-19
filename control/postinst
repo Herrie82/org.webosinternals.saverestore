@@ -21,6 +21,11 @@ fi
 rm -f /usr/share/dbus-1/system-services/${PID}.service
 cp $IPKG_OFFLINE_ROOT/usr/share/dbus-1/system-services/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
 
+# Install the saverestore scripts
+mkdir -p /var/svc/org.webosinternals.saverestore
+tar -C $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/scripts -c -f - . | \
+tar -C /var/svc/org.webosinternals.saverestore -x -f -
+
 # Start the service
 /sbin/start ${PID}
 
