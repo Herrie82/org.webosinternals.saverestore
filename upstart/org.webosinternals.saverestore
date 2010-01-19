@@ -1,4 +1,4 @@
 start on stopped finish
 
-exec /var/usr/sbin/org.webosinternals.saverestoremgr
+exec /var/usr/sbin/org.webosinternals.saverestore
 respawn
