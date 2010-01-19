@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <getopt.h>
 
-#include "saverestoremgr.h"
+#include "saverestore.h"
 
 static struct option long_options[] = {
   { "help",	no_argument,		0, 'h' },
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
   if (getopts(argc, argv) == 1)
     return 1;
 
-  if (luna_service_initialize("org.webosinternals.saverestoremgr"))
+  if (luna_service_initialize("org.webosinternals.saverestore"))
     luna_service_start();
 
   return 0;

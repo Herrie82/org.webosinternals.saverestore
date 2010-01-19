@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.webosinternals.saverestoremgr
-Exec=/var/usr/sbin/org.webosinternals.saverestoremgr
