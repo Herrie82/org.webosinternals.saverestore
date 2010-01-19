@@ -1,2 +1,5 @@
 #!/bin/sh
 
+echo "We would save and restore the gameset and gamedata files here."
+
+exit 0

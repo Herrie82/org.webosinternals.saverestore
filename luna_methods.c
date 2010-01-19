@@ -49,9 +49,52 @@ bool dummy_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   return returnVal;
 }
 
+bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+
+  bool returnVal = true;
+  char line[MAXLINELEN];
+  // %%% MAGIC NUMBERS ALERT %%%
+  char name[128];
+
+  LSError lserror;
+  LSErrorInit(&lserror);
+
+  char *jsonResponse = 0;
+  int len = 0;
+
+  json_t *response = json_new_object();
+
+  FILE *fp = popen("/bin/ls -1 /var/saverestore/", "r");
+  if (fp) {
+    json_t *array = json_new_array();
+    while ( fgets( line, sizeof line, fp)) {
+      if (sscanf(line, "%128s\n", (char*)&name) == 1) {
+	json_insert_child(array, json_new_string(name));
+      }
+    }
+    if (!pclose(fp)) {
+      // %%% IGNORING RETURN ALERT %%%
+      json_insert_pair_into_object(response, "returnValue", json_new_true());
+      json_insert_pair_into_object(response, "scripts", array);
+      json_tree_to_string(response, &jsonResponse);
+    }
+  }
+
+  if (jsonResponse) {
+    LSMessageReply(lshandle, message, jsonResponse, &lserror);
+    free(jsonResponse);
+  } else
+    LSMessageReply(lshandle, message, "{\"returnValue\":false,\"errorCode\":-1,\"errorText\":\"Generic error\"}", &lserror);
+ 
+  json_free_value(&response);
+  LSErrorFree(&lserror);
+
+  return returnVal;
+}
+
 LSMethod luna_methods[] = {
   { "version",	dummy_method },
-  { "list",	dummy_method },
+  { "list",	list_method },
   { "save",	dummy_method },
   { "restore",	dummy_method },
   { 0, 0 }
