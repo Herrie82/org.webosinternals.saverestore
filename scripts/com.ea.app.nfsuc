@@ -1,10 +1,33 @@
 #!/bin/sh
 
+NAME=`basename $0`
+
+APPS=/media/cryptofs/apps
+
+SRC=$APPS/usr/palm/applications/$NAME/res_nfsuc
+DST=/media/internal/saverestore/$NAME
+
 if [ "$1" == "save" ] ; then
-  echo "We would save the gameset and gamedata files here."
-fi
-if [ "$1" == "restore" ] ; then
-  echo "We would restore the gameset and gamedata files here."
+
+    [ -d $SRC ] ||          ( echo "$NAME not installed" ; exit 0 )
+    [ -f $SRC/gamesett ] || ( echo "gamesett not found"  ; exit 0 )
+    [ -f $SRC/gamedata ] || ( echo "gamedata not found"  ; exit 0 )
+
+    mkdir -p $DST
+
+    cp $SRC/gamesett $DST/
+    cp $SRC/gamedata $DST/
+
+elif [ "$1" == "restore" ] ; then
+
+    [ -d $SRC ] ||          ( echo "$NAME not installed" ; exit 0 )
+    [ -d $DST ] ||          ( echo "$NAME not saved"     ; exit 0 )
+    [ -f $DST/gamesett ] || ( echo "gamesett not found"  ; exit 0 )
+    [ -f $DST/gamedata ] || ( echo "gamedata not found"  ; exit 0 )
+
+    cp $DST/gamesett $SRC/
+    cp $DST/gamedata $SRC/
+
 fi
 
 exit 0
