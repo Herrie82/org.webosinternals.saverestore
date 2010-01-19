@@ -139,7 +139,7 @@ bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char 
     json_t *array = json_new_array();
     while ( fgets( line, sizeof line, fp)) {
       // %%% MAGIC NUMBERS ALERT %%%
-      if (sscanf(line, "%127s\n", (char*)&name) == 1) {
+      if (sscanf(line, "%127c\n", (char*)&name) == 1) {
 	// %%% IGNORING RETURN ALERT %%%
 	json_insert_child(array, json_new_string(name));
       }

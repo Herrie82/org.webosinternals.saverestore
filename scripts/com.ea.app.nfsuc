@@ -1,5 +1,10 @@
 #!/bin/sh
 
-echo "We would save and restore the gameset and gamedata files here."
+if [ "$1" == "save" ] ; then
+  echo "We would save the gameset and gamedata files here."
+fi
+if [ "$1" == "restore" ] ; then
+  echo "We would restore the gameset and gamedata files here."
+fi
 
 exit 0
