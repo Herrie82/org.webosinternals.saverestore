@@ -1,0 +1,883 @@
+/*
+ * Global Styles
+ */
+.scene-fade-top
+{
+	position: fixed; 
+	top: 0; 
+	z-index: 11000;
+	height: 30px; 
+	width: 100%;
+	background: url(../images/palm-default/scrollFade-top.png) top center repeat-x;
+	-webkit-palm-mouse-target: ignore;
+}
+.scene-fade-bottom
+{
+	position: fixed; 
+	bottom: 0; 
+	z-index: 11000;
+	height: 30px; 
+	width: 100%;
+	background: url(../images/palm-default/scrollFade-bottom.png) bottom center repeat-x;
+	-webkit-palm-mouse-target: ignore;
+}
+body.palm-dark .scene-fade-top
+{
+	background: url(../images/palm-dark/scrollFade-top.png) top center repeat-x;
+}
+body.palm-dark .scene-fade-bottom
+{
+	background: url(../images/palm-dark/scrollFade-bottom.png) bottom center repeat-x;
+}
+.palm-row-wrapper .pkgCount
+{
+	float: right;
+    line-height: 19px;
+    height: 30px;
+    min-width: 30px;
+	vertical-align: middle;
+    -webkit-border-image: url(../images/palm-default/pkgCount.png) 5 10 5 10 stretch stretch;
+    -webkit-box-sizing: border-box;
+    border-width: 5px 10px 5px 10px;
+	margin-top: 12px;
+	margin-right: 15px;
+}
+body.palm-dark .palm-row-wrapper .pkgCount
+{
+    -webkit-border-image: url(../images/palm-dark/pkgCount.png) 5 10 5 10 stretch stretch;
+}
+.palm-row-wrapper .pkgCount .count
+{
+	color: #e4e4e2;
+}
+body.palm-dark .palm-row-wrapper .pkgCount .count
+{
+	color: #393e43;
+}
+
+
+/*
+ * Startup Scene Styles
+ */
+.startup #data .palm-divider.labeled .label
+{
+	text-transform: lowercase;
+}
+.startup #data
+{
+	font-size: 18px;
+}
+.startup #data .text
+{
+	padding-top: 4px;
+	padding-left: 17px;
+	padding-right: 15px;
+	padding-bottom: 10px;
+}
+.startup #data ul
+{
+	margin: 0px;
+	padding-left: 37px;
+	padding-right: 15px;
+	padding-bottom: 10px;
+}
+
+
+/*
+ * Update Scene Styles
+ */
+.update #spinner
+{
+	margin-top: 116px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.update #spinner #spinnerStatus
+{
+	text-align: center;
+	padding-top: 122px;
+	width: 300px;
+	margin-left: -85px;
+	color: #666;
+	font-size: 16px;
+}
+.update #spinner #spinnerStatus .text
+{
+	margin-top: 10px;
+	padding: 10px;
+	text-align: left;
+}
+body.palm-dark .update #spinner #spinnerStatus
+{
+	color: #999;
+}
+.update .progress
+{
+	margin-top: 42px;
+	height: 15px;
+	width: 114px;
+	margin-left: auto;
+	margin-right: auto;
+	background: url(../images/palm-default/progress-back.png) center center no-repeat;
+}
+.update .progress .progress-bar
+{
+	height: 15px;
+	width: 50%;
+	margin-left: 0px;
+	background: url(../images/palm-default/progress-front.png) top left no-repeat;
+}
+body.palm-dark .update .progress
+{
+	background: url(../images/palm-dark/progress-back.png) center center no-repeat;
+}
+body.palm-dark .update .progress .progress-bar
+{
+	background: url(../images/palm-dark/progress-front.png) top left no-repeat;
+}
+
+
+/*
+ * Main Scene Styles
+ */
+.main .palm-page-header-wrapper .icon
+{
+	width: 76px;
+	height: 75px;
+	background: url(../icon.png) center center no-repeat;
+}
+.main .palm-page-header-wrapper .title
+{
+	padding-left: 80px;
+}
+.main .palm-page-header-wrapper .title.main
+{
+	font-size: 30px;
+	padding-top: 5px;
+	padding-bottom: 0px;
+}
+.main .palm-page-header-wrapper .title .version
+{
+	font-size: 12px;
+	color: #888;
+	text-transform: lowercase;
+}
+.main .palm-page-header-wrapper .title.sub
+{
+	font-size: 14px;
+	padding-top: 0px;
+	margin-top: 0px;
+}
+.main .palm-row-wrapper
+{
+	height: 60px;
+}
+.main .palm-row-wrapper .title
+{
+	padding-top: 15px;
+}
+.main .palm-row-wrapper.disabled .title
+{
+	color: #999;
+}
+.main .palm-row-wrapper .pkgCount
+{
+	display: none;
+}
+.main .palm-row-wrapper.showCount .pkgCount
+{
+	display: inline;
+	margin-top: 14px;
+}
+
+
+
+/*
+ * Preference Scene Styles
+ */
+.prefs .palm-row-wrapper .label.left
+{
+	padding-left: 6px;
+	-webkit-palm-mouse-target: ignore;
+}
+.prefs .palm-list-selector .label
+{
+	float: left;
+}
+.prefs .palm-list-selector .title
+{
+	text-align: right;
+}
+.prefs .palm-group.disabled
+{
+	opacity: 0.35;
+}
+
+.prefs .headerButton,
+.configs .headerButton
+{
+	-webkit-border-image: url(../images/palm-default/selector-header-selected.png);
+	-webkit-border-image: url(../images/palm-default/selector-header.png) 0 16 0 16 stretch stretch;
+	-webkit-box-sizing: border-box;
+	border-width: 0px 16px 0px 16px;
+	margin: 9px 9px 0px 0px;
+	text-transform: uppercase;
+	display: inline-block;
+	font-size: 14px;
+	height: 35px;
+	line-height: 35px;
+	float: right;
+	color: #555;
+}
+body.palm-dark .prefs .headerButton,
+body.palm-dark .configs .headerButton
+{
+	-webkit-border-image: url(../images/palm-dark/selector-header-selected.png);
+	-webkit-border-image: url(../images/palm-dark/selector-header.png) 0 16 0 16 stretch stretch;
+	color: #c0c0c0;
+}
+.prefs .headerButton.selected ,
+.configs .headerButton.selected {
+	-webkit-border-image: url(../images/palm-default/selector-header-selected.png) 0 16 0 16 stretch stretch;
+	color: #c0c0c0;
+}
+body.palm-dark .prefs .headerButton.selected,
+body.palm-dark .configs .headerButton.selected
+{
+	-webkit-border-image: url(../images/palm-dark/selector-header-selected.png) 0 16 0 16 stretch stretch;
+}
+
+
+/*
+ * Config/Feed Scene Styles
+ */
+.configs #confList .toggle-text
+{
+	float: right;
+}
+.configs #confList .title.sub
+{
+	color: #999;
+	padding-top: 0px;
+	padding-left: 16px;
+	padding-right: 10px;
+	margin-top: -5px;
+	font-size: 14px;
+}
+.configs #confList .disabled,
+.configs #confList .disabled *,
+.configs .palm-group.disabled
+{
+	opacity: 0.35;
+}
+
+
+
+/*
+ * Package Category List Styles
+ */
+.pkg-groups #groupList .title
+{
+	text-transform: capitalize;
+}
+.pkg-groups #groupList .palm-row-wrapper.all .title
+{
+	font-weight: bold;
+}
+
+
+
+/*
+ * Package List Scene Styles
+ */
+.pkg-list #searchText
+{
+	display: none;
+	z-index: 20000;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+	color: #fff;
+	padding-top: 2px;
+	padding-left: 1px;
+	border-width: 10px 25px 10px 25px;
+	-webkit-border-image: url(../images/palm-default/search-box.png) 10 25 10 25 stretch stretch;
+	-webkit-box-sizing: border-box;
+}
+body.palm-dark .pkg-list #searchText
+{
+	-webkit-border-image: url(../images/palm-dark/search-box.png) 10 25 10 25 stretch stretch;
+}
+.pkg-list #searchText input
+{
+	color: #fff;
+	background: none;
+	margin-top: 0px;
+	margin-left: -1px;
+	border: 0px;
+	padding: 0px;
+}
+.pkg-list #spinner
+{
+	position: fixed;
+	top: 8px;
+	right: 10px;
+	z-index: 20001;
+	float: right;
+}
+.pkg-list #statusSpinner
+{
+	margin-top: 135px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.pkg-list #statusSpinner #spinnerStatus
+{
+	text-align: center;
+	padding-top: 122px;
+	width: 200px;
+	margin-left: -35px;
+	color: #666;
+	font-size: 16px;
+}
+body.palm-dark .palm-list #statusSpinner #spinnerStatus
+{
+	color: #999;
+}
+.pkg-list .group-source 
+{
+	display: none;
+	position: relative;
+	float: right;
+	margin: 8px -16px 0px 0px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: bold;
+	height: 35px;
+	line-height: 33px;
+	border-width: 0px 22px 0px 16px;
+	-webkit-border-image:url(../images/palm-default/header-selector.png) 0 22 0 16 stretch stretch;
+	-webkit-box-sizing: border-box;
+}
+body.palm-dark .pkg-list .group-source 
+{
+	-webkit-border-image:url(../images/palm-dark/header-selector.png) 0 22 0 16 stretch stretch;
+}
+.pkg-list .group-selector 
+{
+	margin-left: -5px;
+	padding-right: 2px;
+	background: transparent;
+	display: inline-block;
+	min-width: 12px;
+	max-width: 80px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	-webkit-palm-mouse-target: ignore;
+}
+.pkg-list .palm-row-wrapper
+{
+	position: relative;
+	min-height: 56px;
+}
+.pkg-list .palm-row-wrapper .icon
+{
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	background: url(../images/noIcon.png) center center no-repeat;
+	-webkit-background-size: 48px 48px;
+	top: 3px;
+	left: 4px;
+}
+.pkg-list .palm-row-wrapper.installed .icon .sub
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 0px;
+	left: 32px;
+	background: url(../images/icon_installed.png) center center no-repeat;
+}
+.pkg-list .palm-row-wrapper.update .icon .sub
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 0px;
+	left: 32px;
+	background: url(../images/icon_updates.png) center center no-repeat;
+}
+.pkg-list .palm-row-wrapper .title
+{
+	padding-top: 0px;
+	padding-left: 60px;
+}
+.pkg-list .palm-row-wrapper .title .highlight
+{
+	font-weight: bold;
+	text-decoration: underline;
+}
+.pkg-list .palm-row-wrapper .title.description
+{
+	line-height: 22px;
+	padding-top: 5px;
+	padding-right: 2px;
+	padding-bottom: 1px;
+}
+.pkg-list .palm-row-wrapper .title.sub
+{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-right: 5px;
+	padding-bottom: 6px;
+	color: #999;
+	font-size: 14px;
+}
+/* for non-wrapping rows
+.pkg-list .palm-row-wrapper .title
+{
+	position: absolute;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-top: 0px;
+	padding-left: 0px;
+	left: 60px;
+	right: 5px;
+}
+.pkg-list .palm-row-wrapper .title.description
+{
+	top: 4px;
+}
+.pkg-list .palm-row-wrapper .title.sub
+{
+	color: #999;
+	top: 30px;
+	font-size: 14px;
+}
+*/
+.group-popup.palm-popup-container
+{
+	text-transform: capitalize;
+}
+/* these would be sub of .pkg-list, but the commandmenu isn't part of that div */
+.icon-filter-date
+{
+	background:url(../images/icon_date.png) top center no-repeat;
+}
+.icon-filter-alpha
+{
+	background:url(../images/icon_alpha.png) top center no-repeat;
+}
+.icon-filter-price
+{
+	background:url(../images/icon_price.png) top center no-repeat;
+}
+
+
+
+/*
+ * Package Connected Scene Styles
+ */
+.pkg-connected #spinner
+{
+	margin-top: 135px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.pkg-connected #spinner #spinnerStatus
+{
+	text-align: center;
+	padding-top: 122px;
+	width: 200px;
+	margin-left: -35px;
+	color: #666;
+	font-size: 16px;
+}
+body.palm-dark .palm-connected #spinner #spinnerStatus
+{
+	color: #999;
+}
+.pkg-connected #pkgSingle,
+.pkg-connected #pkgSingle *
+{
+	text-transform: none;
+}
+.pkg-connected #pkgSingle
+{
+	position: fixed;
+	padding-top: 50px;
+	height: 110px;
+	z-index: 999;
+	width: 320px;
+}
+.pkg-connected .palm-row-wrapper
+{
+	position: relative;
+	height: 56px;
+}
+.pkg-connected .palm-page-header-wrapper .icon
+{
+	margin-top: -4px;
+}
+.pkg-connected .palm-page-header-wrapper .icon,
+.pkg-connected .palm-row-wrapper .icon
+{
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	background: url(../images/noIcon.png) center center no-repeat;
+	-webkit-background-size: 48px 48px;
+	top: 3px;
+	left: 4px;
+}
+.pkg-connected .palm-page-header-wrapper.installed .icon .sub,
+.pkg-connected .palm-row-wrapper.installed .icon .sub
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 0px;
+	left: 32px;
+	background: url(../images/icon_installed.png) center center no-repeat;
+}
+.pkg-connected .palm-page-header-wrapper.update .icon .sub,
+.pkg-connected .palm-row-wrapper.update .icon .sub
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 0px;
+	left: 32px;
+	background: url(../images/icon_updates.png) center center no-repeat;
+}
+.pkg-connected .palm-page-header-wrapper .title,
+.pkg-connected .palm-row-wrapper .title
+{
+	position: absolute;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-top: 0px;
+	padding-left: 0px;
+	left: 60px;
+	right: 5px;
+}
+.pkg-connected .palm-page-header-wrapper .title.description
+{
+	color: #000;
+}
+body.palm-dark .pkg-connected .palm-page-header-wrapper .title.description
+{
+	color: #fff;
+}
+.pkg-connected .palm-page-header-wrapper .title.description,
+.pkg-connected .palm-row-wrapper .title.description
+{
+	top: 4px;
+}
+.pkg-connected .palm-page-header-wrapper .title.sub,
+.pkg-connected .palm-row-wrapper .title.sub
+{
+	color: #999;
+	top: 30px;
+	font-size: 14px;
+}
+
+
+
+/*
+ * Package View Scene Styles
+ */
+.pkg-view #spinner
+{
+	margin-top: 85px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.pkg-view #spinner #spinnerStatus
+{
+	text-align: center;
+	padding-top: 122px;
+	width: 200px;
+	margin-left: -35px;
+	color: #666;
+	font-size: 16px;
+}
+body.palm-dark .pkg-view #spinner #spinnerStatus
+{
+	color: #999;
+}
+.pkg-view .palm-header
+{
+	padding-left: 0px;
+}
+.pkg-view .palm-header #icon
+{
+	float: left;
+	width: 48px;
+	height: 48px;
+	margin-top: 2px;
+	margin-left: -10px;
+	background: url(../images/noIcon.png) center center no-repeat;
+	-webkit-background-size: 48px 48px;
+}
+.pkg-view .palm-header #title
+{
+	float: left;
+	padding-left: 15px;
+	width: 215px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.pkg-view .palm-header-spacer
+{
+	height: 50px;
+}
+.pkg-view .palm-row .palm-row-wrapper .title.description
+{
+	margin-top: 5px;
+	font-size: 18px !important;
+}
+.pkg-view .palm-row .palm-row-wrapper .title.description *
+{
+	font-size: 18px !important;
+}
+.pkg-view .palm-row .palm-row-wrapper .title.description p
+{
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+/*
+.pkg-view .palm-row .palm-row-wrapper .title.right.class
+{
+}
+*/
+.pkg-view #scrollerContainer.palm-row.screenshots
+{
+	background: url(../images/palm-default/screenshotFade.png) repeat-x;
+}
+.pkg-view #scrollerContainer.palm-row.apps
+{
+	background: url(../images/palm-default/appFade.png) repeat-x;
+}
+body.palm-dark .pkg-view #scrollerContainer.palm-row.screenshots
+{
+	background: url(../images/palm-dark/screenshotFade.png) repeat-x;
+}
+body.palm-dark .pkg-view #scrollerContainer.palm-row.apps
+{
+	background: url(../images/palm-dark/appFade.png) repeat-x;
+}
+.pkg-view #scrollerContainer.palm-row.screenshots #viewScroller
+{
+	height: 130px;
+	padding-top: 10px;
+	width: 100%;
+}
+.pkg-view #scrollerContainer.palm-row.apps #viewScroller
+{
+	height: 64px;
+	padding-top: 10px;
+	width: 100%;
+}
+.pkg-view #viewScroller #scrollItems
+{
+	width: 320px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: visible;
+}
+.pkg-view #viewScroller #scrollItems img.screenshot
+{
+	margin-left: 13px;
+	margin-right: 13px;
+	height: 120px
+}
+.pkg-view #viewScroller #scrollItems div.appReset
+{
+	background: #fff; /* for some reason, if i remove this, it stops working */
+	position: relative;
+	display: inline;
+	margin-left: 0px;
+	margin-right: 0px;
+	height: 54px;
+	width: 0px;
+}
+.pkg-view #viewScroller #scrollItems div.app
+{
+	position: relative;
+	display: inline-block;
+	margin-left: 13px;
+	margin-right: 13px;
+	height: 54px;
+	width: 54px;
+	background: url(../images/noIcon.png) center center no-repeat;
+	-webkit-background-size: 54px 54px;
+}
+.pkg-view #viewScroller #scrollItems div.app .sub
+{
+	position: absolute;
+	display: inline-block;
+	width: 0px;
+	height: 0px;
+	-webkit-palm-mouse-target: ignore;
+}
+.pkg-view #viewScroller #scrollItems div.app.installed .sub
+{
+	width: 16px;
+	height: 16px;
+	margin-left: 38px;
+	background: url(../images/icon_installed.png) center center no-repeat;
+}
+.pkg-view #viewScroller #scrollItems div.app.update .sub
+{
+	width: 16px;
+	height: 16px;
+	margin-left: 38px;
+	background: url(../images/icon_updates.png) center center no-repeat;
+}
+
+
+
+/*
+ * IPKGLog Scene Styles
+ */
+.ipkglog #logScroller
+{
+	height: 100%;
+	width: 320px;
+}
+.ipkglog #logScroller .palm-header-spacer
+{
+	height: 42px;
+}
+.ipkglog #logScroller #logData
+{
+	white-space: nowrap;
+	height: 100%;
+	width: 100%;
+}
+.ipkglog #logScroller #logData .noData
+{
+	text-align: center;
+	margin-top: 100px;
+	font-style: italic;
+}
+.ipkglog #logScroller #logData .container
+{
+	padding: 8px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+}
+.ipkglog #logScroller #logData .container.two
+{
+	background: #dbdbdb;
+}
+body.palm-dark .ipkglog #logScroller #logData .container.two
+{
+	background: #474e54;
+}
+.ipkglog #logScroller #logData .title
+{
+	text-transform: capitalize;
+	font-weight: bold;
+	font-size: 20px;
+}
+.ipkglog #logScroller #logData .msg
+{
+	padding-left: 10px;
+	font-size: 18px;
+}
+.ipkglog #logScroller #logData .stdOut div
+{
+	padding-left: 10px;
+	font-size: 18px;
+	color: #060;
+}
+body.palm-dark .ipkglog #logScroller #logData .stdOut div
+{
+	color: #afa;
+}
+.ipkglog #logScroller #logData .stdErr div
+{
+	padding-left: 10px;
+	font-size: 18px;
+	color: #600;
+}
+body.palm-dark .ipkglog #logScroller #logData .stdErr div
+{
+	color: #faa;
+}
+
+
+
+/*
+ * Screenshot Scene Styles
+ */
+.ss-scene
+{
+	padding: 0px;
+	background: black;
+}
+.ss-scene #screenshotView
+{
+	height: 480px;
+	width: 320px;
+	margin: 0px;
+	-webkit-user-drag: none;
+	border: 0px;
+	padding: 0px;
+	background-color: black;
+}
+.ss-scene #screenshotView.sideways
+{
+	width: 480px;
+	height: 320px;
+}
+
+/*
+ * Help Scene Styles
+ */
+.help .list_scene
+{
+	position:relative;
+	left:48px;
+	top:10px;
+	width:32px; 
+	height:32px;
+	vertical-align:bottom;
+	padding: 0px 0px 0px 5px;
+	float:left;
+}
+.help .img_web
+{
+	position:relative;
+	left:8px;
+	top:10px;
+	width:32px; 
+	height:32px;
+	background: url(../images/help/application-web.png) no-repeat  bottom;
+	padding: 0px 0px 0px 5px;
+	float:left;
+}
+.help .img_email
+{
+	position:relative;
+	left:8px;
+	top:10px;
+	width:32px; 
+	height:32px;
+	background: url(../images/help/application-email.png) no-repeat bottom;
+	vertical-align:bottom;
+	padding: 0px 0px 0px 5px;
+	float:left;
+}

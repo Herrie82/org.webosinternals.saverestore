@@ -1,0 +1,11 @@
+{
+	"id": "org.webosinternals.saverestore",
+	"version": "0.0.1",
+	"vendor": "WebOS Internals",
+	"type": "web",
+	"main": "index.html",
+	"title": "Save/Restore",
+	"vendor_email":	"support@webos-internals.org",
+	"vendor_url": "http://www.webos-internals.org/wiki/Application:Save_and_Restore",
+	"icon": "icon.png"
+}
