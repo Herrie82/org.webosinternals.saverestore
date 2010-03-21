@@ -2,13 +2,13 @@
 
 PID="org.webosinternals.saverestore"
 
+if [ -z "$IPKG_OFFLINE_ROOT" ]; then
+  IPKG_OFFLINE_ROOT=/media/cryptofs/apps
+  mount -o remount,rw /
+fi
+
 # Stop the service
 /sbin/stop ${PID}
-
-# Remove the service binary
-if [ "$IPKG_OFFLINE_ROOT" != "/var" ] ; then
-  rm -f /var/usr/sbin/${PID}
-fi
 
 # Remove the dbus service
 rm -f /usr/share/dbus-1/system-services/${PID}.service

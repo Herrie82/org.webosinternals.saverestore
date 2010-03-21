@@ -4,22 +4,16 @@ PID="org.webosinternals.saverestore"
 
 if [ -z "$IPKG_OFFLINE_ROOT" ]; then
   IPKG_OFFLINE_ROOT=/media/cryptofs/apps
+  mount -o remount,rw /
 fi
 
 # Install the upstart script
 rm -f /etc/event.d/${PID}
-cp $IPKG_OFFLINE_ROOT/etc/event.d/${PID} /etc/event.d/${PID}
-
-# Install the service binary
-if [ "$IPKG_OFFLINE_ROOT" != "/var" ] ; then
-  rm -f /var/usr/sbin/${PID}
-  mkdir -p /var/usr/sbin
-  cp $IPKG_OFFLINE_ROOT/usr/sbin/${PID} /var/usr/sbin/${PID}
-fi
+cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/upstart/${PID} /etc/event.d/${PID}
 
 # Install the dbus service
 rm -f /usr/share/dbus-1/system-services/${PID}.service
-cp $IPKG_OFFLINE_ROOT/usr/share/dbus-1/system-services/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
+cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/dbus/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
 
 # Install the saverestore scripts
 mkdir -p /var/svc/org.webosinternals.saverestore
