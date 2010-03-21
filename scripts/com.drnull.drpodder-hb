@@ -1,18 +1,16 @@
 #!/bin/sh
 
-SCRIPTDIR=`dirname $0`
-
 NAME=`basename $0`
+
+APPS=/media/cryptofs/apps
 
 APPDIR=$APPS/usr/palm/applications/$NAME
 [ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
 DSTDIR=/media/internal/saverestore/$NAME
 
-PALMDB=/var/palm/data/Databases.db
-
 DBSTORE=/var/palm/data
-
 APPSTORE=/media/internal/.app-storage
+PALMDB=$DBSTORE/Databases.db
 
 ORIGIN=`sqlite3 $PALMDB "SELECT origin FROM Origins WHERE origin LIKE \"%${NAME}_0\""`
 [ -n "$ORIGIN" ] || { echo "Cannot find database origin for $NAME" ; exit 1 ; }
@@ -28,11 +26,13 @@ if [ "$1" == "save" ] ; then
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then
 	    LOC=$APPSTORE/$ORIGIN/$FILE
+	    NAME=`expr "$db" : "ext:\(.*\)"`
 	else
 	    LOC=$DBSTORE/$ORIGIN/$FILE
+	    NAME=$db
 	fi
-	cp $LOC $DSTDIR/$db
-	ls -l $DSTDIR/$db
+	cp $LOC $DSTDIR/$NAME
+	ls -l $DSTDIR/$NAME
     done
 
 elif [ "$1" == "restore" ] ; then
@@ -43,10 +43,12 @@ elif [ "$1" == "restore" ] ; then
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then
 	    LOC=$APPSTORE/$ORIGIN/$FILE
+	    NAME=`expr "$db" : "ext:\(.*\)"`
 	else
 	    LOC=$DBSTORE/$ORIGIN/$FILE
+	    NAME=$db
 	fi
-	cp $DSTDIR/$db $LOC
+	cp $DSTDIR/$NAME $LOC
 	ls -l $LOC
     done
 
