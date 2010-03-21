@@ -4,10 +4,10 @@ NAME=`basename $0`
 
 APPS=/media/cryptofs/apps
 
-APPDIR=$APPS/usr/palm/applications/$NAME/res_nfsuc
+APPDIR=$APPS/usr/palm/applications/$NAME/glyder2
 [ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
 DSTDIR=/media/internal/saverestore/$NAME
-FILES="gamesett gamedata"
+FILES="savegame.dat hs.dat prefs.dat settings.dat"
 
 if [ "$1" == "save" ] ; then
 
