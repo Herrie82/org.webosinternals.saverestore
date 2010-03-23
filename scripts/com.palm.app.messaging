@@ -3,12 +3,10 @@
 NAME=`basename $0`
 
 APPDIR=/usr/palm/applications/$NAME
-# [ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
-# DSTDIR=/media/internal/saverestore/$NAME
-DSTDIR=/srv/webos/saverestore/$NAME
+[ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
+DSTDIR=/media/internal/saverestore/$NAME
 
-# DBSTORE=/var/luna/data/dbdata
-DBSTORE=/srv/webos/luna/data/dbdata
+DBSTORE=/var/luna/data/dbdata
 PALMDB=$DBSTORE/PalmDatabase.db3
 
 if [ "$1" == "save" ] ; then
