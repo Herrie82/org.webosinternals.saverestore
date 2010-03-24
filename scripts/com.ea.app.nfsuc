@@ -1,38 +1,9 @@
 #!/bin/sh
 
 NAME=`basename $0`
-
-APPS=/media/cryptofs/apps
-
-APPDIR=$APPS/usr/palm/applications/$NAME/res_nfsuc
-[ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
-DSTDIR=/media/internal/saverestore/$NAME
+APPDIR=/media/cryptofs/apps/usr/palm/applications/$NAME/res_nfsuc
 FILES="gamesett gamedata"
 
-if [ "$1" == "save" ] ; then
-
-    for file in ${FILES} ; do
-      [ -f $APPDIR/$file ] || { echo "$APPDIR/$file not found" ; exit 1 ; }
-    done
-
-    mkdir -p $DSTDIR
-
-    for file in ${FILES} ; do
-      cp $APPDIR/$file $DSTDIR/
-    done
-
-elif [ "$1" == "restore" ] ; then
-
-    [ -d $DSTDIR ] || { echo "$NAME not saved" ; exit 1 ; }
-
-    for file in ${FILES} ; do
-      [ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
-    done
-
-    for file in ${FILES} ; do
-      cp $DSTDIR/$file $APPDIR/
-    done
-
-fi
+source `dirname $0`/srf.app.files
 
 exit 0
