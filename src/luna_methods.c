@@ -76,8 +76,10 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
     while ( fgets( line, sizeof line, fp)) {
       // %%% MAGIC NUMBERS ALERT %%%
       if (sscanf(line, "%127s\n", (char*)&name) == 1) {
-	// %%% IGNORING RETURN ALERT %%%
-	json_insert_child(array, json_new_string(name));
+	if (strncmp(name, "srf.", 4)) {
+	  // %%% IGNORING RETURN ALERT %%%
+	  json_insert_child(array, json_new_string(name));
+	}
       }
     }
     if (!pclose(fp)) {
