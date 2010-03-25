@@ -9,5 +9,13 @@
     {
         "scenes": "save",
         "source": "app/assistants/save-assistant.js"
+    },
+    {
+        "scenes": "restore",
+        "source": "app/assistants/restore-assistant.js"
+    },
+    {
+        "scenes": "list",
+        "source": "app/assistants/list-assistant.js"
     }
 ]

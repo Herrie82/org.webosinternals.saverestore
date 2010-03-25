@@ -37,6 +37,12 @@ MainAssistant.prototype.listTap = function(event)
 	if( event.item.cmd == 'save' ){
 		this.controller.stageController.pushScene( 'save' );
 	}
+	else if( event.item.cmd == 'restore' ){
+		this.controller.stageController.pushScene( 'restore' );
+	}
+	else if( event.item.cmd == 'list' ){
+		this.controller.stageController.pushScene( 'list' );
+	}
 }
 
 MainAssistant.prototype.updateList = function(skipUpdate)
@@ -66,7 +72,7 @@ Mojo.Log.error("updateList");
 		name:     $L('List of Everything'),
 		style:    'showCount',
 		scene:    'active',
-		cmd:		'everything',
+		cmd:		'list',
 		pkgCount: 1
 	});
 

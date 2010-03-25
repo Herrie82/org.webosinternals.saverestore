@@ -1,28 +1,32 @@
 function ListAssistant() {
-	/* this is the creator function for your scene assistant object. It will be passed all the 
-	   additional parameters (after the scene name) that were passed to pushScene. The reference
-	   to the scene controller (this.controller) has not be established yet, so any initialization
-	   that needs the scene controller should be done in the setup function below. */
+	this.boundFunctions = new Array();
+	this.boundFunctions['getList'] = this.getList.bind(this);
+	this.processAppsList = [];
 }
 
 ListAssistant.prototype.setup = function() {
-	/* this function is for setup tasks that have to happen when the scene is first created */
-		
-	/* use Mojo.View.render to render view templates and add them to the scene, if needed */
+	// initialize our list
+	this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
+	this.appListModel = { items: [] };
+	this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
 	
-	/* setup widgets here */
-	
-	/* add event handlers to listen to events from widgets */
+	// load up
+	SaveRestoreService.list(this.boundFunctions['getList']);
+};
 
-var hasNet="";
-var onlyLoad="";
-	IPKGService.version(this.onVersionCheck.bindAsEventListener(this, hasNet, onlyLoad));
-}
-
-ListAssistant.prototype.onVersionCheck = function(payload, hasNet, onlyLoad) {
-		// log payload for display
-		IPKGService.logPayload(payload, 'VersionCheck');
-
+ListAssistant.prototype.getList = function(data) {
+	if( data.returnValue == true ){
+		var apps = data.scripts;
+		Mojo.Log.info( "We got back " + apps.length + " apps" );
+		for( var i = 0; i < apps.length; i++ ){
+			var app = apps[i];
+			this.appListModel.items.push( { appname: app, appid: app } );
+		}
+		this.controller.modelChanged( this.appListModel );
+	}else{
+		Mojo.Log.error( "list returned error!" );
+		dumpObject(data);
+	}
 };
 
 ListAssistant.prototype.activate = function(event) {
