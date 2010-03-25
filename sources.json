@@ -1,7 +1,13 @@
 [
+    {"source": "app/models/SaveRestoreService.js"},
     {"source": "app/assistants/stage-assistant.js"},
+    {"source": "app/models/functions.js"},
     {
         "scenes": "main",
         "source": "app/assistants/main-assistant.js"
+    },
+    {
+        "scenes": "save",
+        "source": "app/assistants/save-assistant.js"
     }
 ]

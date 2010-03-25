@@ -34,7 +34,9 @@ MainAssistant.prototype.setup = function() {
 
 MainAssistant.prototype.listTap = function(event)
 {
-
+	if( event.item.cmd == 'save' ){
+		this.controller.stageController.pushScene( 'save' );
+	}
 }
 
 MainAssistant.prototype.updateList = function(skipUpdate)
@@ -48,6 +50,7 @@ Mojo.Log.error("updateList");
 		name:     $L('Save Application Data'),
 		style:    'showCount',
 		scene:    'available',
+		cmd:		'save',
 		pkgCount: 5
 	});
 	this.mainModel.items.push(
@@ -55,6 +58,7 @@ Mojo.Log.error("updateList");
 		name:     $L('Restore Application Data'),
 		style:    'showCount',
 		scene:    'active',
+		cmd:		'restore',
 		pkgCount: 1
 	});
 	this.mainModel.items.push(
@@ -62,14 +66,16 @@ Mojo.Log.error("updateList");
 		name:     $L('List of Everything'),
 		style:    'showCount',
 		scene:    'active',
+		cmd:		'everything',
 		pkgCount: 1
 	});
 
 
 	this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
 	this.listElement.mojo.setLength(this.mainModel.items.length);
-
 }
+
+
 
 MainAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
