@@ -2,18 +2,13 @@
 
 PID="org.webosinternals.saverestore"
 
-if [ -z "$IPKG_OFFLINE_ROOT" ]; then
-  IPKG_OFFLINE_ROOT=/media/cryptofs/apps
-  mount -o remount,rw /
-fi
-
 # Stop the service
 /sbin/stop ${PID}
 
 # Remove the dbus service
-rm -f /usr/share/dbus-1/system-services/${PID}.service
+rm -f /usr/share/dbus-1/system-services/${PID}.service /var/palm/system-services/${PID}.service
 
 # Remove the upstart script
-rm -f /etc/event.d/${PID}
+rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
 
 exit 0

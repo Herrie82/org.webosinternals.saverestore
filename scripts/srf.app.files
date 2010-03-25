@@ -1,0 +1,36 @@
+#!/bin/sh
+
+[ -n "$NAME" ] || { echo "srf.app.files: NAME not defined" ; exit 1 ; }
+[ -n "$APPDIR" ] || { echo "srf.app.files: APPDIR not defined" ; exit 1 ; }
+[ -n "$FILES" ] || { echo "srf.app.files: FILES not defined" ; exit 1 ; }
+
+[ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
+DSTDIR=/media/internal/saverestore/$NAME
+
+if [ "$1" == "save" ] ; then
+
+    for file in ${FILES} ; do
+      [ -f $APPDIR/$file ] || { echo "$APPDIR/$file not found" ; exit 1 ; }
+    done
+
+    mkdir -p $DSTDIR
+
+    for file in ${FILES} ; do
+      cp $APPDIR/$file $DSTDIR/
+    done
+
+elif [ "$1" == "restore" ] ; then
+
+    [ -d $DSTDIR ] || { echo "$NAME not saved" ; exit 1 ; }
+
+    for file in ${FILES} ; do
+      [ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
+    done
+
+    for file in ${FILES} ; do
+      cp $DSTDIR/$file $APPDIR/
+    done
+
+fi
+
+exit 0

@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME=`basename $0`
+
+APPDIR=/usr/palm/applications/$NAME
+[ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
+DSTDIR=/media/internal/saverestore/$NAME
+
+DBSTORE=/var/luna/data/dbdata
+PALMDB=$DBSTORE/PalmDatabase.db3
+
+if [ "$1" == "save" ] ; then
+
+    mkdir -p $DSTDIR
+
+    TYPES="SMS IM"
+    FIELDS="messageType,fromAddress,messageText,timeStamp,deviceTimeStamp"
+
+    for type in $TYPES ; do
+
+	echo $FIELDS | sed -e 's/,/|/g' > $DSTDIR/$type.txt
+
+	sqlite3 $PALMDB "SELECT $FIELDS FROM com_palm_pim_FolderEntry WHERE messageType like \"$type\"" \
+	    >> $DSTDIR/$type.txt
+
+    done
+
+elif [ "$1" == "restore" ] ; then
+     
+    [ -d $DSTDIR ] || { echo "$NAME not saved" ; exit 0 ; }
+
+    { echo "$NAME restore not supported yet" ; exit 0 ; }
+
+fi
+
+exit 0
