@@ -1,3 +1,3 @@
 [D-BUS Service]
 Name=org.webosinternals.saverestore
-Exec=/media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/bin/saverestore
+Exec=/var/usr/sbin/org.webosinternals.saverestore

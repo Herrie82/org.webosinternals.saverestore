@@ -2,13 +2,16 @@
 
 PID="org.webosinternals.saverestore"
 
-# Stop the service
-/sbin/stop ${PID}
+# Stop the service if running
+/sbin/stop ${PID} || true
 
 # Remove the dbus service
 rm -f /usr/share/dbus-1/system-services/${PID}.service /var/palm/system-services/${PID}.service
 
 # Remove the upstart script
 rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
+
+# Remove the saverestore executable
+rm -f /var/usr/sbin/${PID}
 
 exit 0
