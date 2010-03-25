@@ -47,7 +47,6 @@ MainAssistant.prototype.listTap = function(event)
 
 MainAssistant.prototype.updateList = function(skipUpdate)
 {
-Mojo.Log.error("updateList");
 	// clear main list model of its items
 	this.mainModel.items = [];
 		

@@ -4,18 +4,31 @@ function SaveAssistant() {
 	this.boundFunctions['saveApps'] = this.saveApps.bindAsEventListener(this);
 	this.boundFunctions['processCallback'] = this.processCallback.bind(this);
 	this.processAppsList = [];
+	this.toggleOn = false;
 }
 
 SaveAssistant.prototype.setup = function() {
 	// initialize our list
-	this.appListAttr = { itemTemplate: "app-list/row-template-checkboxes" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
+	this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
 	this.appListModel = { items: [] };
 	this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
-	this.controller.setupWidget( "appCheckbox", { modelProperty: 'checked' } );
+	this.controller.setupWidget( "appToggleButton", { modelProperty: 'checked', trueLabel: 'save', falseLabel: 'ignore' } );
 	
 	// button
-	this.controller.setupWidget( "actionButton", {}, { label: "Save Data", buttonClass: 'affirmative' } );
-	Mojo.Event.listen( this.controller.get("actionButton"), Mojo.Event.tap, this.boundFunctions['saveApps'] );
+	//this.controller.setupWidget( "actionButton", {}, { label: "Save Data", buttonClass: 'affirmative' } );
+	//Mojo.Event.listen( this.controller.get("actionButton"), Mojo.Event.tap, this.boundFunctions['saveApps'] );
+	
+	// new buttons
+	this.buttonsAttributes = { spacerHeight: 50, menuClass: 'no-fade' };
+	this.buttonsModel = {
+	  visible: true,
+	  items: [
+			   { label: "select none", command: "toggleChecked" },
+			   { label: "save selected", command: "doSave" }
+	  ]
+	}
+	this.controller.setupWidget( Mojo.Menu.commandMenu, this.buttonsAttributes, this.buttonsModel );
+
 
 	// load up
 	SaveRestoreService.list(this.boundFunctions['getList']);
@@ -27,7 +40,7 @@ SaveAssistant.prototype.getList = function(data) {
 		Mojo.Log.info( "We got back " + apps.length + " apps" );
 		for( var i = 0; i < apps.length; i++ ){
 			var app = apps[i];
-			this.appListModel.items.push( { appname: app, appid: app, checked: false } );
+			this.appListModel.items.push( { appname: "Application Name", appid: app, checked: true } );
 		}
 		this.controller.modelChanged( this.appListModel );
 	}else{
@@ -56,6 +69,31 @@ SaveAssistant.prototype.processCallback = function(e) {
 	if( e.returnValue == true ) this.processApps();
 	else dumpObject(e);
 };
+
+SaveAssistant.prototype.handleCommand = function (event) {
+
+	if (event.type === Mojo.Event.command){
+        if( event.command == 'toggleChecked' ){
+            Mojo.Log.info( "toggling" );
+			
+			// loop the items
+			for( var i = 0; i < this.appListModel.items.length; i++ ){
+				var thisobj = this.appListModel.items[i];
+				thisobj.checked = this.toggleOn;
+			}
+			this.controller.modelChanged( this.appListModel );
+			
+			// switch it up
+			this.buttonsModel.items[0].label = this.toggleOn ? "select none" : "select all";
+			Mojo.Log.info( "label: " + this.buttonsModel.items[0].label );
+			this.controller.modelChanged( this.buttonsModel );
+			this.toggleOn = !this.toggleOn;
+        }else if( event.command == 'doSave' ){
+            Mojo.Log.info( "saving" );
+			this.saveApps();
+        }
+	}
+}
 
 SaveAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
