@@ -2,18 +2,25 @@
 
 PID="org.webosinternals.saverestore"
 
-if [ -z "$IPKG_OFFLINE_ROOT" ]; then
-  IPKG_OFFLINE_ROOT=/media/cryptofs/apps
-  mount -o remount,rw /
-fi
+IPKG_OFFLINE_ROOT=/media/cryptofs/apps
+
+[ -d $IPKG_OFFLINE_ROOT ] || { echo "Requires webOS 1.3.5 or later" ; exit 1 ; }
 
 # Install the upstart script
-rm -f /etc/event.d/${PID}
-cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/upstart/${PID} /etc/event.d/${PID}
+rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
+if [ -d /var/palm/event.d ] ; then
+  cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/upstart/${PID} /var/palm/event.d/${PID}
+else
+  cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/upstart/${PID} /etc/event.d/${PID}
+fi
 
 # Install the dbus service
-rm -f /usr/share/dbus-1/system-services/${PID}.service
-cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/dbus/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
+rm -f /usr/share/dbus-1/system-services/${PID}.service /var/palm/system-services/${PID}.service
+if [ -d /var/palm/system-services ] ; then
+  cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/dbus/${PID}.service /var/palm/system-services/${PID}.service
+else
+  cp $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/dbus/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
+fi
 
 # Install the saverestore scripts
 mkdir -p /var/svc/org.webosinternals.saverestore
@@ -22,5 +29,11 @@ tar -C /var/svc/org.webosinternals.saverestore -x -f -
 
 # Start the service
 /sbin/start ${PID}
+
+# Check the upstart script is installed
+[ -f /var/palm/event.d/${PID} ] || [ -f /etc/event.d/${PID} ] || exit 1
+
+# Check the dbus service is installed
+[ -f /var/palm/system-services/${PID}.service ] || [ -f /usr/share/dbus-1/system-services/${PID}.service ] || exit 1
 
 exit 0
