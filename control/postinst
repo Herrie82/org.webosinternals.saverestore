@@ -24,8 +24,15 @@ fi
 
 # Install the saverestore scripts
 mkdir -p /var/svc/org.webosinternals.saverestore
-tar -C $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/scripts -c -f - . | \
-tar -C /var/svc/org.webosinternals.saverestore -x -f -
+tar -C /var/svc/org.webosinternals.saverestore -zxf $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/scripts.tgz
+
+# Stop any existing service
+/sbin/stop ${PID} || true
+
+# Install the saverestore executable
+mkdir -p /var/usr/sbin/
+rm -f /var/usr/sbin/${PID}
+install -m 755 $IPKG_OFFLINE_ROOT/usr/palm/applications/${PID}/bin/${PID} /var/usr/sbin/${PID}
 
 # Start the service
 /sbin/start ${PID}

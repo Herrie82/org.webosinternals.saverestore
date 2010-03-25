@@ -1,4 +1,4 @@
 start on stopped finish
 
-exec /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/bin/saverestore
+exec /var/usr/sbin/org.webosinternals.saverestore
 respawn
