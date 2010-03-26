@@ -43,6 +43,9 @@ MainAssistant.prototype.listTap = function(event)
 	else if( event.item.cmd == 'list' ){
 		this.controller.stageController.pushScene( 'list' );
 	}
+	else if( event.item.cmd == 'installed' ){
+		this.controller.stageController.pushScene( 'installed' );
+	}
 }
 
 MainAssistant.prototype.updateList = function(skipUpdate)
@@ -68,10 +71,18 @@ MainAssistant.prototype.updateList = function(skipUpdate)
 	});
 	this.mainModel.items.push(
 	{
-		name:     $L('List of Everything'),
+		name:     $L('Available Applications'),
 		style:    'showCount',
 		scene:    'active',
 		cmd:		'list',
+		pkgCount: 1
+	});
+	this.mainModel.items.push(
+	{
+		name:     $L('Installed Applications'),
+		style:    'showCount',
+		scene:    'active',
+		cmd:		'installed',
 		pkgCount: 1
 	});
 

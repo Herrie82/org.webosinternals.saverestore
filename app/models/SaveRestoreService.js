@@ -43,6 +43,15 @@ SaveRestoreService.restore = function(callback, pkg) {
     return request;
 };
 
+SaveRestoreService.listApps = function(callback) {
+    var request = new Mojo.Service.Request(SaveRestoreService.identifier, {
+	    method: 'listApps',
+	    onSuccess: callback,
+	    onFailure: callback
+	});
+    return request;
+}
+    
 SaveRestoreService.logClear = function() {
     this.log = '';
     this.logNum = 1;

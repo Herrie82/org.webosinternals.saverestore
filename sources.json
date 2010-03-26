@@ -15,6 +15,10 @@
         "source": "app/assistants/restore-assistant.js"
     },
     {
+        "scenes": "installed",
+        "source": "app/assistants/installed-assistant.js"
+    },
+    {
         "scenes": "list",
         "source": "app/assistants/list-assistant.js"
     }

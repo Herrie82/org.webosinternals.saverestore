@@ -467,11 +467,46 @@ bool restore_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   return saverestore_method(lshandle, message, ctx, "restore");
 }
 
+//
+// Handler for the listApps service.
+//
+bool listApps_handler(LSHandle* lshandle, LSMessage *reply, void *ctx) {
+  bool retVal;
+  LSError lserror;
+  LSErrorInit(&lserror);
+  LSMessage* message = (LSMessage*)ctx;
+  retVal = LSMessageRespond(message, LSMessageGetPayload(reply), &lserror);
+  LSMessageUnref(message);
+  if (!retVal) {
+    LSErrorPrint(&lserror, stderr);
+    LSErrorFree(&lserror);
+  }
+  return retVal;
+}
+
+//
+// Call the listApps service using liblunaservice and return the output to webOS.
+//
+bool listApps_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+  bool retVal;
+  LSError lserror;
+  LSErrorInit(&lserror);
+  LSMessageRef(message);
+  retVal = LSCall(priv_serviceHandle, "palm://com.palm.applicationManager/listApps", "{}",
+		  listApps_handler, message, NULL, &lserror);
+  if (!retVal) {
+    LSErrorPrint(&lserror, stderr);
+    LSErrorFree(&lserror);
+  }
+  return retVal;
+}
+
 LSMethod luna_methods[] = {
   { "status",	dummy_method },
   { "list",	list_method },
   { "save",	save_method },
   { "restore",	restore_method },
+  { "listApps",	listApps_method },
   { 0, 0 }
 };
 
