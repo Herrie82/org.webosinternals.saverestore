@@ -19,7 +19,7 @@ ListAssistant.prototype.getList = function(data) {
 		Mojo.Log.info( "We got back " + apps.length + " apps" );
 		for( var i = 0; i < apps.length; i++ ){
 			var app = apps[i];
-			this.appListModel.items.push( { appname: "Application Name", appid: app } );
+			this.appListModel.items.push( { appname: app.name, appid: app.id } );
 		}
 		this.controller.modelChanged( this.appListModel );
 	}else{
