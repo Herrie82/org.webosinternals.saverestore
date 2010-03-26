@@ -1,11 +1,11 @@
 #!/bin/sh
 
-[ -n "$NAME" ] || { echo "srf.app.files: NAME not defined" ; exit 1 ; }
+[ -n "$APPID" ] || { echo "srf.app.files: APPID not defined" ; exit 1 ; }
 [ -n "$APPDIR" ] || { echo "srf.app.files: APPDIR not defined" ; exit 1 ; }
 [ -n "$FILES" ] || { echo "srf.app.files: FILES not defined" ; exit 1 ; }
 
-[ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
-DSTDIR=/media/internal/saverestore/$NAME
+[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
+DSTDIR=/media/internal/saverestore/$APPID
 
 if [ "$1" == "save" ] ; then
 
@@ -21,7 +21,7 @@ if [ "$1" == "save" ] ; then
 
 elif [ "$1" == "restore" ] ; then
 
-    [ -d $DSTDIR ] || { echo "$NAME not saved" ; exit 1 ; }
+    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 1 ; }
 
     for file in ${FILES} ; do
       [ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
@@ -32,5 +32,3 @@ elif [ "$1" == "restore" ] ; then
     done
 
 fi
-
-exit 0

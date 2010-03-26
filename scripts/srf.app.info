@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ -n "$APPID" ] || { echo "srf.app.files: APPID not defined" ; exit 1 ; }
+[ -n "$APPNAME" ] || { echo "srf.app.files: APPNAME not defined" ; exit 1 ; }
+
+if [ "$1" == "info" ] ; then
+
+    echo '{ "name": "'$APPNAME'", "id": "'$APPID'" }'
+
+fi

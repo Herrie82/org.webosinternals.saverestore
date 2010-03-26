@@ -1,7 +1,11 @@
 #!/bin/sh
 
-NAME=`basename $0`
-APPDIR=/media/cryptofs/apps/usr/palm/applications/$NAME/glyder2
+APPID=`basename $0`
+APPNAME="Glyder 2"
+
+source `dirname $0`/srf.app.info
+
+APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID/glyder2
 FILES="savegame.dat hs.dat prefs.dat settings.dat"
 
 source `dirname $0`/srf.app.files

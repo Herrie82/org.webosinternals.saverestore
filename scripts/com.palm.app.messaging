@@ -1,10 +1,13 @@
 #!/bin/sh
 
-NAME=`basename $0`
+APPID=`basename $0`
+APPNAME="Messaging"
 
-APPDIR=/usr/palm/applications/$NAME
-[ -d $APPDIR ] || { echo "$NAME not installed" ; exit 0 ; }
-DSTDIR=/media/internal/saverestore/$NAME
+source `dirname $0`/srf.app.info
+
+APPDIR=/usr/palm/applications/$APPID
+[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
+DSTDIR=/media/internal/saverestore/$APPID
 
 DBSTORE=/var/luna/data/dbdata
 PALMDB=$DBSTORE/PalmDatabase.db3
@@ -27,9 +30,9 @@ if [ "$1" == "save" ] ; then
 
 elif [ "$1" == "restore" ] ; then
      
-    [ -d $DSTDIR ] || { echo "$NAME not saved" ; exit 0 ; }
+    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 0 ; }
 
-    { echo "$NAME restore not supported yet" ; exit 0 ; }
+    { echo "$APPID restore not supported yet" ; exit 0 ; }
 
 fi
 
