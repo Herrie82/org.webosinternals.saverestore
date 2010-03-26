@@ -12,7 +12,7 @@ SaveAssistant.prototype.setup = function() {
 	this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
 	this.appListModel = { items: [] };
 	this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
-	this.controller.setupWidget( "appToggleButton", { modelProperty: 'checked', trueLabel: 'save', falseLabel: 'ignore' } );
+	this.controller.setupWidget( "appToggleButton", { modelProperty: 'checked', trueLabel: 'on', falseLabel: 'off' } );
 	
 	// button
 	//this.controller.setupWidget( "actionButton", {}, { label: "Save Data", buttonClass: 'affirmative' } );
