@@ -176,7 +176,6 @@ static bool run_command(char *command, bool escape) {
 
   // Local buffers to store the current and previous lines.
   char line[MAXLINLEN];
-  char lastline[MAXLINLEN];
 
   fprintf(stderr, "Running command %s\n", command);
 
@@ -184,9 +183,6 @@ static bool run_command(char *command, bool escape) {
 
   // Is this the first line of output?
   bool first = true;
-
-  // Has an early termination error been detected?
-  bool error = false;
 
   bool array = false;
 
@@ -198,65 +194,45 @@ static bool run_command(char *command, bool escape) {
     return false;
   }
 
-  // Initialise the previous line contents.
-  strcpy(lastline, "");
-
   // Loop through the output lines
-  while (!feof(fp)) {
+  while (fgets(line, sizeof line, fp)) {
 
-    // Initialise the current line contents.
-    strcpy(line, "");
-    int len = 0;
+    // Chomp the newline
+    char *nl = strchr(line,'\n'); if (nl) *nl = 0;
 
-    // Read and store characters up to the next LF or NL.
-    char c;
-    while ((len < MAXLINLEN) && ((c = fgetc(fp)) != EOF)) { 
-      if ((c == '\r') || (c == '\n')) {
-	line[len] = '\0';
-	// Skip empty lines
-	if (!len) continue;
-	break;
+    // Add formatting breaks between lines
+    if (first) {
+      if (run_command_buffer[strlen(run_command_buffer)-1] == '[') {
+	array = true;
       }
-      line[len++] = c; line[len] = '\0';
+      first = false;
     }
-
-    // If we read something, then process it
-    if (len) {
-
-      // Add formatting breaks between lines
-      if (first) {
-	if (run_command_buffer[strlen(run_command_buffer)-1] == '[') {
-	  array = true;
-	}
-	first = false;
+    else {
+      if (array) {
+	strcat(run_command_buffer, ", ");
       }
       else {
-	if (array) {
-	  strcat(run_command_buffer, ", ");
-	}
-	else {
-	  strcat(run_command_buffer, "<br>");
-	}
+	strcat(run_command_buffer, "<br>");
       }
-
-      // Append the unfiltered output to the run_command_buffer.
-      if (escape) {
-	if (array) {
-	  strcat(run_command_buffer, "\"");
-	}
-	strcat(run_command_buffer, json_escape_str(line));
-	if (array) {
-	  strcat(run_command_buffer, "\"");
-	}
+    }
+    
+    // Append the unfiltered output to the run_command_buffer.
+    if (escape) {
+      if (array) {
+	strcat(run_command_buffer, "\"");
       }
-      else {
-	strcat(run_command_buffer, line);
+      strcat(run_command_buffer, json_escape_str(line));
+      if (array) {
+	strcat(run_command_buffer, "\"");
       }
+    }
+    else {
+      strcat(run_command_buffer, line);
     }
   }
   
-  // Check the close status of the process, and return the combined error status
-  if (pclose(fp) || error) {
+  // Check the close status of the process
+  if (pclose(fp)) {
     return false;
   }
 
@@ -303,6 +279,8 @@ static bool report_command_failure(LSHandle* lshandle, LSMessage *message, char 
   // Terminate the JSON reply message ...
   strcat(buffer, "}");
 
+  fprintf(stderr, "Message is %s\n", buffer);
+
   // and send it.
   if (!LSMessageReply(lshandle, message, buffer, &lserror)) goto error;
 
@@ -329,6 +307,8 @@ static bool simple_command(LSHandle* lshandle, LSMessage *message, char *command
 
     // Finalise the message ...
     strcat(run_command_buffer, "], \"returnValue\": true}");
+
+    fprintf(stderr, "Message is %s\n", run_command_buffer);
 
     // and send it to webOS.
     if (!LSMessageReply(lshandle, message, run_command_buffer, &lserror)) goto error;
@@ -433,6 +413,8 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   else {
     strcat(buffer, "\"returnValue\": true}");
   }
+
+  fprintf(stderr, "Message is %s\n", buffer);
 
   // Return the results to webOS.
   if (!LSMessageReply(lshandle, message, buffer, &lserror)) goto error;
