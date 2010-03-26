@@ -1,7 +1,6 @@
 function ListAssistant() {
 	this.boundFunctions = new Array();
 	this.boundFunctions['getList'] = this.getList.bind(this);
-	this.processAppsList = [];
 }
 
 ListAssistant.prototype.setup = function() {
@@ -20,7 +19,7 @@ ListAssistant.prototype.getList = function(data) {
 		Mojo.Log.info( "We got back " + apps.length + " apps" );
 		for( var i = 0; i < apps.length; i++ ){
 			var app = apps[i];
-			this.appListModel.items.push( { appname: app, appid: app } );
+			this.appListModel.items.push( { appname: "Application Name", appid: app } );
 		}
 		this.controller.modelChanged( this.appListModel );
 	}else{

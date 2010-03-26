@@ -23,8 +23,8 @@ SaveAssistant.prototype.setup = function() {
 	this.buttonsModel = {
 	  visible: true,
 	  items: [
-			   { label: "select none", command: "toggleChecked" },
-			   { label: "save selected", command: "doSave" }
+			   { label: "Select None", command: "toggleChecked" },
+			   { label: "Save Selected", command: "doSave" }
 	  ]
 	}
 	this.controller.setupWidget( Mojo.Menu.commandMenu, this.buttonsAttributes, this.buttonsModel );
@@ -84,7 +84,7 @@ SaveAssistant.prototype.handleCommand = function (event) {
 			this.controller.modelChanged( this.appListModel );
 			
 			// switch it up
-			this.buttonsModel.items[0].label = this.toggleOn ? "select none" : "select all";
+			this.buttonsModel.items[0].label = this.toggleOn ? "Select None" : "Select All";
 			Mojo.Log.info( "label: " + this.buttonsModel.items[0].label );
 			this.controller.modelChanged( this.buttonsModel );
 			this.toggleOn = !this.toggleOn;
