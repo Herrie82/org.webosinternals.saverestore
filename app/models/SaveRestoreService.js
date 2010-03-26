@@ -14,6 +14,7 @@ SaveRestoreService.version = function(callback) {
     return request;
 };
 
+// returns list of apps we have scripts for
 SaveRestoreService.list = function(callback) {
     var request = new Mojo.Service.Request(SaveRestoreService.identifier, {
 	    method: 'list',
@@ -43,6 +44,7 @@ SaveRestoreService.restore = function(callback, pkg) {
     return request;
 };
 
+// returns list of apps installed on the device
 SaveRestoreService.listApps = function(callback) {
     var request = new Mojo.Service.Request(SaveRestoreService.identifier, {
 	    method: 'listApps',

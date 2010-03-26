@@ -4,5 +4,8 @@ function StageAssistant() {
 
 StageAssistant.prototype.setup = function() {
 	/* this function is for setup tasks that have to happen when the stage is first created */
-	this.controller.pushScene("main");
+	// TODO - we should push a loading scene to show while polling the service
+	// then we push main once the load is complete, or show dialog on error
+	appDB = new Applications(this);
+	//this.controller.pushScene("main");
 };

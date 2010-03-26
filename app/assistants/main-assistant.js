@@ -59,7 +59,7 @@ MainAssistant.prototype.updateList = function(skipUpdate)
 		style:    'showCount',
 		scene:    'available',
 		cmd:		'save',
-		pkgCount: 5
+		pkgCount: appDB.appsAvailable.length
 	});
 	this.mainModel.items.push(
 	{
@@ -67,7 +67,7 @@ MainAssistant.prototype.updateList = function(skipUpdate)
 		style:    'showCount',
 		scene:    'active',
 		cmd:		'restore',
-		pkgCount: 1
+		pkgCount: appDB.appsSaved.length
 	});
 	this.mainModel.items.push(
 	{
@@ -75,7 +75,7 @@ MainAssistant.prototype.updateList = function(skipUpdate)
 		style:    'showCount',
 		scene:    'active',
 		cmd:		'list',
-		pkgCount: 1
+		pkgCount: appDB.appsWithScripts.length
 	});
 	this.mainModel.items.push(
 	{
@@ -83,7 +83,7 @@ MainAssistant.prototype.updateList = function(skipUpdate)
 		style:    'showCount',
 		scene:    'active',
 		cmd:		'installed',
-		pkgCount: 1
+		pkgCount: appDB.appsInstalled.length
 	});
 
 

@@ -1,6 +1,6 @@
 function ListAssistant() {
 	this.boundFunctions = new Array();
-	this.boundFunctions['getList'] = this.getList.bind(this);
+	//this.boundFunctions['getList'] = this.getList.bind(this);
 }
 
 ListAssistant.prototype.setup = function() {
@@ -10,9 +10,11 @@ ListAssistant.prototype.setup = function() {
 	this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
 	
 	// load up
-	SaveRestoreService.list(this.boundFunctions['getList']);
+	//SaveRestoreService.list(this.boundFunctions['getList']);
+	this.loadList();
 };
 
+/*
 ListAssistant.prototype.getList = function(data) {
 	if( data.returnValue == true ){
 		var apps = data.scripts;
@@ -26,6 +28,16 @@ ListAssistant.prototype.getList = function(data) {
 		Mojo.Log.error( "list returned error!" );
 		dumpObject(data);
 	}
+};
+*/
+
+ListAssistant.prototype.loadList = function() {
+	var apps = appDB.appsWithScripts;
+	for( var i = 0; i < apps.length; i++ ){
+		var app = appDB.appsInformation[apps[i]];
+		this.appListModel.items.push( { appname: app.title, appid: app.id, checked: true } );
+	}
+	this.controller.modelChanged( this.appListModel );
 };
 
 ListAssistant.prototype.activate = function(event) {

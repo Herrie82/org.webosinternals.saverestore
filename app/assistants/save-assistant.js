@@ -1,6 +1,6 @@
 function SaveAssistant() {
 	this.boundFunctions = new Array();
-	this.boundFunctions['getList'] = this.getList.bind(this);
+	//this.boundFunctions['getList'] = this.getList.bind(this);
 	this.boundFunctions['saveApps'] = this.saveApps.bindAsEventListener(this);
 	this.boundFunctions['processCallback'] = this.processCallback.bind(this);
 	this.processAppsList = [];
@@ -31,9 +31,11 @@ SaveAssistant.prototype.setup = function() {
 
 
 	// load up
-	SaveRestoreService.list(this.boundFunctions['getList']);
+	//SaveRestoreService.list(this.boundFunctions['getList']);
+	this.loadList();
 };
 
+/*
 SaveAssistant.prototype.getList = function(data) {
 	if( data.returnValue == true ){
 		var apps = data.scripts;
@@ -47,6 +49,16 @@ SaveAssistant.prototype.getList = function(data) {
 		Mojo.Log.error( "list returned error!" );
 		dumpObject(data);
 	}
+};
+*/
+
+SaveAssistant.prototype.loadList = function() {
+	var apps = appDB.appsAvailable;
+	for( var i = 0; i < apps.length; i++ ){
+		var app = appDB.appsInformation[apps[i]];
+		this.appListModel.items.push( { appname: app.title, appid: app.id, checked: true } );
+	}
+	this.controller.modelChanged( this.appListModel );
 };
 
 SaveAssistant.prototype.saveApps = function(event) {

@@ -1,4 +1,5 @@
 [
+    {"source": "app/models/Applications.js"},
     {"source": "app/models/SaveRestoreService.js"},
     {"source": "app/assistants/stage-assistant.js"},
     {"source": "app/models/functions.js"},
