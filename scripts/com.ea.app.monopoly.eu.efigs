@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Monopoly"
+
+source `dirname $0`/srf.app.info
+
+APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID/monopolyclassic
+DIRS="save"
+
+source `dirname $0`/srf.app.dirs
+
+exit 0
