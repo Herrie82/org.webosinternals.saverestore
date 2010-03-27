@@ -1,6 +1,6 @@
 #!/bin/sh
 
-[ -n "$APPID" ] || { echo "srf.app.files: APPID not defined" ; exit 1 ; }
+[ -n "$APPID" ]   || { echo "srf.app.files: APPID not defined"   ; exit 1 ; }
 [ -n "$APPNAME" ] || { echo "srf.app.files: APPNAME not defined" ; exit 1 ; }
 
 DSTDIR=/media/internal/saverestore/$APPID

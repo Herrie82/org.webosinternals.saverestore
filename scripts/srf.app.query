@@ -1,0 +1,36 @@
+#!/bin/sh
+
+[ -n "$APPID" ]  || { echo "srf.app.query: APPID not defined"  ; exit 1 ; }
+[ -n "$APPDIR" ] || { echo "srf.app.query: APPDIR not defined" ; exit 1 ; }
+[ -n "$DSTDIR" ] || { echo "srf.app.query: DSTDIR not defined" ; exit 1 ; }
+
+[ -n "$DATABASE" ] || { echo "srf.app.query: FIELDS not defined" ; exit 1 ; }
+[ -n "$TABLES" ]   || { echo "srf.app.query: TABLES not defined" ; exit 1 ; }
+[ -n "$FIELDS" ]   || { echo "srf.app.query: FIELDS not defined" ; exit 1 ; }
+[ -n "$QUERY" ]    || { echo "srf.app.query: QUERY not defined"  ; exit 1 ; }
+
+[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
+
+if [ "$1" == "save" ] ; then
+
+    mkdir -p $DSTDIR
+
+    for table in $TABLES ; do
+
+	echo $FIELDS | sed -e 's/,/|/g' > $DSTDIR/$table.txt
+	
+	sqlite3 $DATABASE "$QUERY" >> $DSTDIR/$table.txt
+
+	ls -l $DSTDIR/$table.txt
+
+    done
+    
+elif [ "$1" == "restore" ] ; then
+     
+    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 0 ; }
+
+    { echo "$APPID restore not supported yet" ; exit 0 ; }
+
+fi
+
+exit 0

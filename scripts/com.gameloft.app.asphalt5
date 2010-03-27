@@ -1,11 +1,13 @@
 #!/bin/sh
 
+source `dirname $0`/srf.defaults
+
 APPID=`basename $0`
 APPNAME="Asphalt5"
+APPDIR=$USERAPPDIR/$APPID/Asphalt5
 
 source `dirname $0`/srf.app.info
 
-APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID/Asphalt5
 FILES="data.sav"
 
 source `dirname $0`/srf.app.files

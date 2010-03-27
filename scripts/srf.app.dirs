@@ -1,9 +1,9 @@
 #!/bin/sh
 
-[ -n "$APPID" ] || { echo "srf.app.dirs: APPID not defined" ; exit 1 ; }
+[ -n "$APPID" ]  || { echo "srf.app.dirs: APPID not defined"  ; exit 1 ; }
 [ -n "$APPDIR" ] || { echo "srf.app.dirs: APPDIR not defined" ; exit 1 ; }
 [ -n "$DSTDIR" ] || { echo "srf.app.dirs: DSTDIR not defined" ; exit 1 ; }
-[ -n "$DIRS" ] || { echo "srf.app.dirs: DIRS not defined" ; exit 1 ; }
+[ -n "$DIRS" ]   || { echo "srf.app.dirs: DIRS not defined"   ; exit 1 ; }
 
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
@@ -17,6 +17,7 @@ if [ "$1" == "save" ] ; then
 
     for dir in ${DIRS} ; do
       cp -r $APPDIR/$dir $DSTDIR/
+      ls -l $DSTDIR/$dir
     done
 
 elif [ "$1" == "restore" ] ; then
@@ -29,6 +30,7 @@ elif [ "$1" == "restore" ] ; then
 
     for dir in ${DIRS} ; do
       cp -r $DSTDIR/$dir $APPDIR/
+      ls -l $APPDIR/$dir
     done
 
 fi

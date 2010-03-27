@@ -1,38 +1,20 @@
 #!/bin/sh
 
+source `dirname $0`/srf.defaults
+
 APPID=`basename $0`
 APPNAME="Messaging"
+APPDIR=$PALMAPPDIR/$APPID
 
 source `dirname $0`/srf.app.info
 
-APPDIR=/usr/palm/applications/$APPID
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
-DBSTORE=/var/luna/data/dbdata
-PALMDB=$DBSTORE/PalmDatabase.db3
+DATABASE=/var/luna/data/dbdata/PalmDatabase.db3
+TABLES="SMS IM"
+FIELDS="messageType,fromAddress,messageText,timeStamp,deviceTimeStamp"
+QUERY="SELECT $FIELDS FROM com_palm_pim_FolderEntry WHERE messageType like \"\$table\""
 
-if [ "$1" == "save" ] ; then
-
-    mkdir -p $DSTDIR
-
-    TYPES="SMS IM"
-    FIELDS="messageType,fromAddress,messageText,timeStamp,deviceTimeStamp"
-
-    for type in $TYPES ; do
-
-	echo $FIELDS | sed -e 's/,/|/g' > $DSTDIR/$type.txt
-
-	sqlite3 $PALMDB "SELECT $FIELDS FROM com_palm_pim_FolderEntry WHERE messageType like \"$type\"" \
-	    >> $DSTDIR/$type.txt
-
-    done
-
-elif [ "$1" == "restore" ] ; then
-     
-    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 0 ; }
-
-    { echo "$APPID restore not supported yet" ; exit 0 ; }
-
-fi
+source `dirname $0`/srf.app.query
 
 exit 0

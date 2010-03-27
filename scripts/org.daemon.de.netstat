@@ -1,66 +1,18 @@
 #!/bin/sh
 
+source `dirname $0`/srf.defaults
+
 APPID=`basename $0`
 APPNAME="Netstat"
+APPDIR=$USERAPPDIR/$APPID
 
 source `dirname $0`/srf.app.info
 
-APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID
-[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
+source `dirname $0`/srf.app.databases
 
-DBSTORE=/var/palm/data
-APPSTORE=/media/internal/.app-storage
-PALMDB=$DBSTORE/Databases.db
+APPDIR=$APPSTORE/$ORIGIN
+FILES=0000000000000001.db
 
-ORIGIN=`sqlite3 $PALMDB "SELECT origin FROM Origins WHERE origin LIKE \"%${APPID}_0\""`
-[ -n "$ORIGIN" ] || { echo "Cannot find database origin for $APPID" ; exit 1 ; }
-
-DATABASES=`sqlite3 $PALMDB "SELECT name FROM Databases WHERE origin = \"$ORIGIN\""`
-[ -n "$DATABASES" ] || { echo "$APPID has no databases" ; exit 1 ; }
-
-STATSDIR=$APPSTORE/$ORIGIN
-STATSNAME=0000000000000001.db
-
-if [ "$1" == "save" ] ; then
-
-    mkdir -p $DSTDIR
-
-    for db in $DATABASES ; do
-	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
-	if expr "$db" : "ext:.*" >/dev/null ; then
-	    LOC=$APPSTORE/$ORIGIN/$FILE
-	    NAME=`expr "$db" : "ext:\(.*\)"`
-	else
-	    LOC=$DBSTORE/$ORIGIN/$FILE
-	    NAME=$db
-	fi
-	cp $LOC $DSTDIR/$NAME
-	ls -l $DSTDIR/$NAME
-    done
-
-    [ -f "$STATSDIR/$STATSNAME" ] || { echo "$STATSDIR/$STATSNAME not found" ; exit 1 ; }
-    cp $STATSDIR/$STATSNAME $DSTDIR/$STATSNAME
-
-elif [ "$1" == "restore" ] ; then
-
-    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 0 ; }
-
-    for db in $DATABASES ; do
-	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
-	if expr "$db" : "ext:.*" >/dev/null ; then
-	    LOC=$APPSTORE/$ORIGIN/$FILE
-	    NAME=`expr "$db" : "ext:\(.*\)"`
-	else
-	    LOC=$DBSTORE/$ORIGIN/$FILE
-	    NAME=$db
-	fi
-	cp $DSTDIR/$NAME $LOC
-	ls -l $LOC
-    done
-
-    [ -f "$DSTDIR/$STATSNAME" ] || { echo "$DSTDIR/$STATSNAME not found" ; exit 1 ; }
-    cp $DSTDIR/$STATSNAME $STATSDIR/$STATSNAME
-
-fi
+source `dirname $0`/srf.app.files
 
 exit 0

@@ -1,11 +1,13 @@
 #!/bin/sh
 
+source `dirname $0`/srf.defaults
+
 APPID=`basename $0`
 APPNAME="NFSU"
+APPDIR=$USERAPPDIR/$APPID/res_nfsuc
 
 source `dirname $0`/srf.app.info
 
-APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID/res_nfsuc
 FILES="gamesett gamedata"
 
 source `dirname $0`/srf.app.files

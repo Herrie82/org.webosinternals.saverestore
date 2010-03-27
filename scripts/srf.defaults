@@ -1,0 +1,4 @@
+#!/bin/sh
+
+PALMAPPDIR=/usr/palm/applications
+USERAPPDIR=/media/cryptofs/apps/usr/palm/applications

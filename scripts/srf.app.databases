@@ -1,9 +1,9 @@
 #!/bin/sh
 
-[ -n "$APPID" ] || { echo "srf.app.databases: APPID not defined" ; exit 1 ; }
-[ -n "$DSTDIR" ] || { echo "srf.app.files: DSTDIR not defined" ; exit 1 ; }
+[ -n "$APPID" ]  || { echo "srf.app.databases: APPID not defined"  ; exit 1 ; }
+[ -n "$APPDIR" ] || { echo "srf.app.databases: APPDIR not defined" ; exit 1 ; }
+[ -n "$DSTDIR" ] || { echo "srf.app.databases: DSTDIR not defined" ; exit 1 ; }
 
-APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
 DBSTORE=/var/palm/data
