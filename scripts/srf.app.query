@@ -13,8 +13,6 @@
 
 if [ "$1" == "save" ] ; then
 
-    mkdir -p $DSTDIR
-
     for table in $TABLES ; do
 
 	echo $FIELDS | sed -e 's/,/|/g' > $DSTDIR/$table.txt
@@ -27,10 +25,6 @@ if [ "$1" == "save" ] ; then
     
 elif [ "$1" == "restore" ] ; then
      
-    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 0 ; }
-
     { echo "$APPID restore not supported yet" ; exit 0 ; }
 
 fi
-
-exit 0

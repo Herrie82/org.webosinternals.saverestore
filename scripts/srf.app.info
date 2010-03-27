@@ -5,15 +5,40 @@
 
 DSTDIR=/media/internal/saverestore/$APPID
 
+# Only keep the most recent archive
+MOSTRECENT=
+if [ -d $DSTDIR ] ; then
+    MOSTRECENT=`ls -1 $DSTDIR | egrep '^[0-9]+$' | sort -n | tail -1`
+    for f in `ls -1 $DSTDIR` ; do
+	if [ "$f" != "$MOSTRECENT" ] ; then
+	    rm -rf $DSTDIR/$f
+	fi
+    done
+fi
+
 if [ "$1" == "info" ] ; then
     
     echo -n '{ "id": "'$APPID'", "title": "'$APPNAME'", '
-    if [ -d $DSTDIR ] ; then
-	echo '"saved": true }'
+    if [ -n "$MOSTRECENT" ] ; then
+	echo '"saved": true, "timestamp": '$MOSTRECENT' }'
     else
 	echo '"saved": false }'
     fi
 
     exit 0
+
+elif [ "$1" == "save" ] ; then
+
+    DSTDIR=$DSTDIR/`date -S`
+
+    mkdir -p $DSTDIR
+
+elif [ "$1" == "restore" ] ; then
+
+    if [ -n "$MOSTRECENT" ] ; then
+	DSTDIR=$DSTDIR/$MOSTRECENT
+    else
+	{ echo "$APPID not saved" ; exit 1 ; }
+    fi
 
 fi

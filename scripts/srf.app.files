@@ -13,16 +13,12 @@ if [ "$1" == "save" ] ; then
       [ -f $APPDIR/$file ] || { echo "$APPDIR/$file not found" ; exit 1 ; }
     done
 
-    mkdir -p $DSTDIR
-
     for file in ${FILES} ; do
       cp $APPDIR/$file $DSTDIR/
       ls -l $DSTDIR/$file
     done
 
 elif [ "$1" == "restore" ] ; then
-
-    [ -d $DSTDIR ] || { echo "$APPID not saved" ; exit 1 ; }
 
     for file in ${FILES} ; do
       [ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
