@@ -43,10 +43,9 @@ Apps.loadApps = function( data ){
 		var scripts = data.scripts;
 		for( var i = 0; i < scripts.length; i++ ){
 			var script = scripts[i];
-			script.title = script.name; // we copy name to title, since the app list returns it as title
 			this.appsWithScripts.push( script.id );
-			// here is where we would check if we had save info for this script
-			// if( script.hasSave ) this.appsSaved.push( script.id );
+			// check if we have save info for this script
+			if( script.saved ) this.appsSaved.push( script.id );
 			// store information in our array if we don't have it already
 			if( !this.appsInformation[script.id] ) this.appsInformation[script.id] = script;
 		}

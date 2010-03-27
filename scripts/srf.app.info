@@ -3,9 +3,16 @@
 [ -n "$APPID" ] || { echo "srf.app.files: APPID not defined" ; exit 1 ; }
 [ -n "$APPNAME" ] || { echo "srf.app.files: APPNAME not defined" ; exit 1 ; }
 
-if [ "$1" == "info" ] ; then
+DSTDIR=/media/internal/saverestore/$APPID
 
-    echo '{ "name": "'$APPNAME'", "id": "'$APPID'" }'
+if [ "$1" == "info" ] ; then
+    
+    echo -n '{ "id": "'$APPID'", "title": "'$APPNAME'", '
+    if [ -d $DSTDIR ] ; then
+	echo '"saved": true }'
+    else
+	echo '"saved": false }'
+    fi
 
     exit 0
 

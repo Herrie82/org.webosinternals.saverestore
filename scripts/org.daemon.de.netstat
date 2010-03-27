@@ -7,7 +7,6 @@ source `dirname $0`/srf.app.info
 
 APPDIR=/media/cryptofs/apps/usr/palm/applications/$APPID
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
-DSTDIR=/media/internal/saverestore/$APPID
 
 DBSTORE=/var/palm/data
 APPSTORE=/media/internal/.app-storage

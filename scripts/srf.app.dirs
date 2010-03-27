@@ -2,10 +2,10 @@
 
 [ -n "$APPID" ] || { echo "srf.app.dirs: APPID not defined" ; exit 1 ; }
 [ -n "$APPDIR" ] || { echo "srf.app.dirs: APPDIR not defined" ; exit 1 ; }
+[ -n "$DSTDIR" ] || { echo "srf.app.dirs: DSTDIR not defined" ; exit 1 ; }
 [ -n "$DIRS" ] || { echo "srf.app.dirs: DIRS not defined" ; exit 1 ; }
 
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
-DSTDIR=/media/internal/saverestore/$APPID
 
 if [ "$1" == "save" ] ; then
 
