@@ -15,11 +15,16 @@ if [ "$1" == "save" ] ; then
 
     for table in $TABLES ; do
 
-	echo $FIELDS | sed -e 's/,/|/g' > $DSTDIR/$table.txt
-	
-	sqlite3 $DATABASE "$QUERY" >> $DSTDIR/$table.txt
+	echo "<TABLE border=\"1\">" > $DSTDIR/$table.html
+	echo -n "<TR>" >> $DSTDIR/$table.html
+	for field in `echo $FIELDS | sed -e 's/,/ /g'` ; do
+	    echo -n "<TH>$field</TH>" >> $DSTDIR/$table.html
+	done
+	echo "</TR>" >> $DSTDIR/$table.html
+	sqlite3 -html $DATABASE "$QUERY ;" >> $DSTDIR/$table.html
+	echo "</TABLE>" >> $DSTDIR/$table.html
 
-	ls -l $DSTDIR/$table.txt
+	ls -1 $DSTDIR/$table.html
 
     done
     

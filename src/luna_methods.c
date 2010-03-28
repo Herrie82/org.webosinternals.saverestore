@@ -300,7 +300,7 @@ static bool simple_command(LSHandle* lshandle, LSMessage *message, char *command
   LSErrorInit(&lserror);
 
   // Initialise the output buffer
-  strcpy(run_command_buffer, "{\"stdOut\": [");
+  strcpy(run_command_buffer, "{\"output\": [");
 
   // Run the command
   if (run_command(command, true)) {

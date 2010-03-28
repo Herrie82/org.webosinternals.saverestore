@@ -33,7 +33,7 @@ SaveAssistant.prototype.loadList = function() {
     var apps = appDB.appsAvailable;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
-	this.appListModel.items.push( { appname: app.title, appid: app.id, checked: true } );
+	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
 };
@@ -41,7 +41,7 @@ SaveAssistant.prototype.loadList = function() {
 SaveAssistant.prototype.saveApps = function(event) {
     for (var i = 0; i < this.appListModel.items.length; i++) {
 	var thisobj = this.appListModel.items[i];
-	if (thisobj.checked) this.processAppsList.push( thisobj.appid );
+	if (thisobj.checked) this.processAppsList.push( thisobj );
     }
 	
     this.processApps();
@@ -49,13 +49,20 @@ SaveAssistant.prototype.saveApps = function(event) {
 
 SaveAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) return;
-    var appid = this.processAppsList.shift();
-    Mojo.Log.info( "Saving " + appid );
-    SaveRestoreService.save( this.boundFunctions['processCallback'], appid );
+    var item = this.processAppsList.shift();
+    Mojo.Log.info( "Saving " + item.appid );
+    SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
-SaveAssistant.prototype.processCallback = function(e) {
-    if (e.returnValue == true) this.processApps();
+SaveAssistant.prototype.processCallback = function(e, item) {
+    if (e.returnValue == true) {
+	if (e.output && e.output.length > 0) {
+	    item.summary = e.output.join("\n");
+	}
+	item.checked = false;
+	this.controller.modelChanged( this.appListModel );
+	this.processApps();
+    }
     else dumpObject(e);
 };
 

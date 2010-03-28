@@ -1,7 +1,7 @@
 function RestoreAssistant() {
     this.boundFunctions = new Array();
     this.boundFunctions['restoreApps'] = this.restoreApps.bindAsEventListener(this);
-    this.boundFunctions['processCallback'] = this.processCallback.bind(this);
+    this.boundFunctions['processCallback'] = 
     this.processAppsList = [];
     this.toggleOn = false;
 }
@@ -36,7 +36,7 @@ RestoreAssistant.prototype.loadList = function() {
     var apps = appDB.appsSaved;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
-	this.appListModel.items.push( { appname: app.title, appid: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), checked: true } );
+	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
 };
@@ -44,7 +44,7 @@ RestoreAssistant.prototype.loadList = function() {
 RestoreAssistant.prototype.restoreApps = function(event) {
     for (var i = 0; i < this.appListModel.items.length; i++) {
 	var thisobj = this.appListModel.items[i];
-	if (thisobj.checked) this.processAppsList.push( thisobj.appid );
+	if (thisobj.checked) this.processAppsList.push( thisobj );
     }
 	
     this.processApps();
@@ -52,13 +52,20 @@ RestoreAssistant.prototype.restoreApps = function(event) {
 
 RestoreAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) return;
-    var appid = this.processAppsList.shift();
-    Mojo.Log.info( "Restoring " + appid );
-    SaveRestoreService.restore( this.boundFunctions['processCallback'], appid );
+    var item = this.processAppsList.shift();
+    Mojo.Log.info( "Restoring " + item.appid );
+    SaveRestoreService.restore( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
-RestoreAssistant.prototype.processCallback = function(e) {
-    if (e.returnValue == true) this.processApps();
+RestoreAssistant.prototype.processCallback = function(e, item) {
+    if (e.returnValue == true) {
+	if (e.output && e.output.length > 0) {
+	    item.summary = e.output.join("\n");
+	}
+	item.checked = false;
+	this.controller.modelChanged( this.appListModel );
+	this.processApps();
+    }
     else dumpObject(e);
 };
 

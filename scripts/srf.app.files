@@ -15,7 +15,7 @@ if [ "$1" == "save" ] ; then
 
     for file in ${FILES} ; do
       cp $APPDIR/$file $DSTDIR/
-      ls -l $DSTDIR/$file
+      ls -1 $DSTDIR/$file
     done
 
 elif [ "$1" == "restore" ] ; then
@@ -26,7 +26,7 @@ elif [ "$1" == "restore" ] ; then
 
     for file in ${FILES} ; do
       cp $DSTDIR/$file $APPDIR/
-      ls -l $APPDIR/$file
+      ls -1 $APPDIR/$file
     done
 
 fi

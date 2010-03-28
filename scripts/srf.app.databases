@@ -28,7 +28,7 @@ if [ "$1" == "save" ] ; then
 	    APPID=$db
 	fi
 	cp $LOC $DSTDIR/$APPID
-	ls -l $DSTDIR/$APPID
+	ls -1 $DSTDIR/$APPID
     done
 
 elif [ "$1" == "restore" ] ; then
@@ -43,7 +43,7 @@ elif [ "$1" == "restore" ] ; then
 	    APPID=$db
 	fi
 	cp $DSTDIR/$APPID $LOC
-	ls -l $LOC
+	ls -1 $LOC
     done
 
 fi
