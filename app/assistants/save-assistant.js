@@ -33,7 +33,7 @@ SaveAssistant.prototype.loadList = function() {
     var apps = appDB.appsAvailable;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
-	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), checked: true } );
+	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), summary: app.note, checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
 };
@@ -48,7 +48,12 @@ SaveAssistant.prototype.saveApps = function(event) {
 };
 
 SaveAssistant.prototype.processApps = function() {
-    if (this.processAppsList.length < 1) return;
+    if (this.processAppsList.length < 1) {
+	this.buttonsModel.items[0].label = "Select All";
+	this.controller.modelChanged( this.buttonsModel );
+	this.toggleOn = true;
+	return;
+    }
     var item = this.processAppsList.shift();
     Mojo.Log.info( "Saving " + item.appid );
     SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );

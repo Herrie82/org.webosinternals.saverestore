@@ -19,6 +19,9 @@ fi
 if [ "$1" == "info" ] ; then
     
     echo -n '{ "id": "'$APPID'", "title": "'$APPNAME'", '
+    if [ -n "$APPNOTE" ] ; then
+	echo -n '"note": "'$APPNOTE'", '
+    fi
     if [ -n "$MOSTRECENT" ] ; then
 	echo '"saved": true, "timestamp": "'$MOSTRECENT'" }'
     else

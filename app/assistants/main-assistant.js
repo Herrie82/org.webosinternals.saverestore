@@ -43,9 +43,6 @@ MainAssistant.prototype.listTap = function(event)
     else if (event.item.cmd == 'list') {
 	this.controller.stageController.pushScene('list');
     }
-    else if (event.item.cmd == 'installed') {
-	this.controller.stageController.pushScene('installed');
-    }
 };
 
 MainAssistant.prototype.updateList = function(skipUpdate)
@@ -68,18 +65,11 @@ MainAssistant.prototype.updateList = function(skipUpdate)
 		pkgCount: appDB.appsSaved.length
 		});
     this.mainModel.items.push({
-	    name:     $L('Available Applications'),
+	    name:     $L('Supported Applications'),
 		style:    'showCount',
 		scene:    'active',
 		cmd:      'list',
 		pkgCount: appDB.appsWithScripts.length
-		});
-    this.mainModel.items.push({
-	    name:     $L('Installed Applications'),
-		style:    'showCount',
-		scene:    'active',
-		cmd:      'installed',
-		pkgCount: appDB.appsInstalled.length
 		});
     
     this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
