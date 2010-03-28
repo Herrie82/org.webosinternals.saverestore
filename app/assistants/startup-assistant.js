@@ -9,17 +9,10 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 {
-	     version: '0.4.1',
+	     version: 'X.Y.Z',
 	     log:
 	     [
-	      'Added the startup scene.'
-	      ]
-	 },
-	 {
-	     version: '0.4.0',
-	     log:
-	     [
-	      'Initial public release'
+	      'We will fill this out for public releases'
 	      ]
 	 }
 	 ];
