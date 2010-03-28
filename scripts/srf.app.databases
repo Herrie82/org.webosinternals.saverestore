@@ -30,7 +30,7 @@ if [ "$1" == "save" ] ; then
 	    APPID=$db
 	fi
 	cp $LOC $DSTDIR/$APPID
-	ls -1 $DSTDIR/$APPID
+	( cd $DSTDIR ; ls -1 $APPID )
     done
 
 elif [ "$1" == "restore" ] ; then
@@ -38,14 +38,14 @@ elif [ "$1" == "restore" ] ; then
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then
-	    LOC=$APPSTORE/$ORIGIN/$FILE
+	    LOC=$APPSTORE/$ORIGIN
 	    APPID=`expr "$db" : "ext:\(.*\)"`
 	else
-	    LOC=$DBSTORE/$ORIGIN/$FILE
+	    LOC=$DBSTORE/$ORIGIN
 	    APPID=$db
 	fi
-	cp $DSTDIR/$APPID $LOC
-	ls -1 $LOC
+	cp $DSTDIR/$APPID $LOC/$FILE
+	( cd $LOC ; ls -1 $FILE )
     done
 
 fi

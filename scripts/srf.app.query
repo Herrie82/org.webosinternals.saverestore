@@ -23,10 +23,10 @@ if [ "$1" == "save" ] ; then
 	    echo -n "<TH>$field</TH>" >> $DSTDIR/$table.html
 	done
 	echo "</TR>" >> $DSTDIR/$table.html
-	sqlite3 -html $DATABASE "$QUERY ;" >> $DSTDIR/$table.html
+	sqlite3 -html $DATABASE "$QUERY ;" >> $DSTDIR/$table.html || exit 1
 	echo "</TABLE>" >> $DSTDIR/$table.html
 
-	ls -1 $DSTDIR/$table.html
+	( cd $DSTDIR ; ls -1 $table.html )
 
     done
     

@@ -2,7 +2,7 @@ function MainAssistant() {
     // subtitle random list
     this.randomSub = 
 	[
-	 {weight: 30, text: $L('The Open Source Solution')},
+	 {weight: 30, text: $L('The Open Source Backup Solution')},
 	 {weight:  2, text: $L('Random Taglines Are Awesome')},
 	 {weight:  2, text: $L('We Know Palm Loves Save/Restore')},
 	 {weight:  2, text: $L('Now With More Cowbell')}
