@@ -1,12 +1,16 @@
 function SaveAssistant() {
     this.boundFunctions = new Array();
     this.boundFunctions['saveApps'] = this.saveApps.bindAsEventListener(this);
-    this.boundFunctions['processCallback'] = this.processCallback.bind(this);
     this.processAppsList = [];
+    this.processPosition = 0;
     this.toggleOn = false;
 }
 
 SaveAssistant.prototype.setup = function() {
+
+    this.titleElement = this.controller.get('listTitle');
+    this.titleElement.innerHTML = $L("Save Application Data");
+
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
     this.appListModel = { items: [] };
@@ -30,10 +34,19 @@ SaveAssistant.prototype.setup = function() {
 };
 
 SaveAssistant.prototype.loadList = function() {
+    this.appListModel.items = [];
     var apps = appDB.appsAvailable;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
-	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), summary: app.note, checked: true } );
+	var timestamp = "No archives available";
+	if (app.timestamp) {
+	    timestamp = Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long");
+	}
+	var summary = "";
+	if (app.note) {
+	    summary = app.note;
+	}
+	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: timestamp, summary: summary, checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
 };
@@ -44,6 +57,7 @@ SaveAssistant.prototype.saveApps = function(event) {
 	if (thisobj.checked) this.processAppsList.push( thisobj );
     }
 	
+    this.processPosition = 0;
     this.processApps();
 };
 
@@ -52,23 +66,36 @@ SaveAssistant.prototype.processApps = function() {
 	this.buttonsModel.items[0].label = "Select All";
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
+	// appDB.initApps(this.loadList.bind(this));
 	return;
     }
     var item = this.processAppsList.shift();
+    this.controller.get('appList').mojo.revealItem(this.processPosition, true);
     Mojo.Log.info( "Saving " + item.appid );
     SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
 SaveAssistant.prototype.processCallback = function(e, item) {
     if (e.returnValue == true) {
-	if (e.output && e.output.length > 0) {
-	    item.summary = e.output.join("\n");
+	if (e.stdOut && e.stdOut.length > 0) {
+	    item.timestamp = Mojo.Format.formatDate(ISO8601Parse(e.stdOut.shift()),"long");
+	    item.summary = e.stdOut.join("\n");
 	}
 	item.checked = false;
 	this.controller.modelChanged( this.appListModel );
+	this.processPosition += 1;
 	this.processApps();
     }
-    else dumpObject(e);
+    else {
+	if (e.stdErr && e.stdErr.length > 0) {
+	    item.timestamp = Mojo.Format.formatDate(ISO8601Parse(e.stdErr.shift()),"long");
+	    item.timestamp = "Archive not saved";
+	    item.summary = e.stdErr.join("\n");
+	}
+	this.controller.modelChanged( this.appListModel );
+	this.processPosition += 1;
+	this.processApps();
+    }
 };
 
 SaveAssistant.prototype.handleCommand = function (event) {

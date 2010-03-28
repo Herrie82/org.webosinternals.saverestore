@@ -1,11 +1,15 @@
 {
-	"id": "org.webosinternals.saverestore",
-	"version": "0.4.0",
-	"vendor": "WebOS Internals",
-	"type": "web",
-	"main": "index.html",
 	"title": "Save/Restore",
+	"id": "org.webosinternals.saverestore",
+	"version": "0.4.1",
+	"release_date":	"28-Mar-2010",
+	"vendor": "WebOS Internals",
 	"vendor_email":	"support@webos-internals.org",
 	"vendor_url": "http://www.webos-internals.org/wiki/Application:SaveRestore",
-	"icon": "icon.png"
+	"type": "web",
+	"main": "index.html",
+	"icon": "icon.png",
+	"removable": "true",
+	"noWindow": true,
+	"noDeprecatedStyles" : true 
 }

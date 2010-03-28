@@ -13,6 +13,8 @@ if [ "$1" == "save" ] ; then
       [ -d $APPDIR/$dir ] || { echo "$APPDIR/$dir not found" ; exit 1 ; }
     done
 
+    mkdir -p $DSTDIR
+
     for dir in ${DIRS} ; do
       cp -r $APPDIR/$dir $DSTDIR/
       ls -1 $DSTDIR/$dir/*

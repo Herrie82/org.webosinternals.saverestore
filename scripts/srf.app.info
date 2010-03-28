@@ -32,16 +32,20 @@ if [ "$1" == "info" ] ; then
 
 elif [ "$1" == "save" ] ; then
 
-    DSTDIR=$DSTDIR/`date +%Y%m%dT%H%M%S%z`
+    TIMESTAMP=`date +%Y%m%dT%H%M%S%z`
 
-    mkdir -p $DSTDIR
+    DSTDIR=$DSTDIR/$TIMESTAMP
+
+    echo $TIMESTAMP
 
 elif [ "$1" == "restore" ] ; then
 
     if [ -n "$MOSTRECENT" ] ; then
 	DSTDIR=$DSTDIR/$MOSTRECENT
     else
-	{ echo "$APPID not saved" ; exit 1 ; }
+	{ echo "No archives available" ; exit 1 ; }
     fi
+
+    echo $MOSTRECENT
 
 fi

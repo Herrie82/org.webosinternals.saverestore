@@ -18,6 +18,8 @@ DATABASES=`sqlite3 $PALMDB "SELECT name FROM Databases WHERE origin = \"$ORIGIN\
 
 if [ "$1" == "save" ] ; then
 
+    mkdir -p $DSTDIR
+
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then

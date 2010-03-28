@@ -1,9 +1,5 @@
-// our variable
-var appDB;
-
 // begin the "class"
-function Applications( stage ){
-    this.stage = stage;
+function Applications(){
     // all applications installed on device
     this.appsInstalled = [];
     // store the information for apps, by appid
@@ -17,14 +13,33 @@ function Applications( stage ){
 	
     // load state placeholders - may want a better way
     this.loadedApps = this.loadedScripts = false;
-    // load up the installed applications
-    SaveRestoreService.listApps( this.loadApps.bind(this) );
-    // load up the available applications
-    SaveRestoreService.list( this.loadApps.bind(this) );
 }
+
+var appDB = new Applications();
 
 // shortcut
 var Apps = Applications.prototype;
+
+Apps.initApps = function( callback ) {
+    // all applications installed on device
+    this.appsInstalled = [];
+    // store the information for apps, by appid
+    this.appsInformation = [];
+    // all applications available from the service
+    this.appsWithScripts = [];
+    // all applications both installed and saveable
+    this.appsAvailable = [];
+    // all applications with saved data
+    this.appsSaved = [];
+	
+    // load state placeholders - may want a better way
+    this.loadedApps = this.loadedScripts = false;
+
+    // load up the installed applications
+    SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
+    // load up the available applications
+    SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
+}
 
 Apps.sortApps = function(a, b) {
 
@@ -36,14 +51,14 @@ Apps.sortApps = function(a, b) {
 	return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
     }
     else {
-	strA = this.appsInformation[a].id;
-	strB = this.appsInformation[b].id;
+	strA = appDB.appsInformation[a].id;
+	strB = appDB.appsInformation[b].id;
 	return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
     }
 };
 
 // handles returned apps from the server
-Apps.loadApps = function( data ) {
+Apps.loadApps = function( data, callback ) {
 	
     if (data.apps) {
 	var apps = data.apps;
@@ -71,19 +86,22 @@ Apps.loadApps = function( data ) {
 
 	// sort the list of supported apps
 	this.appsWithScripts.sort(this.sortApps);
+
+	// sort the list of saved apps
+	this.appsSaved.sort(this.sortApps);
     }
 	
     Mojo.Log.info( "loaded apps: " + this.loadedApps + "; loaded scripts: " + this.loadedScripts );
 
-    if( this.loadedApps && this.loadedScripts ){
+    if (this.loadedApps && this.loadedScripts) {
 	// map which apps we actually CAN work with
 	var installed = arrayToObject( this.appsInstalled );
-	for( var i = 0; i < this.appsWithScripts.length; i++ ){
+	for (var i = 0; i < this.appsWithScripts.length; i++) {
 	    var appid = this.appsWithScripts[i];
-	    if( appid in installed ) this.appsAvailable.push( appid );
+	    if (appid in installed) this.appsAvailable.push( appid );
 	}
-		
-	// here's where we should probably push main
-	this.stage.controller.pushScene("main");
+
+	// Update the relevant screen
+	callback();
     }
 }

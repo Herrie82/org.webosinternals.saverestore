@@ -3,18 +3,18 @@
 source `dirname $0`/srf.defaults
 
 APPID=`basename $0`
-APPNAME="Messaging"
+APPNAME="Memos"
 APPDIR=$PALMAPPDIR/$APPID
-APPNOTE="Restore not supported yet"
+APPNOTE="Restore not supported yet."
 
 source `dirname $0`/srf.app.info
 
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
 DATABASE=/var/luna/data/dbdata/PalmDatabase.db3
-TABLES="SMS IM"
-FIELDS="messageType,fromAddress,messageText,timeStamp,deviceTimeStamp"
-QUERY="SELECT $FIELDS FROM com_palm_pim_FolderEntry WHERE messageType like \"\$table\""
+TABLES="Memos"
+FIELDS="text"
+QUERY="SELECT $FIELDS FROM com_palm_pim_Memo"
 
 source `dirname $0`/srf.app.query
 

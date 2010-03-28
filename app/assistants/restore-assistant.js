@@ -1,21 +1,21 @@
 function RestoreAssistant() {
     this.boundFunctions = new Array();
     this.boundFunctions['restoreApps'] = this.restoreApps.bindAsEventListener(this);
-    this.boundFunctions['processCallback'] = 
     this.processAppsList = [];
+    this.processPosition = 0;
     this.toggleOn = false;
 }
 
 RestoreAssistant.prototype.setup = function() {
+
+    this.titleElement = this.controller.get('listTitle');
+    this.titleElement.innerHTML = $L("Restore Application Data");
+
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
     this.appListModel = { items: [] };
     this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
     this.controller.setupWidget( "appToggleButton", { modelProperty: 'checked', trueLabel: 'on', falseLabel: 'off' } );
-	
-    // button
-    //this.controller.setupWidget( "actionButton", {}, { label: "Restore Data", buttonClass: 'affirmative' } );
-    //Mojo.Event.listen( this.controller.get("actionButton"), Mojo.Event.tap, this.boundFunctions['restoreApps'] );
 	
     // new buttons
     this.buttonsAttributes = { spacerHeight: 50, menuClass: 'no-fade' };
@@ -33,10 +33,19 @@ RestoreAssistant.prototype.setup = function() {
 };
 
 RestoreAssistant.prototype.loadList = function() {
+    this.appListModel.items = [];
     var apps = appDB.appsSaved;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
-	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), summary: app.note, checked: true } );
+	var timestamp = "No archives available";
+	if (app.timestamp) {
+	    timestamp = Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long");
+	}
+	var summary = "";
+	if (app.note) {
+	    summary = app.note;
+	}
+	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: timestamp, summary: summary, checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
 };
@@ -47,6 +56,7 @@ RestoreAssistant.prototype.restoreApps = function(event) {
 	if (thisobj.checked) this.processAppsList.push( thisobj );
     }
 	
+    this.processPosition = 0;
     this.processApps();
 };
 
@@ -55,23 +65,35 @@ RestoreAssistant.prototype.processApps = function() {
 	this.buttonsModel.items[0].label = "Select All";
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
+	// appDB.initApps(this.loadList.bind(this));
 	return;
     }
     var item = this.processAppsList.shift();
+    this.controller.get('appList').mojo.revealItem(this.processPosition, true);
     Mojo.Log.info( "Restoring " + item.appid );
     SaveRestoreService.restore( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
 RestoreAssistant.prototype.processCallback = function(e, item) {
     if (e.returnValue == true) {
-	if (e.output && e.output.length > 0) {
-	    item.summary = e.output.join("\n");
+	if (e.stdOut && e.stdOut.length > 0) {
+	    item.timestamp = Mojo.Format.formatDate(ISO8601Parse(e.stdOut.shift()),"long");
+	    item.summary = e.stdOut.join("\n");
 	}
 	item.checked = false;
 	this.controller.modelChanged( this.appListModel );
+	this.processPosition += 1;
 	this.processApps();
     }
-    else dumpObject(e);
+    else {
+	if (e.stdErr && e.stdErr.length > 0) {
+	    item.timestamp = Mojo.Format.formatDate(ISO8601Parse(e.stdErr.shift()),"long");
+	    item.summary = e.stdErr.join("\n");
+	}
+	this.controller.modelChanged( this.appListModel );
+	this.processPosition += 1;
+	this.processApps();
+    }
 };
 
 RestoreAssistant.prototype.handleCommand = function (event) {

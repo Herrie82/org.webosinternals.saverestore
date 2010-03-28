@@ -3,6 +3,10 @@ function ListAssistant() {
 }
 
 ListAssistant.prototype.setup = function() {
+
+    this.titleElement = this.controller.get('listTitle');
+    this.titleElement.innerHTML = $L("Supported Applications");
+
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
     this.appListModel = { items: [] };

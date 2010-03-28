@@ -13,6 +13,8 @@
 
 if [ "$1" == "save" ] ; then
 
+    mkdir -p $DSTDIR
+
     for table in $TABLES ; do
 
 	echo "<TABLE border=\"1\">" > $DSTDIR/$table.html
