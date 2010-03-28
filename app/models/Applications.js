@@ -27,15 +27,15 @@ function Applications( stage ){
 var Apps = Applications.prototype;
 
 // handles returned apps from the server
-Apps.loadApps = function( data ){
+Apps.loadApps = function( data ) {
 	
 	if( data.apps ){
 		var apps = data.apps;
 		for( var i = 0; i < apps.length; i++ ){
 			var app = apps[i];
 			this.appsInstalled.push( app.id );
-			// information from the device always trumps info from scripts
-			this.appsInformation[app.id] = app;
+			// store information in our array if we don't have it already
+			if( !this.appsInformation[app.id] ) this.appsInformation[app.id] = app;
 		}
 		// we loaded apps
 		this.loadedApps = true;
@@ -46,8 +46,8 @@ Apps.loadApps = function( data ){
 			this.appsWithScripts.push( script.id );
 			// check if we have save info for this script
 			if( script.saved ) this.appsSaved.push( script.id );
-			// store information in our array if we don't have it already
-			if( !this.appsInformation[script.id] ) this.appsInformation[script.id] = script;
+			// information from the scripts has more fields
+			this.appsInformation[script.id] = script;
 		}
 		// we loaded scripts
 		this.loadedScripts = true;

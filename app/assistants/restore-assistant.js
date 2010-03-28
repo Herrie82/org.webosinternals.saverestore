@@ -36,7 +36,7 @@ RestoreAssistant.prototype.loadList = function() {
     var apps = appDB.appsSaved;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
-	this.appListModel.items.push( { appname: app.title, appid: app.id, checked: true } );
+	this.appListModel.items.push( { appname: app.title, appid: Mojo.Format.formatDate(ISO8601Parse(app.timestamp),"long"), checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
 };
