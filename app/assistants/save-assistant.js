@@ -4,12 +4,32 @@ function SaveAssistant() {
     this.processAppsList = [];
     this.processPosition = 0;
     this.toggleOn = false;
-}
+
+    // setup menu
+    this.menuModel = {
+	visible: true,
+	items:
+	[
+    {
+	label: $L("Preferences"),
+	command: 'do-prefs'
+    },
+    {
+	label: $L("Help"),
+	command: 'do-help'
+    }
+	 ]
+    };
+    
+};
 
 SaveAssistant.prototype.setup = function() {
 
     this.titleElement = this.controller.get('listTitle');
     this.titleElement.innerHTML = $L("Save Application Data");
+
+    // setup menu
+    this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
@@ -22,8 +42,10 @@ SaveAssistant.prototype.setup = function() {
     this.buttonsModel = {
 	visible: true,
 	items: [
+    { },
     { label: "Select None", command: "toggleChecked" },
-    { label: "Save Selected", command: "doSave" }
+    { label: "Save Selected", command: "doSave" },
+    { }
 		]
     }
     this.controller.setupWidget( Mojo.Menu.commandMenu, this.buttonsAttributes, this.buttonsModel );
@@ -63,15 +85,15 @@ SaveAssistant.prototype.saveApps = function(event) {
 
 SaveAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) {
-	this.buttonsModel.items[0].label = "Select All";
+	this.buttonsModel.items[1].label = "Select All";
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
-	// appDB.initApps(this.loadList.bind(this));
+	appDB.reload = true;
 	return;
     }
     var item = this.processAppsList.shift();
     this.controller.get('appList').mojo.revealItem(this.processPosition, true);
-    Mojo.Log.info( "Saving " + item.appid );
+    // Mojo.Log.info( "Saving " + item.appid );
     SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
@@ -89,9 +111,9 @@ SaveAssistant.prototype.processCallback = function(e, item) {
     else {
 	if (e.stdErr && e.stdErr.length > 0) {
 	    item.timestamp = Mojo.Format.formatDate(ISO8601Parse(e.stdErr.shift()),"long");
-	    item.timestamp = "Archive not saved";
 	    item.summary = e.stdErr.join("\n");
 	}
+	item.timestamp = "Archive not saved";
 	this.controller.modelChanged( this.appListModel );
 	this.processPosition += 1;
 	this.processApps();
@@ -101,8 +123,9 @@ SaveAssistant.prototype.processCallback = function(e, item) {
 SaveAssistant.prototype.handleCommand = function (event) {
 
     if (event.type === Mojo.Event.command) {
-        if (event.command == 'toggleChecked') {
-            Mojo.Log.info( "toggling" );
+	switch (event.command) {
+	case 'toggleChecked': {
+	    // Mojo.Log.info( "toggling" );
 			
 	    // loop the items
 	    for (var i = 0; i < this.appListModel.items.length; i++) {
@@ -112,15 +135,28 @@ SaveAssistant.prototype.handleCommand = function (event) {
 	    this.controller.modelChanged( this.appListModel );
 			
 	    // switch it up
-	    this.buttonsModel.items[0].label = this.toggleOn ? "Select None" : "Select All";
-	    Mojo.Log.info( "label: " + this.buttonsModel.items[0].label );
+	    this.buttonsModel.items[1].label = this.toggleOn ? "Select None" : "Select All";
+	    // Mojo.Log.info( "label: " + this.buttonsModel.items[1].label );
 	    this.controller.modelChanged( this.buttonsModel );
 	    this.toggleOn = !this.toggleOn;
+	    break;
         }
-	else if (event.command == 'doSave') {
-            Mojo.Log.info( "saving" );
+	case 'doSave': {
+            // Mojo.Log.info( "saving" );
 	    this.saveApps();
+	    break;
         }
+	case 'do-prefs': {
+	    this.controller.stageController.pushScene('preferences');
+	    break;
+	}
+	case 'do-help': {
+	    this.controller.stageController.pushScene('help');
+	    break;
+	}
+	default:
+	break;
+	}
     }
 };
 

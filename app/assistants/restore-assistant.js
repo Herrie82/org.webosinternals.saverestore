@@ -4,12 +4,32 @@ function RestoreAssistant() {
     this.processAppsList = [];
     this.processPosition = 0;
     this.toggleOn = false;
+
+    // setup menu
+    this.menuModel = {
+	visible: true,
+	items:
+	[
+    {
+	label: $L("Preferences"),
+	command: 'do-prefs'
+    },
+    {
+	label: $L("Help"),
+	command: 'do-help'
+    }
+	 ]
+    };
+    
 }
 
 RestoreAssistant.prototype.setup = function() {
 
     this.titleElement = this.controller.get('listTitle');
     this.titleElement.innerHTML = $L("Restore Application Data");
+
+    // setup menu
+    this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
@@ -22,8 +42,10 @@ RestoreAssistant.prototype.setup = function() {
     this.buttonsModel = {
 	visible: true,
 	items: [
+    { },
     { label: "Select None", command: "toggleChecked" },
-    { label: "Restore Selected", command: "doRestore" }
+    { label: "Restore Selected", command: "doRestore" },
+    { }
 		]
     }
     this.controller.setupWidget( Mojo.Menu.commandMenu, this.buttonsAttributes, this.buttonsModel );
@@ -62,15 +84,15 @@ RestoreAssistant.prototype.restoreApps = function(event) {
 
 RestoreAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) {
-	this.buttonsModel.items[0].label = "Select All";
+	this.buttonsModel.items[1].label = "Select All";
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
-	// appDB.initApps(this.loadList.bind(this));
+	appDB.reload = true;
 	return;
     }
     var item = this.processAppsList.shift();
     this.controller.get('appList').mojo.revealItem(this.processPosition, true);
-    Mojo.Log.info( "Restoring " + item.appid );
+    // Mojo.Log.info( "Restoring " + item.appid );
     SaveRestoreService.restore( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
@@ -90,6 +112,7 @@ RestoreAssistant.prototype.processCallback = function(e, item) {
 	    item.timestamp = Mojo.Format.formatDate(ISO8601Parse(e.stdErr.shift()),"long");
 	    item.summary = e.stdErr.join("\n");
 	}
+	item.timestamp = "Archive not restored";
 	this.controller.modelChanged( this.appListModel );
 	this.processPosition += 1;
 	this.processApps();
@@ -99,8 +122,9 @@ RestoreAssistant.prototype.processCallback = function(e, item) {
 RestoreAssistant.prototype.handleCommand = function (event) {
 
     if (event.type === Mojo.Event.command) {
-        if (event.command == 'toggleChecked') {
-            Mojo.Log.info( "toggling" );
+	switch (event.command) {
+	case 'toggleChecked': {
+            // Mojo.Log.info( "toggling" );
 			
 	    // loop the items
 	    for (var i = 0; i < this.appListModel.items.length; i++) {
@@ -110,15 +134,28 @@ RestoreAssistant.prototype.handleCommand = function (event) {
 	    this.controller.modelChanged( this.appListModel );
 			
 	    // switch it up
-	    this.buttonsModel.items[0].label = this.toggleOn ? "Select None" : "Select All";
-	    Mojo.Log.info( "label: " + this.buttonsModel.items[0].label );
+	    this.buttonsModel.items[1].label = this.toggleOn ? "Select None" : "Select All";
+	    // Mojo.Log.info( "label: " + this.buttonsModel.items[1].label );
 	    this.controller.modelChanged( this.buttonsModel );
 	    this.toggleOn = !this.toggleOn;
+	    break;
         }
-	else if (event.command == 'doRestore') {
-            Mojo.Log.info( "restoring" );
+	case 'doRestore': {
+            // Mojo.Log.info( "restoring" );
 	    this.restoreApps();
+	    break;
         }
+	case 'do-prefs': {
+	    this.controller.stageController.pushScene('preferences');
+	    break;
+	}
+	case 'do-help': {
+	    this.controller.stageController.pushScene('help');
+	    break;
+	}
+	default:
+	break;
+	}
     }
 };
 

@@ -5,7 +5,7 @@ source `dirname $0`/srf.defaults
 APPID=`basename $0`
 APPNAME="Memos"
 APPDIR=$PALMAPPDIR/$APPID
-APPNOTE="Restore not supported yet."
+APPNOTE="Restore not supported yet"
 
 source `dirname $0`/srf.app.info
 

@@ -159,70 +159,10 @@ body.palm-dark .palm-row-wrapper .pkgCount .count
 	opacity: 0.35;
 }
 
-.prefs .headerButton,
-.configs .headerButton
-{
-	-webkit-border-image: url(../images/palm-default/selector-header-selected.png);
-	-webkit-border-image: url(../images/palm-default/selector-header.png) 0 16 0 16 stretch stretch;
-	-webkit-box-sizing: border-box;
-	border-width: 0px 16px 0px 16px;
-	margin: 9px 9px 0px 0px;
-	text-transform: uppercase;
-	display: inline-block;
-	font-size: 14px;
-	height: 35px;
-	line-height: 35px;
-	float: right;
-	color: #555;
-}
-body.palm-dark .prefs .headerButton,
-body.palm-dark .configs .headerButton
-{
-	-webkit-border-image: url(../images/palm-dark/selector-header-selected.png);
-	-webkit-border-image: url(../images/palm-dark/selector-header.png) 0 16 0 16 stretch stretch;
-	color: #c0c0c0;
-}
-.prefs .headerButton.selected ,
-.configs .headerButton.selected {
-	-webkit-border-image: url(../images/palm-default/selector-header-selected.png) 0 16 0 16 stretch stretch;
-	color: #c0c0c0;
-}
-body.palm-dark .prefs .headerButton.selected,
-body.palm-dark .configs .headerButton.selected
-{
-	-webkit-border-image: url(../images/palm-dark/selector-header-selected.png) 0 16 0 16 stretch stretch;
-}
-
-
 /*
- * Config/Feed Scene Styles
+ * Application List Scene Styles
  */
-.configs #confList .toggle-text
-{
-	float: right;
-}
-.configs #confList .title.sub
-{
-	color: #999;
-	padding-top: 0px;
-	padding-left: 16px;
-	padding-right: 10px;
-	margin-top: -5px;
-	font-size: 14px;
-}
-.configs #confList .disabled,
-.configs #confList .disabled *,
-.configs .palm-group.disabled
-{
-	opacity: 0.35;
-}
-
-
-
-/*
- * Package List Scene Styles
- */
-.pkg-list #searchText
+.app-list #searchText
 {
 	display: none;
 	z-index: 20000;
@@ -238,11 +178,11 @@ body.palm-dark .configs .headerButton.selected
 	-webkit-border-image: url(../images/palm-default/search-box.png) 10 25 10 25 stretch stretch;
 	-webkit-box-sizing: border-box;
 }
-body.palm-dark .pkg-list #searchText
+body.palm-dark .app-list #searchText
 {
 	-webkit-border-image: url(../images/palm-dark/search-box.png) 10 25 10 25 stretch stretch;
 }
-.pkg-list #searchText input
+.app-list #searchText input
 {
 	color: #fff;
 	background: none;
@@ -251,7 +191,7 @@ body.palm-dark .pkg-list #searchText
 	border: 0px;
 	padding: 0px;
 }
-.pkg-list #spinner
+.app-list #spinner
 {
 	position: fixed;
 	top: 8px;
@@ -259,13 +199,13 @@ body.palm-dark .pkg-list #searchText
 	z-index: 20001;
 	float: right;
 }
-.pkg-list #statusSpinner
+.app-list #statusSpinner
 {
 	margin-top: 135px;
 	margin-left: auto;
 	margin-right: auto;
 }
-.pkg-list #statusSpinner #spinnerStatus
+.app-list #statusSpinner #spinnerStatus
 {
 	text-align: center;
 	padding-top: 122px;
@@ -278,7 +218,7 @@ body.palm-dark .palm-list #statusSpinner #spinnerStatus
 {
 	color: #999;
 }
-.pkg-list .group-source 
+.app-list .group-source 
 {
 	display: none;
 	position: relative;
@@ -293,11 +233,11 @@ body.palm-dark .palm-list #statusSpinner #spinnerStatus
 	-webkit-border-image:url(../images/palm-default/header-selector.png) 0 22 0 16 stretch stretch;
 	-webkit-box-sizing: border-box;
 }
-body.palm-dark .pkg-list .group-source 
+body.palm-dark .app-list .group-source 
 {
 	-webkit-border-image:url(../images/palm-dark/header-selector.png) 0 22 0 16 stretch stretch;
 }
-.pkg-list .group-selector 
+.app-list .group-selector 
 {
 	margin-left: -5px;
 	padding-right: 2px;
@@ -310,72 +250,37 @@ body.palm-dark .pkg-list .group-source
 	overflow: hidden;
 	-webkit-palm-mouse-target: ignore;
 }
-.pkg-list .palm-row-wrapper
+.app-list .palm-row-wrapper
 {
 	position: relative;
 	min-height: 56px;
 }
-.pkg-list .palm-row-wrapper .icon
+.app-list .palm-row-wrapper .title
 {
-	position: absolute;
-	width: 48px;
-	height: 48px;
-	background: url(../images/noIcon.png) center center no-repeat;
-	-webkit-background-size: 48px 48px;
-	top: 3px;
-	left: 4px;
+	padding-top: 11px;
+	padding-bottom: 0px;
 }
-.pkg-list .palm-row-wrapper.installed .icon .sub
-{
-	position: absolute;
-	width: 16px;
-	height: 16px;
-	top: 0px;
-	left: 32px;
-	background: url(../images/icon_installed.png) center center no-repeat;
-}
-.pkg-list .palm-row-wrapper.update .icon .sub
-{
-	position: absolute;
-	width: 16px;
-	height: 16px;
-	top: 0px;
-	left: 32px;
-	background: url(../images/icon_updates.png) center center no-repeat;
-}
-.pkg-list .palm-row-wrapper .title
-{
-	padding-top: 0px;
-	padding-left: 5px;
-}
-.pkg-list .palm-row-wrapper .title .highlight
+.app-list .palm-row-wrapper .title .highlight
 {
 	font-weight: bold;
 	text-decoration: underline;
 }
-.pkg-list .palm-row-wrapper .title.description
-{
-	line-height: 22px;
-	padding-top: 5px;
-	padding-right: 2px;
-	padding-bottom: 1px;
-}
-.pkg-list .palm-row-wrapper .title.sub
+.app-list .palm-row-wrapper .title.sub
 {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	padding-right: 5px;
-	padding-bottom: 6px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 	color: #999;
 	font-size: 14px;
 }
-.pkg-list .palm-row-wrapper .title.summary
+.app-list .palm-row-wrapper .title.summary
 {
-	padding-right: 5px;
-	padding-bottom: 6px;
-	color: #999;
-	font-size: 14px;
+	line-height: 22px;
+	padding-top: 0px;
+	padding-bottom: 8px;
+	font-size: 16px;
 }
 .group-popup.palm-popup-container
 {

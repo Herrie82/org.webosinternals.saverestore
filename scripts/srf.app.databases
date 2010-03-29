@@ -11,10 +11,10 @@ APPSTORE=/media/internal/.app-storage
 PALMDB=$DBSTORE/Databases.db
 
 ORIGIN=`sqlite3 $PALMDB "SELECT origin FROM Origins WHERE origin LIKE \"%${APPID}_0\""`
-[ -n "$ORIGIN" ] || { echo "Cannot find database origin for $APPID" ; exit 1 ; }
+[ -n "$ORIGIN" ] || exit 1
 
 DATABASES=`sqlite3 $PALMDB "SELECT name FROM Databases WHERE origin = \"$ORIGIN\""`
-[ -n "$DATABASES" ] || { echo "$APPID has no databases" ; exit 1 ; }
+[ -n "$DATABASES" ] || exit 1
 
 if [ "$1" == "save" ] ; then
 

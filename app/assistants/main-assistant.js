@@ -2,7 +2,7 @@ function MainAssistant() {
     // subtitle random list
     this.randomSub = 
 	[
-	 {weight: 30, text: $L('The Open Source Backup Solution')},
+	 {weight: 30, text: $L('The Open Source Solution')},
 	 {weight:  2, text: $L('Random Taglines Are Awesome')},
 	 {weight:  2, text: $L('We Know Palm Loves Save/Restore')},
 	 {weight:  2, text: $L('Now With More Cowbell')}
@@ -145,8 +145,9 @@ MainAssistant.prototype.handleCommand = function(event)
 }
 
 MainAssistant.prototype.activate = function(event) {
-    /* put in event handlers here that should only be in effect when this scene is active. For
-       example, key handlers that are observing the document */
+    if (appDB.reload) {
+	appDB.initApps(this.updateList.bind(this));
+    }
 };
 
 MainAssistant.prototype.deactivate = function(event) {

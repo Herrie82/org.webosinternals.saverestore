@@ -1,11 +1,30 @@
 function ListAssistant() {
     this.boundFunctions = new Array();
+
+    // setup menu
+    this.menuModel = {
+	visible: true,
+	items:
+	[
+    {
+	label: $L("Preferences"),
+	command: 'do-prefs'
+    },
+    {
+	label: $L("Help"),
+	command: 'do-help'
+    }
+	 ]
+    };
 }
 
 ListAssistant.prototype.setup = function() {
 
     this.titleElement = this.controller.get('listTitle');
     this.titleElement.innerHTML = $L("Supported Applications");
+
+    // setup menu
+    this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
@@ -23,6 +42,24 @@ ListAssistant.prototype.loadList = function() {
 	this.appListModel.items.push( { appname: app.title, appid: app.id, summary: app.note, checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
+};
+
+ListAssistant.prototype.handleCommand = function (event) {
+
+    if (event.type === Mojo.Event.command) {
+	switch (event.command) {
+	case 'do-prefs': {
+	    this.controller.stageController.pushScene('preferences');
+	    break;
+	}
+	case 'do-help': {
+	    this.controller.stageController.pushScene('help');
+	    break;
+	}
+	default:
+	break;
+	}
+    }
 };
 
 ListAssistant.prototype.activate = function(event) {

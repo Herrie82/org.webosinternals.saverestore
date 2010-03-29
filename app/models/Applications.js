@@ -13,6 +13,9 @@ function Applications(){
 	
     // load state placeholders - may want a better way
     this.loadedApps = this.loadedScripts = false;
+
+    // do we need to reload?
+    this.reload = false;
 }
 
 var appDB = new Applications();
@@ -91,7 +94,7 @@ Apps.loadApps = function( data, callback ) {
 	this.appsSaved.sort(this.sortApps);
     }
 	
-    Mojo.Log.info( "loaded apps: " + this.loadedApps + "; loaded scripts: " + this.loadedScripts );
+    // Mojo.Log.info( "loaded apps: " + this.loadedApps + "; loaded scripts: " + this.loadedScripts );
 
     if (this.loadedApps && this.loadedScripts) {
 	// map which apps we actually CAN work with
@@ -102,6 +105,6 @@ Apps.loadApps = function( data, callback ) {
 	}
 
 	// Update the relevant screen
-	callback();
+	if (callback) callback();
     }
 }

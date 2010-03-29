@@ -1,7 +1,7 @@
 function StartupAssistant()
 {
     // on first start, this message is displayed, along with the current version message from below
-    this.firstMessage = $L('Here are some tips for first-timers:<ul><li>Save/Restore ...</li></ul>');
+    this.firstMessage = $L('Here are some tips for first-timers:<ul><li>To see what Save/Restore is able to process, look in the Supported Applications list</li><li>For the subset of those applications that you have installed, Save/Restore can Save Application Data</li><li>For applications that have saved data, Save/Restore can Restore Application Data</li></ul>');
 	
     this.secondMessage = $L('We hope you enjoy being able to manage your application data.<br>Please consider making a <a href=http://www.webos-internals.org/wiki/WebOS_Internals:Site_support>donation</a> if you wish to show your appreciation.');
 	
@@ -9,10 +9,10 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 {
-	     version: 'X.Y.Z',
+	     version: '0.4.5',
 	     log:
 	     [
-	      'We will fill this out for public releases'
+	      'Public Release Candidate'
 	      ]
 	 }
 	 ];
