@@ -15,9 +15,9 @@ function StartupAssistant()
 	 { version: '0.5.1', log: [ 'Made the restore screen default to all off - much safer that way',
 				    'Fixed a bug in screen positioning for partial restores' ] },
 	 { version: '0.5.0', log: [ 'First Public Release',
-				    'Applications: Dr Podder, Monopoly, NFSU, The Sims 3, '
-				    'A+ Student Organiser, Asphalt5, Dungeon Hunter, Shrek Kart, '
-				    'Dragon Game, Glyder 2, Keyring, Messaging (Save Only), Memos (Save Only), '
+				    'Applications: Dr Podder, Monopoly, NFSU, The Sims 3, ' +
+				    'A+ Student Organiser, Asphalt5, Dungeon Hunter, Shrek Kart, ' +
+				    'Dragon Game, Glyder 2, Keyring, Messaging (Save Only), Memos (Save Only), ' +
 				    'JogStats, SplashID, Netstat' ] }
 	 ];
 	
