@@ -1,17 +1,13 @@
 #!/bin/sh
 
-source `dirname $0`/srf.defaults
-
 APPID=`basename $0`
 APPNAME="Messaging"
-APPDIR=$PALMAPPDIR/$APPID
+APPDIR="/usr/palm/applications/$APPID"
 APPNOTE="Restore not supported yet"
 
 source `dirname $0`/srf.app.info
 
-[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
-
-DATABASE=/var/luna/data/dbdata/PalmDatabase.db3
+DATABASE="/var/luna/data/dbdata/PalmDatabase.db3"
 TABLES="SMS IM"
 FIELDS="messageType,fromAddress,messageText,timeStamp,deviceTimeStamp"
 QUERY="SELECT $FIELDS FROM com_palm_pim_FolderEntry WHERE messageType like \"\$table\""

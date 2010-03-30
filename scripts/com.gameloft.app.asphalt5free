@@ -1,13 +1,11 @@
 #!/bin/sh
 
-source `dirname $0`/srf.defaults
-
 APPID=`basename $0`
 APPNAME="Asphalt5 FREE"
-APPDIR=$USERAPPDIR/$APPID/Asphalt5Demo
 
 source `dirname $0`/srf.app.info
 
+SRCDIR="$APPDIR/Asphalt5Demo"
 FILES="data.sav"
 
 source `dirname $0`/srf.app.files

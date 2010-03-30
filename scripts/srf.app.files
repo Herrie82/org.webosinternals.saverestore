@@ -3,32 +3,33 @@
 [ -n "$APPID" ]  || { echo "srf.app.files: APPID not defined"  ; exit 1 ; }
 [ -n "$APPDIR" ] || { echo "srf.app.files: APPDIR not defined" ; exit 1 ; }
 [ -n "$DSTDIR" ] || { echo "srf.app.files: DSTDIR not defined" ; exit 1 ; }
+[ -n "$SRCDIR" ] || { echo "srf.app.files: SRCDIR not defined" ; exit 1 ; }
 [ -n "$FILES" ]  || { echo "srf.app.files: FILES not defined"  ; exit 1 ; }
 
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
 if [ "$1" == "save" ] ; then
 
-    for file in `cd $APPDIR ; echo ${FILES}` ; do
-      [ -f $APPDIR/$file ] || { echo "$APPDIR/$file not found" ; exit 1 ; }
+    for file in `cd $SRCDIR ; echo ${FILES}` ; do
+	[ -f $SRCDIR/$file ] || { echo "$SRCDIR/$file not found" ; exit 1 ; }
     done
 
     mkdir -p $DSTDIR
 
-    for file in `cd $APPDIR ; echo ${FILES}` ; do
-      cp $APPDIR/$file $DSTDIR/
-      ( cd $DSTDIR ; ls -1 $file )
+    for file in `cd $SRCDIR ; echo ${FILES}` ; do
+	cp $SRCDIR/$file $DSTDIR/$file
+	( cd $DSTDIR ; ls -1 $file )
     done
 
 elif [ "$1" == "restore" ] ; then
 
     for file in `cd $DSTDIR ; echo ${FILES}` ; do
-      [ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
+	[ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
     done
 
     for file in `cd $DSTDIR ; echo ${FILES}` ; do
-      cp $DSTDIR/$file $APPDIR/
-      ( cd $APPDIR ; ls -1 $file )
+	cp $DSTDIR/$file $SRCDIR/$file
+	( cd $SRCDIR ; ls -1 $file )
     done
 
 fi

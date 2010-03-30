@@ -1,13 +1,11 @@
 #!/bin/sh
 
-source `dirname $0`/srf.defaults
-
 APPID=`basename $0`
 APPNAME="Dungeon Hunter"
-APPDIR=$USERAPPDIR/$APPID/dungeonhunter/data
 
 source `dirname $0`/srf.app.info
 
+SRCDIR="$APPDIR/dungeonhunter/data"
 FILES="DQM_*.savegame"
 
 source `dirname $0`/srf.app.files

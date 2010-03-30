@@ -3,7 +3,9 @@
 [ -n "$APPID" ]   || { echo "srf.app.files: APPID not defined"   ; exit 1 ; }
 [ -n "$APPNAME" ] || { echo "srf.app.files: APPNAME not defined" ; exit 1 ; }
 
-DSTDIR=/media/internal/saverestore/$APPID
+: ${APPDIR:="/media/cryptofs/apps/usr/palm/applications/$APPID"} 
+: ${SRCDIR:="$APPDIR"} 
+: ${DSTDIR:="/media/internal/saverestore/$APPID"} 
 
 # Only keep the most recent archive
 MOSTRECENT=

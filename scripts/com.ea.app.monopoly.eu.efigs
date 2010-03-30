@@ -1,15 +1,13 @@
 #!/bin/sh
 
-source `dirname $0`/srf.defaults
-
 APPID=`basename $0`
 APPNAME="Monopoly"
-APPDIR=$USERAPPDIR/$APPID/monopolyclassic
 
 source `dirname $0`/srf.app.info
 
-DIRS="save"
+SRCDIR="$APPDIR/monopolyclassic/save"
+FILES="*"
 
-source `dirname $0`/srf.app.dirs
+source `dirname $0`/srf.app.files
 
 exit 0

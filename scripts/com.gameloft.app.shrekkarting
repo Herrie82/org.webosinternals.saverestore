@@ -1,13 +1,11 @@
 #!/bin/sh
 
-source `dirname $0`/srf.defaults
-
 APPID=`basename $0`
 APPNAME="Shrek Kart"
-APPDIR=$USERAPPDIR/$APPID
 
 source `dirname $0`/srf.app.info
 
+SRCDIR="$APPDIR"
 FILES="data.sav"
 
 source `dirname $0`/srf.app.files

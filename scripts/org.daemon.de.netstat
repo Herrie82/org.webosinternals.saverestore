@@ -1,17 +1,14 @@
 #!/bin/sh
 
-source `dirname $0`/srf.defaults
-
 APPID=`basename $0`
 APPNAME="Netstat"
-APPDIR=$USERAPPDIR/$APPID
 
 source `dirname $0`/srf.app.info
 
 source `dirname $0`/srf.app.databases
 
-APPDIR=$APPSTORE/$ORIGIN
-FILES=0000000000000001.db
+SRCDIR="$APPSTORE/$ORIGIN"
+FILES="0000000000000001.db"
 
 source `dirname $0`/srf.app.files
 
