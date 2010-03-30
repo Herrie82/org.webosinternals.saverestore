@@ -48,11 +48,31 @@ MainAssistant.prototype.setup = function() {
     // setup menu
     this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 	
+    this.mainModel.items.push({
+	    name:     $L('Save Application Data'),
+		style:    'disabled',
+		scene:    'save',
+		pkgCount: appDB.appsAvailable.length
+		});
+    this.mainModel.items.push({
+	    name:     $L('Restore Application Data'),
+		style:    'disabled',
+		scene:    'restore',
+		pkgCount: appDB.appsSaved.length
+		});
+    this.mainModel.items.push({
+	    name:     $L('Supported Applications'),
+		style:    'disabled',
+		scene:    'list',
+		pkgCount: appDB.appsWithScripts.length
+		});
+    
     // setup widget
     this.controller.setupWidget('mainList', { itemTemplate: "main/rowTemplate", swipeToDelete: false, reorderable: false }, this.mainModel);
     this.controller.listen(this.listElement, Mojo.Event.listTap, this.listTapHandler);
 
-    appDB.initApps(this.updateList.bind(this));
+    // Load the application database
+    appDB.reload = true;
 };
 
 MainAssistant.prototype.listTap = function(event)
@@ -66,39 +86,15 @@ MainAssistant.prototype.listTap = function(event)
     }
 };
 
-MainAssistant.prototype.updateList = function(skipUpdate)
+MainAssistant.prototype.updateList = function()
 {
-    try {
-	// clear main list model of its items
-	this.mainModel.items = [];
-		
-	this.mainModel.items.push({
-		name:     $L('Save Application Data'),
-		    style:    'showCount',
-		    scene:    'save',
-		    pkgCount: appDB.appsAvailable.length
-		    });
-	this.mainModel.items.push({
-		name:     $L('Restore Application Data'),
-		    style:    'showCount',
-		    scene:    'restore',
-		    pkgCount: appDB.appsSaved.length
-		    });
-	this.mainModel.items.push({
-		name:     $L('Supported Applications'),
-		    style:    'showCount',
-		    scene:    'list',
-		    pkgCount: appDB.appsWithScripts.length
-		    });
-	
-	if (!skipUpdate) {
-	    this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
-	    this.listElement.mojo.setLength(this.mainModel.items.length);
-	}
-    }
-    catch (e) {
-	Mojo.Log.logException(e, 'main#updateList');
-    }
+    this.mainModel.items[0].style = 'showCount';
+    this.mainModel.items[0].pkgCount = appDB.appsAvailable.length;
+    this.mainModel.items[1].style = 'showCount';
+    this.mainModel.items[1].pkgCount = appDB.appsSaved.length;
+    this.mainModel.items[2].style = 'showCount';
+    this.mainModel.items[2].pkgCount = appDB.appsWithScripts.length;
+    this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
 };
     
 MainAssistant.prototype.getRandomSubTitle = function()
@@ -150,6 +146,13 @@ MainAssistant.prototype.handleCommand = function(event)
 
 MainAssistant.prototype.activate = function(event) {
     if (appDB.reload) {
+	for (var i = 0; i < this.mainModel.items.length; i++) {
+	    this.mainModel.items[i].style = 'disabled';
+	    this.mainModel.items[i].pkgCount = 0;
+	}
+	this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
+	var appController = Mojo.Controller.getAppController();
+	appController.showBanner({ messageText: "Loading archive data ..." }, {}, "initApps");
 	appDB.initApps(this.updateList.bind(this));
     }
 };

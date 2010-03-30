@@ -75,6 +75,9 @@ SaveAssistant.prototype.loadList = function() {
 };
 
 SaveAssistant.prototype.saveApps = function(event) {
+    this.buttonsModel.items[2].label = "Saving ...";
+    this.controller.modelChanged( this.buttonsModel );
+
     for (var i = 0; i < this.appListModel.items.length; i++) {
 	var thisobj = this.appListModel.items[i];
 	if (thisobj.checked) this.processAppsList.push( thisobj );
@@ -86,14 +89,15 @@ SaveAssistant.prototype.saveApps = function(event) {
 SaveAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) {
 	this.buttonsModel.items[1].label = "Select All";
+	this.buttonsModel.items[2].label = "Save Selected";
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
-	appDB.reload = true;
 	return;
     }
     var item = this.processAppsList.shift();
     this.controller.get('appList').mojo.revealItem(item.position, true);
     // Mojo.Log.info( "Saving " + item.appid );
+    appDB.reload = true;
     SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
@@ -104,8 +108,6 @@ SaveAssistant.prototype.processCallback = function(e, item) {
 	    item.summary = e.stdOut.join("\n");
 	}
 	item.checked = false;
-	this.controller.modelChanged( this.appListModel );
-	this.processApps();
     }
     else {
 	if (e.stdErr && e.stdErr.length > 0) {
@@ -113,9 +115,9 @@ SaveAssistant.prototype.processCallback = function(e, item) {
 	    item.summary = e.stdErr.join("\n");
 	}
 	item.timestamp = "Archive not saved";
-	this.controller.modelChanged( this.appListModel );
-	this.processApps();
     }
+    this.controller.get('appList').mojo.invalidateItems(item.position, 1);
+    this.processApps();
 };
 
 SaveAssistant.prototype.handleCommand = function (event) {

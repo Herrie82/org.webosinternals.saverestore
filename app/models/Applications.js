@@ -104,6 +104,9 @@ Apps.loadApps = function( data, callback ) {
 	    if (appid in installed) this.appsAvailable.push( appid );
 	}
 
+	// fully loaded
+	this.reload = false;
+
 	// Update the relevant screen
 	if (callback) callback();
     }

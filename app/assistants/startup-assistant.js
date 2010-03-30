@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.5.2', log: [ 'Added activity notifications and disabled main buttons while reloading' ] },
 	 { version: '0.5.1', log: [ 'Made the restore screen default to all off - much safer that way',
 				    'Fixed a bug in screen positioning for partial restores' ] },
 	 { version: '0.5.0', log: [ 'First Public Release' ] }
