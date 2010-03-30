@@ -8,8 +8,8 @@ function StartupAssistant()
     // on new version start
     this.newMessages =
 	[
-	 { version: '0.4.6', log: [ 'Added support for Dungeon Hunter' ] }
-	 { version: '0.4.5', log: [ 'Public Release Candidate' ] }
+	 // Don't forget the comma on all but the last entry
+	 { version: '0.5.0', log: [ 'First Public Release' ] }
 	 ];
 	
     // setup menu
