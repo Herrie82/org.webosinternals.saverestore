@@ -2,8 +2,7 @@ function RestoreAssistant() {
     this.boundFunctions = new Array();
     this.boundFunctions['restoreApps'] = this.restoreApps.bindAsEventListener(this);
     this.processAppsList = [];
-    this.processPosition = 0;
-    this.toggleOn = false;
+    this.toggleOn = true;
 
     // setup menu
     this.menuModel = {
@@ -43,7 +42,7 @@ RestoreAssistant.prototype.setup = function() {
 	visible: true,
 	items: [
     { },
-    { label: "Select None", command: "toggleChecked" },
+    { label: "Select All", command: "toggleChecked" },
     { label: "Restore Selected", command: "doRestore" },
     { }
 		]
@@ -57,6 +56,7 @@ RestoreAssistant.prototype.setup = function() {
 RestoreAssistant.prototype.loadList = function() {
     this.appListModel.items = [];
     var apps = appDB.appsSaved;
+    var position = 0;
     for (var i = 0; i < apps.length; i++) {
 	var app = appDB.appsInformation[apps[i]];
 	var timestamp = "No archives available";
@@ -67,7 +67,8 @@ RestoreAssistant.prototype.loadList = function() {
 	if (app.note) {
 	    summary = app.note;
 	}
-	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: timestamp, summary: summary, checked: true } );
+	this.appListModel.items.push( { appname: app.title, appid: app.id, timestamp: timestamp, summary: summary, checked: false, position: position } );
+	position += 1;
     }
     this.controller.modelChanged( this.appListModel );
 };
@@ -78,7 +79,6 @@ RestoreAssistant.prototype.restoreApps = function(event) {
 	if (thisobj.checked) this.processAppsList.push( thisobj );
     }
 	
-    this.processPosition = 0;
     this.processApps();
 };
 
@@ -91,7 +91,7 @@ RestoreAssistant.prototype.processApps = function() {
 	return;
     }
     var item = this.processAppsList.shift();
-    this.controller.get('appList').mojo.revealItem(this.processPosition, true);
+    this.controller.get('appList').mojo.revealItem(item.position, true);
     // Mojo.Log.info( "Restoring " + item.appid );
     SaveRestoreService.restore( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
@@ -104,7 +104,6 @@ RestoreAssistant.prototype.processCallback = function(e, item) {
 	}
 	item.checked = false;
 	this.controller.modelChanged( this.appListModel );
-	this.processPosition += 1;
 	this.processApps();
     }
     else {
@@ -114,7 +113,6 @@ RestoreAssistant.prototype.processCallback = function(e, item) {
 	}
 	item.timestamp = "Archive not restored";
 	this.controller.modelChanged( this.appListModel );
-	this.processPosition += 1;
 	this.processApps();
     }
 };
