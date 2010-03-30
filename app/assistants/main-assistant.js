@@ -30,6 +30,10 @@ function MainAssistant() {
 }
 
 MainAssistant.prototype.setup = function() {
+    this.controller.get('main-title').innerHTML = $L('Save/Restore');
+    this.controller.get('version').innerHTML = $L('v0.0.0');
+    this.controller.get('subTitle').innerHTML = $L('The Open Source Solution');	
+
     // get elements
     this.versionElement =  this.controller.get('version');
     this.subTitleElement = this.controller.get('subTitle');
