@@ -1,12 +1,12 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="Asphalt5"
+APPNAME="The Sims 3"
 
 source `dirname $0`/srf.app.info
 
-SRCDIR="$APPDIR/Asphalt5Demo"
-FILES="data.sav"
+SRCDIR="$APPDIR/res_sims3"
+FILES="sim3set sim3dat0"
 
 source `dirname $0`/srf.app.files
 

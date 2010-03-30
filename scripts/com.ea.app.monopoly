@@ -1,12 +1,12 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="Asphalt5"
+APPNAME="Monopoly"
 
 source `dirname $0`/srf.app.info
 
-SRCDIR="$APPDIR/Asphalt5Demo"
-FILES="data.sav"
+SRCDIR="$APPDIR/monopolyclassic/save"
+FILES="*"
 
 source `dirname $0`/srf.app.files
 
