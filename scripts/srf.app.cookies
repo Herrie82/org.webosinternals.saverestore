@@ -9,25 +9,26 @@ FIELDS="domain_head,domain_tail,path,name,value,expires,secure"
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
 PALMDB=/var/palm/data/cookies.db
+FILE=cookies.sql
 
 if [ "$1" == "save" ] ; then
 
     mkdir -p $DSTDIR
 
-    sqlite3 $PALMDB > $DSTDIR/$APPID.sql <<EOF
+    sqlite3 $PALMDB > $DSTDIR/$FILE <<EOF
 .mode insert Cookies ;
 SELECT $FIELDS FROM Cookies WHERE path like "$APPDIR" ;
 .quit ;
 EOF
 
-    ( cd $DSTDIR ; ls -1 $APPID.sql )
+    ( cd $DSTDIR ; ls -1 $FILE )
 
 elif [ "$1" == "restore" ] ; then
 
-    [ -f $DSTDIR/$APPID.sql ] || { echo "$DSTDIR/$APPID.sql not found" ; exit 1 ; }
+    [ -f $DSTDIR/$FILE ] || { echo "$DSTDIR/$FILE not found" ; exit 1 ; }
 
-    ( cd $DSTDIR ; ls -1 $APPID.sql )
+    ( cd $DSTDIR ; ls -1 $FILE )
 
-    sqlite3 $PALMDB < $DSTDIR/$APPID.sql
+    sqlite3 $PALMDB < $DSTDIR/$FILE
 
 fi
