@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.6.1', log: [ 'Applications: Sorrowind Slots, GiftJammer, GolfPinFinder, Flickr Addict' ] },
 	 { version: '0.6.0', log: [ 'Added support for saving and restoring cookies',
 				    'Applications: Paratrooper, Weather Window, Scoop, Tweed, Clock Sync' ] },
 	 { version: '0.5.2', log: [ 'Added activity notifications and disabled main buttons while reloading' ] },
