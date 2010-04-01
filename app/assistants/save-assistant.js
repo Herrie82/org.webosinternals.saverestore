@@ -127,6 +127,9 @@ SaveAssistant.prototype.handleCommand = function (event) {
 	case 'toggleChecked': {
 	    // Mojo.Log.info( "toggling" );
 			
+	    // move to the top of the list 
+	    this.controller.get('appList').mojo.revealItem(0, true);
+
 	    // loop the items
 	    for (var i = 0; i < this.appListModel.items.length; i++) {
 		var thisobj = this.appListModel.items[i];
