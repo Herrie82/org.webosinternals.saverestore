@@ -1,4 +1,7 @@
+description "Save/Restore Service"
+
 start on stopped finish
 
 exec /var/usr/sbin/org.webosinternals.saverestore
+
 respawn
