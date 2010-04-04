@@ -10,6 +10,7 @@ function StartupAssistant()
 	[
 	 // Don't forget the comma on all but the last entry
 	 { version: '0.6.3', log: [ 'Fixed positioning of the list when toggling selections',
+				    'Now supports databases on the emulator',
 				    'Applications: ' ] },
 	 { version: '0.6.2', log: [ 'Applications: Hawx, Myles, Time is Money' ] },
 	 { version: '0.6.1', log: [ 'Applications: Sorrowind Slots, GiftJammer, GolfPinFinder, Flickr Addict' ] },

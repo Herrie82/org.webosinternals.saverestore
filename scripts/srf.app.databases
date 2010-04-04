@@ -6,9 +6,14 @@
 
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
+if [ -f /var/home/root/html5-databases/Databases.db ] ; then
+DBSTORE=/var/home/root/html5-databases
+else
 DBSTORE=/var/palm/data
-APPSTORE=/media/internal/.app-storage
+fi
 PALMDB=$DBSTORE/Databases.db
+
+APPSTORE=/media/internal/.app-storage
 
 ORIGIN=`sqlite3 $PALMDB "SELECT origin FROM Origins WHERE origin LIKE \"%${APPID}_0\""`
 [ -n "$ORIGIN" ] || exit 1
