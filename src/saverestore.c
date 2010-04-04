@@ -30,7 +30,7 @@ static struct option long_options[] = {
 };
 
 void print_version() {
-  printf("Save Restore Manager Service (%s)\n", VERSION);
+  printf("Save Restore Service (%s)\n", VERSION);
 }
 
 void print_help(char *argv[]) {
