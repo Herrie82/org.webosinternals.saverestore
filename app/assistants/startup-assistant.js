@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.6.4', log: [ 'Applications: Checkbook, Brothers in Arms' ] },
 	 { version: '0.6.3', log: [ 'Fixed positioning of the list when toggling selections',
 				    'Now supports databases on the emulator',
 				    'Applications: Preware, FlashCards, Absolute Fitness' ] },
