@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Real Soccer 2010"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/RealSoccer2010"
+FILES="rfb_rfbsav.sav rfb_replay.rec rfb_matchhistory.rec"
+
+source `dirname $0`/srf.app.files
+
+exit 0
