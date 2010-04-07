@@ -9,7 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
-	 { version: '0.6.6', log: [ 'Applications: NFL 2010, Real Soccer 2010, Sandstorm' ] },
+	 { version: '0.6.6', log: [ 'Applications: NFL 2010, Real Soccer 2010, Sandstorm, Let\'s Golf, Shopping List, ShopList, ClassTracker, Fliq Notes' ] },
 	 { version: '0.6.5', log: [ 'Applications: NewsRoom, SecuStore' ] },
 	 { version: '0.6.4', log: [ 'Applications: Checkbook, Brothers in Arms' ] },
 	 { version: '0.6.3', log: [ 'Fixed positioning of the list when toggling selections',
