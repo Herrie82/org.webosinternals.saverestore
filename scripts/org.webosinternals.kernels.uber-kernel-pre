@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Uber-Kernel (Palm Pre)"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="backup.tar.gz"
+
+source `dirname $0`/srf.app.files
+
+exit 0
