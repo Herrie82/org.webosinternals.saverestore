@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Glyder 2"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/glyder2"
+FILES="savegame.dat hs.dat prefs.dat settings.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0

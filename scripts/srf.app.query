@@ -17,16 +17,16 @@ if [ "$1" == "save" ] ; then
 
     for table in $TABLES ; do
 
-	echo "<TABLE border=\"1\">" > $DSTDIR/$table.html
-	echo -n "<TR>" >> $DSTDIR/$table.html
+	echo "<TABLE border=\"1\">" > $DSTDIR/${table}.html
+	echo -n "<TR>" >> $DSTDIR/${table}.html
 	for field in `echo $FIELDS | sed -e 's/,/ /g'` ; do
-	    echo -n "<TH>$field</TH>" >> $DSTDIR/$table.html
+	    echo "<TH>$field</TH>" >> $DSTDIR/${table}.html
 	done
-	echo "</TR>" >> $DSTDIR/$table.html
-	sqlite3 -html $DATABASE "$QUERY ;" >> $DSTDIR/$table.html || exit 1
-	echo "</TABLE>" >> $DSTDIR/$table.html
+	echo "</TR>" >> $DSTDIR/${table}.html
+	sqlite3 -html $DATABASE "`echo $QUERY | sed 's/%TABLE%/'${table}'/g'` ;" >> $DSTDIR/${table}.html || exit 1
+	echo "</TABLE>" >> $DSTDIR/${table}.html
 
-	( cd $DSTDIR ; ls -1 $table.html )
+	( cd $DSTDIR ; ls -1 ${table}.html )
 
     done
     
