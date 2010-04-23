@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.6.9', log: [ 'Applications: WSOP3, The Settlers' ] },
 	 { version: '0.6.8', log: [ 'Fixed Messaging query support',
 				    'Applications: N.O.V.A' ] },
 	 { version: '0.6.7', log: [ 'Applications: AmpachPre, Stock Kernel (Palm Pre), Uber-Kernel (Palm Pre)' ] },

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="WSOP3"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/wsop3"
+FILES="savehand.dat savegame.dat currenhand.dat prefs.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0
