@@ -30,6 +30,11 @@ function MainAssistant() {
 }
 
 MainAssistant.prototype.setup = function() {
+	
+    // set theme because this can be the first scene pushed
+    this.controller.document.body.className = prefs.get().theme;
+	
+	
     this.controller.get('main-title').innerHTML = $L('Save/Restore');
     this.controller.get('version').innerHTML = $L('v0.0.0');
     this.controller.get('subTitle').innerHTML = $L('The Open Source Solution');	
