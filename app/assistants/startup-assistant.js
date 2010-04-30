@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.7.0', log: [ 'Now supports some launcher settings' ] },
 	 { version: '0.6.9', log: [ 'Applications: WSOP3, The Settlers' ] },
 	 { version: '0.6.8', log: [ 'Fixed Messaging query support',
 				    'Applications: N.O.V.A' ] },

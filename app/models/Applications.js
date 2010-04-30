@@ -25,7 +25,7 @@ var Apps = Applications.prototype;
 
 Apps.initApps = function( callback ) {
     // all applications installed on device
-    this.appsInstalled = [];
+    this.appsInstalled = ['com.palm.app.launcher'];
     // store the information for apps, by appid
     this.appsInformation = [];
     // all applications available from the service
