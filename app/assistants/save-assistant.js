@@ -4,6 +4,9 @@ function SaveAssistant() {
     this.processAppsList = [];
     this.toggleOn = false;
 
+    // we'll need this for the subscription based services
+    this.subscription = false;
+
     // setup menu
     this.menuModel = {
 	visible: true,
@@ -98,7 +101,7 @@ SaveAssistant.prototype.processApps = function() {
     this.controller.get('appList').mojo.revealItem(item.position, true);
     // Mojo.Log.info( "Saving " + item.appid );
     appDB.reload = true;
-    SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );
+    this.subscription = SaveRestoreService.save( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
 SaveAssistant.prototype.processCallback = function(e, item) {
@@ -174,6 +177,8 @@ SaveAssistant.prototype.deactivate = function(event) {
 };
 
 SaveAssistant.prototype.cleanup = function(event) {
-    /* this function should do any cleanup needed before the scene is destroyed as 
-       a result of being popped off the scene stack */
+    // cancel the last subscription, this may not be needed
+    if (this.subscription) {
+	this.subscription.cancel();
+    }
 };

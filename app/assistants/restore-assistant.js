@@ -4,6 +4,9 @@ function RestoreAssistant() {
     this.processAppsList = [];
     this.toggleOn = true;
 
+    // we'll need this for the subscription based services
+    this.subscription = false;
+
     // setup menu
     this.menuModel = {
 	visible: true,
@@ -97,7 +100,7 @@ RestoreAssistant.prototype.processApps = function() {
     this.controller.get('appList').mojo.revealItem(item.position, true);
     // Mojo.Log.info( "Restoring " + item.appid );
     appDB.reload = true;
-    SaveRestoreService.restore( this.processCallback.bindAsEventListener(this, item), item.appid );
+    this.subscription = SaveRestoreService.restore( this.processCallback.bindAsEventListener(this, item), item.appid );
 };
 
 RestoreAssistant.prototype.processCallback = function(e, item) {
@@ -173,6 +176,8 @@ RestoreAssistant.prototype.deactivate = function(event) {
 };
 
 RestoreAssistant.prototype.cleanup = function(event) {
-    /* this function should do any cleanup needed before the scene is destroyed as 
-       a result of being popped off the scene stack */
+    // cancel the last subscription, this may not be needed
+    if (this.subscription) {
+	this.subscription.cancel();
+    }
 };
