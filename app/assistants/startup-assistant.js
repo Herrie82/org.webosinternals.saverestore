@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.7.3', log: [ 'Improved Deer Hunter 3D support' ] },
 	 { version: '0.7.2', log: [ 'Improved Govnah support' ] },
 	 { version: '0.7.1', log: [ 'Applications: Govnah, ClassicNote, Mail Lists, Shopping Manager, Super Contacts, Epocrates, Family Medical History, XboxLive Friends, Bible Reader KJV, Time Tracker, Deer Hunter 3D' ] },
 	 { version: '0.7.0', log: [ 'Now supports some launcher settings' ] },
