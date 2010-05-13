@@ -14,6 +14,9 @@ function Applications(){
     // load state placeholders - may want a better way
     this.loadedApps = this.loadedScripts = false;
 
+    // we'll need this for the subscription based services
+    this.subscription = false;
+
     // do we need to reload?
     this.reload = false;
 }
@@ -39,9 +42,9 @@ Apps.initApps = function( callback ) {
     this.loadedApps = this.loadedScripts = false;
 
     // load up the installed applications
-    SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
+    this.subscription = SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
     // load up the available applications
-    SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
+    this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
 }
 
 Apps.sortApps = function(a, b) {
