@@ -9,6 +9,8 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.7.5', log: [ 'Applications: MapTool, Just Pong, Match This, Consumption Calculator, UberRadio, Soccer 2010, TravelGuide, Wikay, OGCOpenInfo, My webOS Apps, FreeWeather (all courtesy of MetaView)',
+				    'Improved Mail Lists support' ] },
 	 { version: '0.7.4', log: [ 'Robustified saving and restoring multiple items' ] },
 	 { version: '0.7.3', log: [ 'Improved Deer Hunter 3D support' ] },
 	 { version: '0.7.2', log: [ 'Improved Govnah support' ] },
