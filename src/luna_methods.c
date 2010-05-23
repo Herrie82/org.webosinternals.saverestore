@@ -26,6 +26,8 @@
 
 #define ALLOWED_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-"
 
+#define API_VERSION "1"
+
 static char *scriptdir = "/var/svc/org.webosinternals.saverestore";
 
 //
@@ -139,6 +141,24 @@ bool dummy_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   LSErrorInit(&lserror);
 
   if (!LSMessageReply(lshandle, message, "{\"returnValue\": true}", &lserror)) goto error;
+
+  return true;
+ error:
+  LSErrorPrint(&lserror, stderr);
+  LSErrorFree(&lserror);
+ end:
+  return false;
+}
+
+//
+// Return the current API version of the service.
+// Called directly from webOS, and returns directly to webOS.
+//
+bool version_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+  LSError lserror;
+  LSErrorInit(&lserror);
+
+  if (!LSMessageReply(lshandle, message, "{\"returnValue\": true, \"version\": \"" VERSION "\", \"apiVersion\": \"" API_VERSION "\"}", &lserror)) goto error;
 
   return true;
  error:
@@ -503,6 +523,7 @@ bool listApps_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 
 LSMethod luna_methods[] = {
   { "status",	dummy_method },
+  { "version",	version_method },
   { "list",	list_method },
   { "save",	save_method },
   { "restore",	restore_method },
