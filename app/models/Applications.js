@@ -41,10 +41,13 @@ Apps.initApps = function( callback ) {
     // load state placeholders - may want a better way
     this.loadedApps = this.loadedScripts = false;
 
+    // cancel the last subscription, this may not be needed
+    if (this.subscription) {
+	this.subscription.cancel();
+    }
+	
     // load up the installed applications
     this.subscription = SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
-    // load up the available applications
-    this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
 }
 
 Apps.sortApps = function(a, b) {
@@ -76,6 +79,14 @@ Apps.loadApps = function( data, callback ) {
 	}
 	// we loaded apps
 	this.loadedApps = true;
+
+	// cancel the last subscription, this may not be needed
+	if (this.subscription) {
+	    this.subscription.cancel();
+	}
+	
+	// load up the available applications
+	this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
     }
     else if (data.scripts) {
 	var scripts = data.scripts;
@@ -90,6 +101,11 @@ Apps.loadApps = function( data, callback ) {
 	// we loaded scripts
 	this.loadedScripts = true;
 
+	// cancel the last subscription, this may not be needed
+	if (this.subscription) {
+	    this.subscription.cancel();
+	}
+	
 	// sort the list of supported apps
 	this.appsWithScripts.sort(this.sortApps);
 

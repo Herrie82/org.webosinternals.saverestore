@@ -71,6 +71,12 @@ MainAssistant.prototype.setup = function() {
 		scene:    'list',
 		pkgCount: appDB.appsWithScripts.length
 		});
+    this.mainModel.items.push({
+	    name:     $L('Installed Applications'),
+		style:    'disabled',
+		scene:    'installed',
+		pkgCount: appDB.appsInstalled.length
+		});
     
     // setup widget
     this.controller.setupWidget('mainList', { itemTemplate: "main/rowTemplate", swipeToDelete: false, reorderable: false }, this.mainModel);
@@ -99,6 +105,8 @@ MainAssistant.prototype.updateList = function()
     this.mainModel.items[1].pkgCount = appDB.appsSaved.length;
     this.mainModel.items[2].style = 'showCount';
     this.mainModel.items[2].pkgCount = appDB.appsWithScripts.length;
+    this.mainModel.items[3].style = 'showCount';
+    this.mainModel.items[3].pkgCount = appDB.appsInstalled.length;
     this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
 };
     

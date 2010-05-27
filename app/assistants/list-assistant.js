@@ -27,7 +27,7 @@ ListAssistant.prototype.setup = function() {
     this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 
     // initialize our list
-    this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "media-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
+    this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "app-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
     this.appListModel = { items: [] };
     this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
 	

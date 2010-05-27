@@ -25,6 +25,10 @@
         "source": "app/assistants/list-assistant.js"
     },
     {
+        "scenes": "installed",
+        "source": "app/assistants/installed-assistant.js"
+    },
+    {
         "scenes": "preferences",
         "source": "app/assistants/preferences-assistant.js"
     },
