@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Transformers G1"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/transg1"
+FILES="savegame.dat hs.dat prefs.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0
