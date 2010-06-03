@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.7.8', log: [ 'Applications: Pack n Track, Pribbage, Top Stocks, Roll Quest, The Helicopter Game, Whendle, Bubble Puzzle (all courtesy of Audermars02), Time Tracker Full (courtesy of baldric)' ] },
 	 { version: '0.7.7', log: [ 'Applications: Transformers G1, WOG Card Keeper (both courtesy of Audermars02)' ] },
 	 { version: '0.7.6', log: [ 'Robustified initial loading of applications',
 				    'Added the Installed Applications list' ] },
