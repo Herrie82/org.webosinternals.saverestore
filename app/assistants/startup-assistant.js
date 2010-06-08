@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.8.2', log: [ 'Applications: Gangstar, wIRC' ] },
 	 { version: '0.8.1', log: [ 'Removed DOS line endings from some contributed scripts that caused startup failure' ] },
 	 { version: '0.8.0', log: [ 'Applications: Sports Live, Football Live, US Soccer Live (all courtesy of MoreSolutions)' ] },
 	 { version: '0.7.9', log: [ 'Applications: Hockey Live, Basketball Live, Baseball Live (all courtesy of MoreSolutions)' ] },
