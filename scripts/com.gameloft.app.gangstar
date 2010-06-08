@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Gangstar: West Coast Hustle"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/Gangstar"
+FILES="Gangstar2.preferences Gangstar2.sav"
+
+source `dirname $0`/srf.app.files
+
+exit 0
