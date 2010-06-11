@@ -12,6 +12,16 @@ FILES="user-dock-positions.json"
 
 source `dirname $0`/srf.app.files
 
+SRCDIR="/var/luna/launchpoints"
+FILES="????????"
+
+source `dirname $0`/srf.app.files
+
+SRCDIR="/var/luna/data/browser/icons"
+FILES="*.png"
+
+source `dirname $0`/srf.app.files
+
 APPID="luna-applauncher"
 
 source `dirname $0`/srf.app.databases
