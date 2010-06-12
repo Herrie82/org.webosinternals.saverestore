@@ -6,6 +6,12 @@
 [ -n "$SRCDIR" ] || { echo "srf.app.files: SRCDIR not defined" ; exit 1 ; }
 [ -n "$FILES" ]  || { echo "srf.app.files: FILES not defined"  ; exit 1 ; }
 
+if [ -n "$DSTSUB" ] ; then
+    DSTPATH=$DSTDIR/$DSTSUB
+else
+    DSTPATH=$DSTDIR
+fi
+
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
 if [ "$1" == "save" ] ; then
@@ -14,21 +20,21 @@ if [ "$1" == "save" ] ; then
 	[ -f $SRCDIR/$file ] || { echo "$SRCDIR/$file not found" ; exit 1 ; }
     done
 
-    mkdir -p $DSTDIR
+    mkdir -p $DSTPATH
 
     for file in `cd $SRCDIR ; echo ${FILES}` ; do
-	cp $SRCDIR/$file $DSTDIR/$file
-	( cd $DSTDIR ; ls -1 $file )
+	cp $SRCDIR/$file $DSTPATH/$file
+	( cd $DSTPATH ; ls -1 $file )
     done
 
 elif [ "$1" == "restore" ] ; then
 
-    for file in `cd $DSTDIR ; echo ${FILES}` ; do
-	[ -f $DSTDIR/$file ] || { echo "$DSTDIR/$file not found" ; exit 1 ; }
+    for file in `cd $DSTPATH ; echo ${FILES}` ; do
+	[ -f $DSTPATH/$file ] || { echo "$DSTPATH/$file not found" ; exit 1 ; }
     done
 
-    for file in `cd $DSTDIR ; echo ${FILES}` ; do
-	cp $DSTDIR/$file $SRCDIR/$file
+    for file in `cd $DSTPATH ; echo ${FILES}` ; do
+	cp $DSTPATH/$file $SRCDIR/$file
 	( cd $SRCDIR ; ls -1 $file )
     done
 
