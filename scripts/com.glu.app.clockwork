@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Jump O Clock"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/clockwork"
+FILES="hs.dat prefs.dat savegame.dat achievements"
+
+source `dirname $0`/srf.app.files
+
+exit 0
