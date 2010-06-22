@@ -9,22 +9,26 @@ source `dirname $0`/srf.app.info
 
 SRCDIR="/var/palm"
 FILES="user-dock-positions.json"
+OPTIONAL=false
 
 source `dirname $0`/srf.app.files
 
 SRCDIR="/var/luna/launchpoints"
 DSTSUB="launchpoints"
 FILES="*"
+OPTIONAL=true
 
 source `dirname $0`/srf.app.files
 
 SRCDIR="/var/luna/data/browser/icons"
 DSTSUB="icons"
 FILES="*.png"
+OPTIONAL=true
 
 source `dirname $0`/srf.app.files
 
 APPID="luna-applauncher"
+OPTIONAL=false
 
 source `dirname $0`/srf.app.databases
 
