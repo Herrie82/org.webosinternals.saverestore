@@ -1,7 +1,7 @@
 {
 	"title": "Save/Restore",
 	"id": "org.webosinternals.saverestore",
-	"version": "0.8.5",
+	"version": "0.8.6",
 	"release_date":	"25-Jun-2010",
 	"vendor": "WebOS Internals",
 	"vendor_email":	"support@webos-internals.org",
