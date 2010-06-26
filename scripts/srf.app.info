@@ -7,15 +7,22 @@
 : ${SRCDIR:="$APPDIR"} 
 : ${DSTDIR:="/media/internal/saverestore/$APPID"} 
 
+ZIP="/media/cryptofs/apps/usr/bin/zip -q"
+UNZIP="/media/cryptofs/apps/usr/bin/unzip -q"
+
 # Only keep the most recent archive
 MOSTRECENT=
+TIMESTAMP=
 if [ -d $DSTDIR ] ; then
-    MOSTRECENT=`ls -1 $DSTDIR | egrep '^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]T[0-9][0-9][0-9][0-9][0-9][0-9][+-][0-9][0-9][0-9][0-9]$' | sort -n | tail -1`
+    MOSTRECENT=`ls -1 $DSTDIR | egrep '^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]T[0-9][0-9][0-9][0-9][0-9][0-9][+-][0-9][0-9][0-9][0-9].zip$' | sort -n | tail -1`
     for f in `ls -1 $DSTDIR` ; do
 	if [ "$f" != "$MOSTRECENT" ] ; then
 	    rm -rf $DSTDIR/$f
 	fi
     done
+fi
+if [ -n "$MOSTRECENT" ] ; then
+    TIMESTAMP=`basename $MOSTRECENT .zip`
 fi
 
 if [ "$1" == "info" ] ; then
@@ -24,8 +31,8 @@ if [ "$1" == "info" ] ; then
     if [ -n "$APPNOTE" ] ; then
 	echo -n '"note": "'$APPNOTE'", '
     fi
-    if [ -n "$MOSTRECENT" ] ; then
-	echo '"saved": true, "timestamp": "'$MOSTRECENT'" }'
+    if [ -n "$TIMESTAMP" ] ; then
+	echo '"saved": true, "timestamp": "'$TIMESTAMP'" }'
     else
 	echo '"saved": false }'
     fi
@@ -42,12 +49,12 @@ elif [ "$1" == "save" ] ; then
 
 elif [ "$1" == "restore" ] ; then
 
-    if [ -n "$MOSTRECENT" ] ; then
-	DSTDIR=$DSTDIR/$MOSTRECENT
+    if [ -n "$TIMESTAMP" ] ; then
+	DSTDIR=$DSTDIR/$TIMESTAMP
     else
 	{ echo "No archives available" ; exit 1 ; }
     fi
 
-    echo $MOSTRECENT
+    echo $TIMESTAMP
 
 fi

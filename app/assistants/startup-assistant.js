@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.0', log: [ 'Now stores the archives as zip files, so the media indexer does not see the constituent files' ] },
 	 { version: '0.8.6', log: [ 'Fixed Govnah support' ] },
 	 { version: '0.8.5', log: [ 'Improved support for Add-to-Launcher icons (e.g. browser, launchpoints, contacts)' ] },
 	 { version: '0.8.4', log: [ 'Application: Govnah (Now supports saving of profiles)',

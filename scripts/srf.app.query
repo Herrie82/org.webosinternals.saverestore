@@ -23,13 +23,18 @@ if [ "$1" == "save" ] ; then
 	    echo "<TH>$field</TH>" >> $DSTDIR/${table}.html
 	done
 	echo "</TR>" >> $DSTDIR/${table}.html
-	sqlite3 -html $DATABASE "`echo $QUERY | sed 's/%TABLE%/'${table}'/g'` ;" >> $DSTDIR/${table}.html || exit 1
+	sqlite3 -html $DATABASE "`echo $QUERY | sed 's/%TABLE%/'${table}'/g'` ;" >> $DSTDIR/${table}.html || \
+	    { rm -rf $DSTDIR}* ; exit 1 ; }
 	echo "</TABLE>" >> $DSTDIR/${table}.html
 
 	( cd $DSTDIR ; ls -1 ${table}.html )
 
+	( cd $DSTDIR ; ${ZIP} ${DSTDIR}.zip ${table}.html )
+
     done
     
+    rm -rf $DSTDIR
+
 elif [ "$1" == "restore" ] ; then
      
     { echo "Restore not supported yet" ; exit 1 ; }

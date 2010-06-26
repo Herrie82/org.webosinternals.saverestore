@@ -35,19 +35,26 @@ if [ "$1" == "save" ] ; then
 	if [ -f "${SRCDIR}/$file" ] ; then
 	    cp ${SRCDIR}/$file ${DSTPATH}/$file
 	    ( cd ${DSTPATH} ; ls -1d $file )
+	    ( cd ${DSTPATH} ; ${ZIP} ${DSTDIR}.zip $file )
 	fi
     done
 
+    rm -rf ${DSTDIR}
+
 elif [ "$1" == "restore" ] ; then
 
+    mkdir -p ${DSTDIR}
+
+    ( cd ${DSTDIR} ; ${UNZIP} ${DSTDIR}.zip ${FILES} )
+
     [ -d "${DSTPATH}" ] || \
-	{ [ "${OPTIONAL}" == "true" ] && exit 0 ; } || \
-	{ echo "${DSTPATH} not found" ; exit 1 ; }
+	{ [ "${OPTIONAL}" == "true" ] && { rm -rf ${DSTDIR} ; exit 0 ; } ; } || \
+	{ echo "${DSTPATH} not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
 
     for file in `cd ${DSTPATH} && echo ${FILES}` ; do
 	[ -f "${DSTPATH}/$file" ] || \
 	    [ "${OPTIONAL}" == "true" ] || \
-	    { echo "${DSTPATH}/$file not found" ; exit 1 ; }
+	    { echo "${DSTPATH}/$file not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
     done
 
     for file in `cd ${DSTPATH} && echo ${FILES}` ; do
@@ -56,5 +63,7 @@ elif [ "$1" == "restore" ] ; then
 	    ( cd ${SRCDIR} ; ls -1d $file )
 	fi
     done
+
+    rm -rf ${DSTDIR}
 
 fi

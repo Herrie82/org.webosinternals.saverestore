@@ -13,7 +13,7 @@ FILE=cookies.sql
 
 if [ "$1" == "save" ] ; then
 
-    mkdir -p $DSTDIR
+    mkdir -p ${DSTDIR}
 
     sqlite3 $PALMDB > $DSTDIR/$FILE <<EOF
 .mode insert Cookies ;
@@ -23,12 +23,22 @@ EOF
 
     ( cd $DSTDIR ; ls -1 $FILE )
 
+    ( cd $DSTDIR ; ${ZIP} ${DSTDIR}.zip $FILE )
+
+    rm -rf $DSTDIR
+
 elif [ "$1" == "restore" ] ; then
 
-    [ -f $DSTDIR/$FILE ] || { echo "$DSTDIR/$FILE not found" ; exit 1 ; }
+    mkdir -p $DSTDIR
+
+    ( cd $DSTDIR ; ${UNZIP} ${DSTDIR}.zip $FILE )
+
+    [ -f $DSTDIR/$FILE ] || { echo "$DSTDIR/$FILE not found" ; rm -rf $DSTDIR ; exit 1 ; }
+
+    sqlite3 $PALMDB < $DSTDIR/$FILE
 
     ( cd $DSTDIR ; ls -1 $FILE )
 
-    sqlite3 $PALMDB < $DSTDIR/$FILE
+    rm -rf $DSTDIR
 
 fi

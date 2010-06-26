@@ -36,9 +36,14 @@ if [ "$1" == "save" ] ; then
 	fi
 	cp $LOC $DSTDIR/$APPID
 	( cd $DSTDIR ; ls -1 $APPID )
+	( cd $DSTDIR ; ${ZIP} ${DSTDIR}.zip $APPID )
     done
 
+    rm -rf $DSTDIR
+
 elif [ "$1" == "restore" ] ; then
+
+    mkdir -p $DSTDIR
 
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
@@ -49,8 +54,16 @@ elif [ "$1" == "restore" ] ; then
 	    LOC=$DBSTORE/$ORIGIN
 	    APPID=$db
 	fi
+
+	( cd $DSTDIR ; ${UNZIP} ${DSTDIR}.zip $APPID )
+
+	[ -f $DSTDIR/$APPID ] || { echo "$DSTDIR/$APPID not found" ; rm -rf $DSTDIR ; exit 1 ; }
+
 	cp $DSTDIR/$APPID $LOC/$FILE
+
 	( cd $LOC ; ls -1 $FILE )
     done
+
+    rm -rf $DSTDIR
 
 fi
