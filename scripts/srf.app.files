@@ -23,7 +23,7 @@ if [ "$1" == "save" ] ; then
 	{ [ "${OPTIONAL}" == "true" ] && exit 0 ; } || \
 	{ echo "${SRCDIR} not found" ; exit 1 ; }
 
-    for file in `cd ${SRCDIR} && echo ${FILES}` ; do
+    for file in `cd ${SRCDIR} ; ls -1d ${FILES} 2>/dev/null` ; do
 	[ -f "${SRCDIR}/$file" ] || \
 	    [ "${OPTIONAL}" == "true" ] || \
 	    { echo "${SRCDIR}/$file not found" ; exit 1 ; }
@@ -31,11 +31,16 @@ if [ "$1" == "save" ] ; then
 
     mkdir -p ${DSTPATH}
 
-    for file in `cd ${SRCDIR} && echo ${FILES}` ; do
+    for file in `cd ${SRCDIR} ; ls -1d ${FILES} 2>/dev/null` ; do
 	if [ -f "${SRCDIR}/$file" ] ; then
 	    cp ${SRCDIR}/$file ${DSTPATH}/$file
-	    ( cd ${DSTPATH} ; ls -1d $file )
-	    ( cd ${DSTPATH} ; ${ZIP} ${DSTDIR}.zip $file )
+	    if [ -n "${DSTSUB}" ] ; then
+		( cd ${DSTDIR} ; ls -1d ${DSTSUB}/$file )
+		( cd ${DSTDIR} ; ${ZIP} ${DSTDIR}.zip ${DSTSUB}/$file )
+	    else
+		( cd ${DSTDIR} ; ls -1d $file )
+		( cd ${DSTDIR} ; ${ZIP} ${DSTDIR}.zip $file )
+	    fi
 	fi
     done
 
@@ -45,19 +50,23 @@ elif [ "$1" == "restore" ] ; then
 
     mkdir -p ${DSTDIR}
 
-    ( cd ${DSTDIR} ; ${UNZIP} ${DSTDIR}.zip ${FILES} )
+    if [ -n "${DSTSUB}" ] ; then
+	( cd ${DSTDIR} ; ${UNZIP} ${DSTDIR}.zip ${DSTSUB}/* )
+    else
+	( cd ${DSTDIR} ; ${UNZIP} ${DSTDIR}.zip ${FILES} )
+    fi
 
     [ -d "${DSTPATH}" ] || \
 	{ [ "${OPTIONAL}" == "true" ] && { rm -rf ${DSTDIR} ; exit 0 ; } ; } || \
 	{ echo "${DSTPATH} not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
 
-    for file in `cd ${DSTPATH} && echo ${FILES}` ; do
+    for file in `cd ${DSTPATH} ; ls -1d ${FILES} 2>/dev/null` ; do
 	[ -f "${DSTPATH}/$file" ] || \
 	    [ "${OPTIONAL}" == "true" ] || \
 	    { echo "${DSTPATH}/$file not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
     done
 
-    for file in `cd ${DSTPATH} && echo ${FILES}` ; do
+    for file in `cd ${DSTPATH} ; ls -1d ${FILES} 2>/dev/null` ; do
 	if [ -f "${DSTPATH}/$file" ] ; then
 	    cp ${DSTPATH}/$file ${SRCDIR}/$file
 	    ( cd ${SRCDIR} ; ls -1d $file )

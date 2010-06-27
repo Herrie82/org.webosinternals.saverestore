@@ -9,6 +9,8 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.1', log: [ 'Fixed Launcher support',
+				    'Now supports the Palm Web Browser' ] },
 	 { version: '0.9.0', log: [ 'Now stores the archives as zip files, so the media indexer does not see the constituent files' ] },
 	 { version: '0.8.6', log: [ 'Fixed Govnah support' ] },
 	 { version: '0.8.5', log: [ 'Improved support for Add-to-Launcher icons (e.g. browser, launchpoints, contacts)' ] },
