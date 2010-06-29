@@ -1,0 +1,20 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Quick Contacts (Homebrew)"
+
+source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.databases
+
+source `dirname $0`/srf.app.cookies
+
+SRCDIR="/media/internal/quickcontacts"
+DSTSUB="quickcontacts"
+FILES="*"
+
+[ -d "${SRCDIR}" ] || { mkdir ${SRCDIR} ; }
+
+source `dirname $0`/srf.app.files
+
+exit 0

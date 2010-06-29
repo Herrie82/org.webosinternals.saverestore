@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Hero of Sparta "
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/HeroOfSparta"
+FILES="Spartan0.dat Spartan.dat Setting.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0

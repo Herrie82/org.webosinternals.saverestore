@@ -9,6 +9,9 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.2', log: [ 'Defensive Warfare (courtesy of pip smith), Preset Reset, ShareTheCost (STC), Sudoku Lite!, ' +
+				    'Milage Monitor, Hero of Sparta, Score Keeper, Timesheet, Radio Hibiki, Online Tracker, ' +
+				    'Online Tracker Free, Battery Monitor Plus, Quick Contacts (homebrew), Crossword Lite' ] },
 	 { version: '0.9.1', log: [ 'Fixed Launcher support',
 				    'Now supports the Palm Web Browser' ] },
 	 { version: '0.9.0', log: [ 'Now stores the archives as zip files, so the media indexer does not see the constituent files' ] },
