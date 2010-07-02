@@ -20,7 +20,7 @@ fi
 if [ "$1" == "save" ] ; then
 
     [ -d "${SRCDIR}" ] || \
-	{ [ "${OPTIONAL}" == "true" ] && exit 0 ; } || \
+	{ [ "${OPTIONAL}" == "true" ] && return 0 ; } || \
 	{ echo "${SRCDIR} not found" ; exit 1 ; }
 
     for file in `cd ${SRCDIR} ; ls -1d ${FILES} 2>/dev/null` ; do
@@ -57,7 +57,7 @@ elif [ "$1" == "restore" ] ; then
     fi
 
     [ -d "${DSTPATH}" ] || \
-	{ [ "${OPTIONAL}" == "true" ] && { rm -rf ${DSTDIR} ; exit 0 ; } ; } || \
+	{ [ "${OPTIONAL}" == "true" ] && { rm -rf ${DSTDIR} ; return 0 ; } ; } || \
 	{ echo "${DSTPATH} not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
 
     for file in `cd ${DSTPATH} ; ls -1d ${FILES} 2>/dev/null` ; do
