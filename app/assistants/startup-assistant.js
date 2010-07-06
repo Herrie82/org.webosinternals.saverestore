@@ -9,7 +9,10 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
-f	 { version: '0.9.3', log: [ 'Fixed Launcher support' ] },
+	 { version: '0.9.4', log: [ 'Application: Preware (Now supports saving of custom feeds), WOG Card Keeper (enchanced support), Suduko (by Cakefight), Five Dice, Battleship (EA)',
+                                    'Applications: Fall-E, Fall-E pro, Back of the Net, Timepiece (all courtesy of pip smith)',
+                                    'Applications: Ampache Mobile, Plumbers Nightmare(all courtesy of mamouton)' ] },
+	 { version: '0.9.3', log: [ 'Fixed Launcher support' ] },
 	 { version: '0.9.2', log: [ 'Defensive Warfare (courtesy of pip smith), Preset Reset, ShareTheCost (STC), Sudoku Lite!, ' +
 				    'Milage Monitor, Hero of Sparta, Score Keeper, Timesheet, Radio Hibiki, Online Tracker, ' +
 				    'Online Tracker Free, Battery Monitor Plus, Quick Contacts (homebrew), Crossword Lite' ] },
