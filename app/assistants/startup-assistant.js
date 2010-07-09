@@ -9,6 +9,9 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.5', log: [ 'Application: Milage Monitor Plus',
+                                    'Applications: Scratchpad, Starship Commander, News Feed (all courtesy of pip smith)',
+                                    'Applications: Avatar, Super KO Boxing 2 (both courtesy of Chakat Silverstreak)' ] },
 	 { version: '0.9.4', log: [ 'Application: Preware (Now supports saving of custom feeds), WOG Card Keeper (enchanced support), Suduko (by Cakefight), Five Dice, Battleship (EA)',
                                     'Applications: Fall-E, Fall-E pro, Back of the Net, Timepiece (all courtesy of pip smith)',
                                     'Applications: Ampache Mobile, Plumbers Nightmare(all courtesy of mamouton)' ] },
