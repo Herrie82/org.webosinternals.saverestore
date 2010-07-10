@@ -11,7 +11,7 @@ function StartupAssistant()
 	 // Don't forget the comma on all but the last entry
 	 { version: '0.9.6', log: [ 'Application: Agenda, Twee, Comics',
                                     'Applications: Bubbles! Plus, Bubbles! (free), FillUps, TXT Group, Topple Ball, Topple Ball Mini, Warranty Manager (all courtesy of pip smith)',
-                                    'Applications: ASCII Star Wars, Ski for Pre, Ski for Pre Lite, WebUI for WebOS Lite, WebUI for WebOS PRO (both courtesy of sunmorgus)' ] },
+                                    'Applications: ASCII Star Wars, Ski for Pre, Ski for Pre Lite, WebUI for WebOS Lite, WebUI for WebOS PRO (all courtesy of sunmorgus)' ] },
 	 { version: '0.9.5', log: [ 'Application: Milage Monitor Plus',
                                     'Applications: Scratchpad, Starship Commander, News Feed (all courtesy of pip smith)',
                                     'Applications: Avatar, Super KO Boxing 2 (both courtesy of Chakat Silverstreak)' ] },
