@@ -9,6 +9,9 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.8', log: [ 'Application: My Medical',
+                                    'Applications: Speed Dial Lite, P2Snippets, Do It Again (all courtesy of pip smith)',
+                                    'Applications: Feeds, Uno, iStayFit, Notes (all courtesy of StoneRyno)' ] },
 	 { version: '0.9.7', log: [ 'Application: Fuel, Jewel Quest III, Bills, Accounts, Google Account Search, Quick System Tasks, GeoTasks Pro, Mojo Messenger, My Loaned Items (all courtesy of mamouton)',
                                     'Applications: Cool Tip Calculator, SkyClimber (free), SkyClimber (paid), CineShowTime, Forbes ii, BillMyTime Demo, BillMyTime (all courtesy of pip smith)' ] },
 	 { version: '0.9.6', log: [ 'Application: Agenda, Twee, Comics',
