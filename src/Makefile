@@ -12,9 +12,10 @@ LDFLAGS  := -g -L${STAGING_DIR}/usr/lib -llunaservice -lmjson -lglib-2.0
 saverestore: saverestore.o luna_service.o luna_methods.o
 
 install: saverestore
-	- ssh root@webos killall org.webosinternals.saverestore
-	scp saverestore root@webos:/var/usr/sbin/org.webosinternals.saverestore.new
-	ssh root@webos mv /var/usr/sbin/org.webosinternals.saverestore.new /var/usr/sbin/org.webosinternals.saverestore
+#	- ssh root@webos killall org.webosinternals.saverestore
+#	scp saverestore root@webos:/var/usr/sbin/org.webosinternals.saverestore.new
+#	ssh root@webos mv /var/usr/sbin/org.webosinternals.saverestore.new /var/usr/sbin/org.webosinternals.saverestore
+	novacom put file://home/root/saverestore < saverestore
 
 clobber:
 	rm -rf *.o saverestore

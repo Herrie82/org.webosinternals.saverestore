@@ -77,16 +77,19 @@ Apps.loadApps = function( data, callback ) {
 	    // store information in our array if we don't have it already
 	    if (!this.appsInformation[app.id]) this.appsInformation[app.id] = app;
 	}
-	// we loaded apps
-	this.loadedApps = true;
 
-	// cancel the last subscription, this may not be needed
-	if (this.subscription) {
-	    this.subscription.cancel();
-	}
+	if (!data.stage || (data.stage == "end")) {
+	    // we loaded apps
+	    this.loadedApps = true;
+
+	    // cancel the last subscription, this may not be needed
+	    if (this.subscription) {
+		this.subscription.cancel();
+	    }
 	
-	// load up the available applications
-	this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
+	    // load up the available applications
+	    this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
+	}
     }
     else if (data.scripts) {
 	var scripts = data.scripts;
@@ -98,19 +101,22 @@ Apps.loadApps = function( data, callback ) {
 	    // information from the scripts has more fields
 	    this.appsInformation[script.id] = script;
 	}
-	// we loaded scripts
-	this.loadedScripts = true;
 
-	// cancel the last subscription, this may not be needed
-	if (this.subscription) {
-	    this.subscription.cancel();
-	}
+	if (!data.stage || (data.stage == "end")) {
+	    // we loaded scripts
+	    this.loadedScripts = true;
+
+	    // cancel the last subscription, this may not be needed
+	    if (this.subscription) {
+		this.subscription.cancel();
+	    }
 	
-	// sort the list of supported apps
-	this.appsWithScripts.sort(this.sortApps);
+	    // sort the list of supported apps
+	    this.appsWithScripts.sort(this.sortApps);
 
-	// sort the list of saved apps
-	this.appsSaved.sort(this.sortApps);
+	    // sort the list of saved apps
+	    this.appsSaved.sort(this.sortApps);
+	}
     }
 	
     // Mojo.Log.info( "loaded apps: " + this.loadedApps + "; loaded scripts: " + this.loadedScripts );

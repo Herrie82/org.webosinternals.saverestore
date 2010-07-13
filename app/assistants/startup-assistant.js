@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.9', log: [ 'Rearchitected list service method to return data in 4Kb chunks (fixes the hang related to a large number of scripts)' ] },
 	 { version: '0.9.8', log: [ 'Application: My Medical',
                                     'Applications: Speed Dial Lite, P2Snippets, Do It Again (all courtesy of pip smith)',
                                     'Applications: Feeds, Uno, iStayFit, Notes (all courtesy of StoneRyno)' ] },

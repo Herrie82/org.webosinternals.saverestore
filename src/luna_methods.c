@@ -385,11 +385,43 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
     return true;
   }
 
+  if (!LSMessageReply(lshandle, message, "{\"stage\": \"start\", \"returnValue\": true}", &lserror)) goto error;
+
   // Initialise the output message.
   strcpy(buffer, "{");
 
   // Loop through the list of files in the scripts directory.
-  while ( fgets( filename, sizeof filename, fp)) {
+  while (fgets( filename, sizeof filename, fp)) {
+
+    // Push out a partial chunk
+    if (strlen(buffer) >= CHUNKSIZE) {
+
+      // Terminate the JSON array
+      if (!first) {
+	strcat(buffer, "], ");
+      }
+
+      strcat(buffer, "\"stage\": \"middle\", ");
+
+      // Check the error status, and return the current error status
+      if (error) {
+	strcat(buffer, "\"returnValue\": false}");
+      }
+      else {
+	strcat(buffer, "\"returnValue\": true}");
+      }
+      
+      fprintf(stderr, "Message is %s\n", buffer);
+
+      // Return the results to webOS.
+      if (!LSMessageReply(lshandle, message, buffer, &lserror)) goto error;
+
+      // This is now the first line of output
+      first = true;
+
+      // Initialise the output message.
+      strcpy(buffer, "{");
+    }
 
     // Chomp the newline
     char *nl = strchr(filename,'\n'); if (nl) *nl = 0;
@@ -419,12 +451,15 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 
     // Store the command output (the contents of the file)
     strcat(buffer, run_command_buffer);
+
   }
 
   // Terminate the JSON array
   if (!first) {
     strcat(buffer, "], ");
   }
+
+  strcat(buffer, "\"stage\": \"end\", ");
 
   // Check the close status of the process, and return the combined error status
   if (pclose(fp) || error) {
