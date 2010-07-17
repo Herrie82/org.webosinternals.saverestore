@@ -25,6 +25,7 @@ if [ "$1" == "save" ] ; then
 
     mkdir -p $DSTDIR
 
+    IFS=$'\n'
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then
@@ -45,6 +46,7 @@ elif [ "$1" == "restore" ] ; then
 
     mkdir -p $DSTDIR
 
+    IFS=$'\n'
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then
