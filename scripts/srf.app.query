@@ -29,7 +29,7 @@ if [ "$1" == "save" ] ; then
 
 	( cd $DSTDIR ; ls -1 ${table}.html )
 
-	( cd $DSTDIR ; ${ZIP} ${DSTDIR}.zip ${table}.html )
+	( cd $DSTDIR ; ${ZIP} -q ${DSTDIR}.zip ${table}.html )
 
     done
     

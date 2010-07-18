@@ -7,8 +7,8 @@
 : ${SRCDIR:="$APPDIR"} 
 : ${DSTDIR:="/media/internal/saverestore/$APPID"} 
 
-ZIP="/media/cryptofs/apps/usr/bin/zip -q"
-UNZIP="/media/cryptofs/apps/usr/bin/unzip -q"
+ZIP=/media/cryptofs/apps/usr/bin/zip
+UNZIP=/media/cryptofs/apps/usr/bin/unzip
 
 # Only keep the most recent archive
 MOSTRECENT=

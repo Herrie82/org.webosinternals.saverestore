@@ -36,10 +36,10 @@ if [ "$1" == "save" ] ; then
 	    cp ${SRCDIR}/$file ${DSTPATH}/$file
 	    if [ -n "${DSTSUB}" ] ; then
 		( cd ${DSTDIR} ; ls -1d ${DSTSUB}/$file )
-		( cd ${DSTDIR} ; ${ZIP} ${DSTDIR}.zip ${DSTSUB}/$file )
+		( cd ${DSTDIR} ; ${ZIP} -q ${DSTDIR}.zip ${DSTSUB}/$file )
 	    else
 		( cd ${DSTDIR} ; ls -1d $file )
-		( cd ${DSTDIR} ; ${ZIP} ${DSTDIR}.zip $file )
+		( cd ${DSTDIR} ; ${ZIP} -q ${DSTDIR}.zip $file )
 	    fi
 	fi
     done
@@ -51,9 +51,9 @@ elif [ "$1" == "restore" ] ; then
     mkdir -p ${DSTDIR}
 
     if [ -n "${DSTSUB}" ] ; then
-	( cd ${DSTDIR} ; ${UNZIP} ${DSTDIR}.zip ${DSTSUB}/* )
+	( cd ${DSTDIR} ; ${UNZIP} -q ${DSTDIR}.zip ${DSTSUB}/* )
     else
-	( cd ${DSTDIR} ; ${UNZIP} ${DSTDIR}.zip ${FILES} )
+	( cd ${DSTDIR} ; ${UNZIP} -q ${DSTDIR}.zip ${FILES} )
     fi
 
     [ -d "${DSTPATH}" ] || \

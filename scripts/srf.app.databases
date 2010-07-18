@@ -21,11 +21,13 @@ ORIGIN=`sqlite3 $PALMDB "SELECT origin FROM Origins WHERE origin LIKE \"%${APPID
 DATABASES=`sqlite3 $PALMDB "SELECT name FROM Databases WHERE origin = \"$ORIGIN\""`
 [ -n "$DATABASES" ] || exit 1
 
+OIFS=$IFS
+IFS=$'\n'
+
 if [ "$1" == "save" ] ; then
 
     mkdir -p $DSTDIR
 
-    IFS=$'\n'
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
 	if expr "$db" : "ext:.*" >/dev/null ; then
@@ -37,7 +39,7 @@ if [ "$1" == "save" ] ; then
 	fi
 	cp $LOC $DSTDIR/$APPID
 	( cd $DSTDIR ; ls -1 $APPID )
-	( cd $DSTDIR ; ${ZIP} ${DSTDIR}.zip $APPID )
+	( cd $DSTDIR ; ${ZIP} -q ${DSTDIR}.zip $APPID )
     done
 
     rm -rf $DSTDIR
@@ -57,7 +59,7 @@ elif [ "$1" == "restore" ] ; then
 	    APPID=$db
 	fi
 
-	( cd $DSTDIR ; ${UNZIP} ${DSTDIR}.zip $APPID )
+	( cd $DSTDIR ; ${UNZIP} -q ${DSTDIR}.zip $APPID )
 
 	[ -f $DSTDIR/$APPID ] || { echo "$DSTDIR/$APPID not found" ; rm -rf $DSTDIR ; exit 1 ; }
 
@@ -69,3 +71,5 @@ elif [ "$1" == "restore" ] ; then
     rm -rf $DSTDIR
 
 fi
+
+IFS=$OIFS

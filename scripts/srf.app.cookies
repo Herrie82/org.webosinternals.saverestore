@@ -23,7 +23,7 @@ EOF
 
     ( cd $DSTDIR ; ls -1 $FILE )
 
-    ( cd $DSTDIR ; ${ZIP} ${DSTDIR}.zip $FILE )
+    ( cd $DSTDIR ; ${ZIP} -q ${DSTDIR}.zip $FILE )
 
     rm -rf $DSTDIR
 
@@ -31,7 +31,7 @@ elif [ "$1" == "restore" ] ; then
 
     mkdir -p $DSTDIR
 
-    ( cd $DSTDIR ; ${UNZIP} ${DSTDIR}.zip $FILE )
+    ( cd $DSTDIR ; ${UNZIP} -q ${DSTDIR}.zip $FILE )
 
     [ -f $DSTDIR/$FILE ] || { echo "$DSTDIR/$FILE not found" ; rm -rf $DSTDIR ; exit 1 ; }
 
