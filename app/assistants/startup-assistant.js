@@ -9,6 +9,11 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '0.9.11', log: [ 'Allows for database names that include spaces',
+                                    'Application: Blades of Fury, Guitar Hero 5 (both courtesy of Chakat Silverstreak), Sprint TV',
+                                    'Applications: AirTraffic Lite, Market Live, Nuclear Attack, Skybox, Tan Total, TrackMyWork Free, Code Cabinet, ' +
+					    'Simple Shop, WordRacer, Tuck Tuck, FeedReader, iCopter, MyLists, ' +
+					    'SpaceAlarm, Ideal Weight , Touch Connect (all courtesy of pip smith)] },
 	 { version: '0.9.10', log: [ 'Applications: Bad Kitty (courtesy of pip smith), jChecklist and jVault (both courtesy of cohoman)' ] },
 	 { version: '0.9.9', log: [ 'Rearchitected list service method to return data in 4Kb chunks (fixes the hang related to a large number of scripts)' ] },
 	 { version: '0.9.8', log: [ 'Application: My Medical',
