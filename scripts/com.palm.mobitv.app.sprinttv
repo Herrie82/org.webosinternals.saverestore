@@ -1,0 +1,14 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Sprint TV"
+APPDIR="/usr/palm/applications/$APPID"
+
+source `dirname $0`/srf.app.info
+
+APPID="com.mobitv.app.sprinttv"
+APPDIR="/usr/palm/applications/com.mobitv.app.sprinttv"
+
+source `dirname $0`/srf.app.databases
+
+exit 0
