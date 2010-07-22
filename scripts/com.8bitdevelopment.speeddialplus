@@ -1,10 +1,11 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="Mail Lists"
-APPNOTE="Save and Restore do not work"
+APPNAME="Speed Dial Plus"
 
 source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.databases
 
 source `dirname $0`/srf.app.cookies
 
