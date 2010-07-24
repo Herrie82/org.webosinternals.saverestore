@@ -9,7 +9,8 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
-	 { version: '0.9.13', log: [ 'Updated Google Account Search script. ',
+	 { version: '1.0.0', log: [ 'Rolled up all the 0.9.x alpha releases into a new public release' ] },
+	 { version: '0.9.13', log: [ 'Updated Google Account Search script',
                                     'Applications: SecuStore (App Catalog), SecuStore Lite',
                                     'Applications: My DataBank, Speed Dial Plus, Speed Dial Pro (all courtesy of pip smith)' ] },
 	 { version: '0.9.12', log: [ 'Fixed scripts to allow for database names with spaces' ] },
