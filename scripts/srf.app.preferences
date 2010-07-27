@@ -1,0 +1,46 @@
+#!/bin/sh
+
+[ -n "$APPID" ]  || { echo "srf.app.preferences: APPID not defined"  ; exit 1 ; }
+[ -n "$APPDIR" ] || { echo "srf.app.preferences: APPDIR not defined" ; exit 1 ; }
+[ -n "$DSTDIR" ] || { echo "srf.app.preferences: DSTDIR not defined" ; exit 1 ; }
+
+[ -n "$FILTER" ] || { echo "srf.app.preferences: FILTER not defined" ; exit 1 ; }
+
+FIELDS="key,value"
+
+[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
+
+PALMDB=/var/palm/data/preferences.db
+FILE=preferences.sql
+
+if [ "$1" == "save" ] ; then
+
+    mkdir -p ${DSTDIR}
+
+    sqlite3 $PALMDB > $DSTDIR/$FILE <<EOF
+.mode insert Preferences ;
+SELECT $FIELDS FROM Preferences WHERE $FILTER ;
+.quit ;
+EOF
+
+    ( cd $DSTDIR ; ls -1 $FILE )
+
+    ( cd $DSTDIR ; ${ZIP} -q ${DSTDIR}.zip $FILE )
+
+    rm -rf $DSTDIR
+
+elif [ "$1" == "restore" ] ; then
+
+    mkdir -p $DSTDIR
+
+    ( cd $DSTDIR ; ${UNZIP} -q ${DSTDIR}.zip $FILE )
+
+    [ -f $DSTDIR/$FILE ] || { echo "$DSTDIR/$FILE not found" ; rm -rf $DSTDIR ; exit 1 ; }
+
+    sqlite3 $PALMDB < $DSTDIR/$FILE
+
+    ( cd $DSTDIR ; ls -1 $FILE )
+
+    rm -rf $DSTDIR
+
+fi
