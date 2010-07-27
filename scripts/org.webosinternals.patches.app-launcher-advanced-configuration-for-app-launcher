@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Advanced Configuration for App Launcher"
+
+source `dirname $0`/srf.app.info
+
+FILTER="key LIKE 'appLauncherCfg' OR key LIKE 'quickLaunchCfg'"
+
+source `dirname $0`/srf.app.preferences
+
+exit 0

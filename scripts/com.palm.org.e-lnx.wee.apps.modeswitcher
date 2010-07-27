@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Mode Switcher"
+
+source `dirname $0`/srf.app.info
+
+FILTER="key LIKE 'modeSwitcher' OR key LIKE 'modesConfig' OR key LIKE 'defaultMode'"
+
+source `dirname $0`/srf.app.preferences
+
+exit 0
