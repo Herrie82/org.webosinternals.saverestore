@@ -10,7 +10,7 @@ FIELDS="key,value"
 
 [ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
 
-PALMDB=/var/palm/data/preferences.db
+PALMDB=/var/luna/preferences/systemprefs.db
 FILE=preferences.sql
 
 if [ "$1" == "save" ] ; then
