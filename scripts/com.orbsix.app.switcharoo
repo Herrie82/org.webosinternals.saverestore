@@ -1,0 +1,18 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Wallpaper Switcharoo"
+
+source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.cookies
+
+SRCDIR="/media/internal/switcharoo"
+DSTSUB="switcharoo"
+FILES="*"
+
+[ -d "${SRCDIR}" ] || { mkdir ${SRCDIR} ; }
+
+source `dirname $0`/srf.app.files
+
+exit 0
