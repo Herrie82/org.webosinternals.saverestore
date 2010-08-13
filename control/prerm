@@ -24,4 +24,7 @@ rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
 # Remove the saverestore executable
 rm -f /var/usr/sbin/${PID}
 
+# Remove the scripts
+rm -rf /var/svc/${PID}
+
 exit 0

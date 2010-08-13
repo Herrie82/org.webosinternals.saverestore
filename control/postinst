@@ -29,8 +29,8 @@ else
 fi
 
 # Install the saverestore scripts
-mkdir -p /var/svc/org.webosinternals.saverestore
-tar -C /var/svc/org.webosinternals.saverestore -zxf $APPS/usr/palm/applications/${PID}/scripts.tgz
+mkdir -p /var/svc/${PID}
+tar -C /var/svc/${PID} -zxf $APPS/usr/palm/applications/${PID}/scripts.tgz
 
 # Stop any existing service
 /sbin/stop ${PID} || true
