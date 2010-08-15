@@ -1,0 +1,17 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="LaunchPoint Speed Dial"
+APPNOTE="Works in conjunction with the Launcher script, and only saves the pic of the Launchpoints, not the launcher icons themselves.  Luna Restart required after restore"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="/media/internal/.launchpoint"
+DSTSUB="LaunchPoint"
+FILES="*"
+
+[ -d "${SRCDIR}" ] || { mkdir -p ${SRCDIR} ; }
+
+source `dirname $0`/srf.app.files
+
+exit 0
