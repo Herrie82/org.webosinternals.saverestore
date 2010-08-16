@@ -9,6 +9,15 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.1', log: [ 'Added support for Preferences-type backups, including support for Mode Switcher',
+                                    'Applications: Quit Smoking Tracker (courtesy of Chakat Silverstreak), NaNPlayer  (courtesy of mamouton)',
+                                    'Applications: TealSpeed, Brothers In Arms 2, YP Mobile (all courtesy of djgardn2)',
+                                    'Applications: My DataBank Unlimited, Movie Diary (courtesy of pip smith)',
+                                    'Applications: Wifi Profiles, YouView, Facebook, Facebook Beta, Cronk, Internalz, ZumoDrive, Switcharoo Free, Wallpaper Switcharoo, ' +
+					    'Brightness Unlinked, WiFi Media Sync, Quick Event, LaunchPoint Speed Dial (courtesy of Audemars02)',
+                                    'Applications: Spades, DZ.Tanks, foursquare, Geocaching for webOS BETA, Speed Brain, Pandora, Card Ace, Card Ace: Blackjack, Word Ace, WHERE, ' +
+					    'Bible (Youversion), Solitaire Collection (minego), Solitaire Collection Beta (minego), LED torch, AccuRadio, Flixster, Convert, Unit Wizard, ' +
+                                  'Slacker Radio, Trapster, Weather Channel, Units, MyQ for Netflix, Terminal (all courtesy of StoneRyno)' ] },
 	 { version: '1.0.0', log: [ 'Rolled up all the 0.9.x alpha releases into a new public release' ] },
 	 { version: '0.9.13', log: [ 'Updated Google Account Search script',
                                     'Applications: SecuStore (App Catalog), SecuStore Lite',
