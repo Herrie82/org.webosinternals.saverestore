@@ -10,9 +10,7 @@
 : ${OPTIONAL:="false"} 
 
 # By default assume no spaces in filenames
-: ${NEWIFS:=$IFS} 
-
-
+: ${NEWIFS:=$IFS}
 
 if [ -n "${DSTSUB}" ] ; then
     DSTPATH=${DSTDIR}/${DSTSUB}
