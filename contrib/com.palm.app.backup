@@ -1,0 +1,157 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Misc OS Backup Files"
+APPNOTE="Luna Restart required after restore.  Does not restore PalmDatabase, cookies.db, databases.db or /dev/tokens/"
+APPDIR="/usr/palm/sysmgr/images/"
+
+source `dirname $0`/srf.app.info
+
+# Save/restore a variety of user-updated personalized files (boot logo, lock screen)
+SRCDIR="/usr/palm/sysmgr/images/"
+DSTSUB="sysimages"
+
+FILES="palm-logo.png* palm-logo-bright.png* screen-lock-padlock*.png screen-lock-target-scrim.png screen-lock-wallpaper-mask*.png"
+
+source `dirname $0`/srf.app.files
+
+# Save/restore a variety of phone-related personalized files
+SRCDIR="/usr/palm/applications/com.palm.app.phone/images"
+DSTSUB="phoneimages"
+
+FILES="backdrop*.png* phone-menu-short-fade.png* list-section-line.png*"
+
+source `dirname $0`/srf.app.files
+
+# Save PalmDatabase.db3, but do not restore
+SRCDIR="/var/luna/data/dbdata"
+FILES="PalmDatabase.db3"
+DSTSUB="dbdata"
+
+if [ "$1" == "save" ] ; then
+   source `dirname $0`/srf.app.files
+fi
+
+if [ "$1" == "restore" ] ; then
+   echo "PalmDatabase.db3 not restored"
+fi
+
+# Save cookies.db and databases.db, but do not restore
+SRCDIR="/var/palm/data/"
+FILES="cookies.db Databases.db"
+DSTSUB="data"
+
+if [ "$1" == "save" ] ; then
+   source `dirname $0`/srf.app.files
+fi
+
+if [ "$1" == "restore" ] ; then
+   echo "cookies.db and database.db not restored"
+fi
+
+# Save systemprefs.db, but do not restore
+SRCDIR="/var/luna/preferences/"
+FILES="systemprefs.db"
+DSTSUB="preferences"
+
+if [ "$1" == "save" ] ; then
+   source `dirname $0`/srf.app.files
+fi
+
+if [ "$1" == "restore" ] ; then
+   echo "systemprefs.db not restored"
+fi
+
+# Save /dev/tokens, but do not restore
+SRCDIR="/dev/tokens/"
+DSTSUB="tokens"
+FILES="*"
+
+if [ "$1" == "save" ] ; then
+   source `dirname $0`/srf.app.files
+fi
+
+if [ "$1" == "restore" ] ; then
+   echo "/dev/tokens/* not restored"
+fi
+
+# Save individual language autocorrect dictionary
+SRCDIR="/etc/palm/autoreplace/de_de/"
+DSTSUB="de_de"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/en_ca/"
+DSTSUB="en_ca"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/en_gb/"
+DSTSUB="en_gb"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/en_ie/"
+DSTSUB="en_ie"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/en_mx/"
+DSTSUB="en_mx"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/en_us/"
+DSTSUB="en_us"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/es_es/"
+DSTSUB="es_es"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/es_mx/"
+DSTSUB="es_mx"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/es_us/"
+DSTSUB="es_us"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/fs_ca/"
+DSTSUB="fr_ca"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/fr_fr/"
+DSTSUB="fr_fr"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/it_it/"
+DSTSUB="it_it"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+# Save "/etc/palm/test-edit-autoreplace" file
+SRCDIR="/etc/palm/"
+DSTSUB="palm"
+FILES="text-edit-autoreplace"
+source `dirname $0`/srf.app.files
+
+exit 0

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="ZZZ Save Restore Zip Creation"
+APPNOTE="Only Creates ZIP file.  Does not restore"
+
+source `dirname $0`/srf.app.info
+
+if [ "$1" == "save" ] ; then
+  cd /media/internal
+  ${ZIP} -q -r saverestore-${TIMESTAMP}.zip saverestore/*
+  cd /
+  echo saverestore-${TIMESTAMP}.zip created
+fi
+
+if [ "$1" == "restore" ] ; then
+  echo ZIP file is not restored
+fi
+
+exit 0
