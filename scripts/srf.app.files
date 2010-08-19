@@ -53,7 +53,6 @@ elif [ "$1" == "restore" ] ; then
 
     mkdir -p ${DSTDIR}
 
-    IFS=$'\n'
     if [ -n "${DSTSUB}" ] ; then
 	( cd ${DSTDIR} ; ${UNZIP} -q ${DSTDIR}.zip ${DSTSUB}/* )
     else
