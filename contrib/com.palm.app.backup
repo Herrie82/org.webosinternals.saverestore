@@ -66,6 +66,7 @@ fi
 SRCDIR="/dev/tokens/"
 DSTSUB="tokens"
 FILES="*"
+OPTIONAL=true
 
 if [ "$1" == "save" ] ; then
    source `dirname $0`/srf.app.files
@@ -153,5 +154,7 @@ SRCDIR="/etc/palm/"
 DSTSUB="palm"
 FILES="text-edit-autoreplace"
 source `dirname $0`/srf.app.files
+
+OPTIONAL=false
 
 exit 0
