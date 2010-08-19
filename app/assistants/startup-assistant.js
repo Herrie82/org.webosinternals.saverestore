@@ -9,6 +9,8 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.4', log: [ 'Fixed issue created when allowing filenames that include spaces',
+                                    'Fixed application names for a few scripts' ] },
 	 { version: '1.0.3', log: [ 'Allows for filenames that include spaces',
                                     'Applications: AutoReplace Dictionary Backup, wIRC (updated), pReader, Photo Safe, YouTube (courtesy of Audemars02)',
                                     'Applications: Fliq Tasks, Sorting Thoughts, bit.ly (all courtesy of djgardn2), SiDiary Exporter (courtesy of Taurec), My Pets (courtesy of rgisraelsen)' ] },
