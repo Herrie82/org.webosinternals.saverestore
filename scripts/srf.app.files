@@ -57,9 +57,9 @@ elif [ "$1" == "restore" ] ; then
     mkdir -p ${DSTDIR}
 
     if [ -n "${DSTSUB}" ] ; then
-	( cd ${DSTDIR} ; ${UNZIP} -q ${DSTDIR}.zip ${DSTSUB}/* )
+	( cd ${DSTDIR} ; ${UNZIP} -q -o ${DSTDIR}.zip ${DSTSUB}/* )
     else
-	( cd ${DSTDIR} ; ${UNZIP} -q ${DSTDIR}.zip ${FILES} )
+	( cd ${DSTDIR} ; ${UNZIP} -q -o ${DSTDIR}.zip ${FILES} )
     fi
 
     [ -d "${DSTPATH}" ] || \

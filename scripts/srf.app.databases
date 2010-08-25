@@ -58,7 +58,7 @@ elif [ "$1" == "restore" ] ; then
 	    APPID=$db
 	fi
 
-	( cd $DSTDIR ; ${UNZIP} -q ${DSTDIR}.zip $APPID )
+	( cd $DSTDIR ; ${UNZIP} -q -o ${DSTDIR}.zip $APPID )
 
 	[ -f $DSTDIR/$APPID ] || { echo "$DSTDIR/$APPID not found" ; rm -rf $DSTDIR ; exit 1 ; }
 

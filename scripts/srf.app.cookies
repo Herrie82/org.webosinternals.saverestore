@@ -31,7 +31,7 @@ elif [ "$1" == "restore" ] ; then
 
     mkdir -p $DSTDIR
 
-    ( cd $DSTDIR ; ${UNZIP} -q ${DSTDIR}.zip $FILE )
+    ( cd $DSTDIR ; ${UNZIP} -q -o ${DSTDIR}.zip $FILE )
 
     [ -f $DSTDIR/$FILE ] || { echo "$DSTDIR/$FILE not found" ; rm -rf $DSTDIR ; exit 1 ; }
 
