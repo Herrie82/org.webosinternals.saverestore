@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Angry Birds"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="highscores.lua settings.lua"
+
+source `dirname $0`/srf.app.files
+
+exit 0
