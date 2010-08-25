@@ -9,9 +9,6 @@
 # By default the referenced files must exist
 : ${OPTIONAL:="false"} 
 
-# By default assume no spaces in filenames
-: ${NEWIFS:=$IFS}
-
 if [ -n "${DSTSUB}" ] ; then
     DSTPATH=${DSTDIR}/${DSTSUB}
 else
@@ -19,9 +16,6 @@ else
 fi
 
 [ -d "${APPDIR}" ] || { echo "${APPID} not installed" ; exit 0 ; }
-
-OIFS=$IFS
-IFS=$NEWIFS
 
 if [ "$1" == "save" ] ; then
 
@@ -82,6 +76,3 @@ elif [ "$1" == "restore" ] ; then
     rm -rf ${DSTDIR}
 
 fi
-
-IFS=$OIFS
-NEWIFS=$OIFS
