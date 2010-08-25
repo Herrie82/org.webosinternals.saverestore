@@ -1,7 +1,7 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="Misc OS Backup Files + AutoReplace"
+APPNAME="Misc OS Backup Files"
 APPNOTE="Luna Restart required after restore.  Does not restore PalmDatabase, cookies.db, databases.db or /dev/tokens/"
 APPDIR="/usr/palm/sysmgr/images/"
 
@@ -75,85 +75,6 @@ fi
 if [ "$1" == "restore" ] ; then
    echo "/dev/tokens/* not restored"
 fi
-
-# Save individual language autocorrect dictionary
-SRCDIR="/etc/palm/autoreplace/de_de/"
-DSTSUB="de_de"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/en_ca/"
-DSTSUB="en_ca"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/en_gb/"
-DSTSUB="en_gb"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/en_ie/"
-DSTSUB="en_ie"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/en_mx/"
-DSTSUB="en_mx"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/en_us/"
-DSTSUB="en_us"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/es_es/"
-DSTSUB="es_es"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/es_mx/"
-DSTSUB="es_mx"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/es_us/"
-DSTSUB="es_us"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/fs_ca/"
-DSTSUB="fr_ca"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/fr_fr/"
-DSTSUB="fr_fr"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-SRCDIR="/etc/palm/autoreplace/it_it/"
-DSTSUB="it_it"
-OPTIONAL=true
-FILES="*"
-source `dirname $0`/srf.app.files
-
-# Save "/etc/palm/test-edit-autoreplace" file
-SRCDIR="/etc/palm/"
-DSTSUB="palm"
-FILES="text-edit-autoreplace"
-source `dirname $0`/srf.app.files
 
 OPTIONAL=false
 
