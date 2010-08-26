@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.6', log: [ 'Applications: TouchConnect+, Mobile Hotspot (both courtesy of Audemars02), SmartRunner (courtesy of djgardn2)' ] },
 	 { version: '1.0.5', log: [ 'Fixed case insensitive unzip overwrite query bug',
                                     'Applications: Angry Birds' ] },
 	 { version: '1.0.4', log: [ 'Fixed issue created when allowing filenames that include spaces',
