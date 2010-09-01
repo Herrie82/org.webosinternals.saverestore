@@ -493,7 +493,7 @@ bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char 
   char command[MAXLINLEN];
 
   // Extract the id argument from the message
-  json_t *object = LSMessageGetPayloadJSON(message);
+  json_t *object = json_parse_document(LSMessageGetPayload(message));
   json_t *id = json_find_first_label(object, "id");               
   if (!id || (id->child->type != JSON_STRING) || (strspn(id->child->text, ALLOWED_CHARS) != strlen(id->child->text))) {
     if (!LSMessageReply(lshandle, message,

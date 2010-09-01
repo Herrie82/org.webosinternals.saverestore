@@ -18,6 +18,10 @@ APPS=/media/cryptofs/apps
 # Remove the dbus service
 rm -f /usr/share/dbus-1/system-services/${PID}.service /var/palm/system-services/${PID}.service
 
+# Remove the ls2 roles
+rm -f /usr/share/ls2/roles/prv/${PID}.json /var/palm/ls2/roles/prv/${PID}.json
+rm -f /usr/share/ls2/roles/pub/${PID}.json /var/palm/ls2/roles/pub/${PID}.json
+
 # Remove the upstart script
 rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
 

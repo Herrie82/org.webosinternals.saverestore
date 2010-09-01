@@ -1,0 +1,14 @@
+{
+  "role": {
+     "exeName":"/var/usr/sbin/org.webosinternals.saverestore",
+     "type": "regular",
+     "allowedNames": ["org.webosinternals.saverestore"]
+  },
+  "permissions": [
+    {
+      "service":"org.webosinternals.saverestore",
+      "inbound":["*"],
+      "outbound":["*"]
+    }
+  ]
+}

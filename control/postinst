@@ -28,6 +28,14 @@ else
   cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
 fi
 
+# Install the ls2 roles
+rm -f /usr/share/ls2/roles/prv/${PID}.json /var/palm/ls2/roles/prv/${PID}.json
+rm -f /usr/share/ls2/roles/pub/${PID}.json /var/palm/ls2/roles/pub/${PID}.json
+if [ -d /usr/share/ls2/roles ] ; then
+  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.json /usr/share/ls2/roles/prv/${PID}.json
+  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.json /usr/share/ls2/roles/pub/${PID}.json
+fi
+
 # Install the saverestore scripts
 mkdir -p /var/svc/${PID}
 tar -C /var/svc/${PID} -zxf $APPS/usr/palm/applications/${PID}/scripts.tgz
@@ -42,11 +50,5 @@ install -m 755 $APPS/usr/palm/applications/${PID}/bin/${PID} /var/usr/sbin/${PID
 
 # Start the service
 /sbin/start ${PID}
-
-# Check the upstart script is installed
-[ -f /var/palm/event.d/${PID} ] || [ -f /etc/event.d/${PID} ] || exit 1
-
-# Check the dbus service is installed
-[ -f /var/palm/system-services/${PID}.service ] || [ -f /usr/share/dbus-1/system-services/${PID}.service ] || exit 1
 
 exit 0
