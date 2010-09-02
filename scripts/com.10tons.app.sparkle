@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Sparkle"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/MythPeople/Sparkle/user"
+FILES="game_progress_001.dat settings.lua profiles.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0

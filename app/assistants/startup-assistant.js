@@ -9,6 +9,8 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.7', log: [ 'Applications: EasyList, Cosmic Nitro, TechTray, GPS Trip Panel, Raging Thunder, Whats for dinner? Lite (all courtesy of djgardn2)',
+                                    'Applications: Crusade Of Destiny, Rednecks Vs Aliens (both courtesy of mamouton), TrackMyWork Full (courtesy of kr_ke), Sparkle (courtesy of pip smith)' ] },
 	 { version: '1.0.6', log: [ 'Applications: TouchConnect+, Mobile Hotspot (both courtesy of Audemars02), SmartRunner (courtesy of djgardn2)' ] },
 	 { version: '1.0.5', log: [ 'Fixed case insensitive unzip overwrite query bug',
                                     'Applications: Angry Birds' ] },
