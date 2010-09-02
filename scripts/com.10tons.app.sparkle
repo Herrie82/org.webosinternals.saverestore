@@ -6,7 +6,7 @@ APPNAME="Sparkle"
 source `dirname $0`/srf.app.info
 
 SRCDIR="$APPDIR/MythPeople/Sparkle/user"
-FILES="game_progress_001.dat settings.lua profiles.dat"
+FILES="game_progress_*.dat settings.lua profiles.dat level_times.dat"
 
 source `dirname $0`/srf.app.files
 
