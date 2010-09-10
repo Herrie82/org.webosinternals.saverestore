@@ -12,43 +12,48 @@ APPS=/media/cryptofs/apps
 
 [ -d $APPS ] || { echo "Requires webOS 1.3.5 or later" ; exit 1 ; }
 
-# Install the upstart script
-rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
-if [ -d /var/palm/event.d ] ; then
-  cp $APPS/usr/palm/applications/${PID}/upstart/${PID} /var/palm/event.d/${PID}
-else
-  cp $APPS/usr/palm/applications/${PID}/upstart/${PID} /etc/event.d/${PID}
-fi
+# Remove the saverestore executable
+rm -f /var/usr/sbin/${PID}
 
-# Install the dbus service
+# Remove the dbus service
 rm -f /usr/share/dbus-1/system-services/${PID}.service /var/palm/system-services/${PID}.service
-if [ -d /var/palm/system-services ] ; then
-  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.service /var/palm/system-services/${PID}.service
-else
-  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.service /usr/share/dbus-1/system-services/${PID}.service
-fi
 
-# Install the ls2 roles
+# Remove the ls2 roles
 rm -f /usr/share/ls2/roles/prv/${PID}.json /var/palm/ls2/roles/prv/${PID}.json
 rm -f /usr/share/ls2/roles/pub/${PID}.json /var/palm/ls2/roles/pub/${PID}.json
-if [ -d /usr/share/ls2/roles ] ; then
-  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.json /usr/share/ls2/roles/prv/${PID}.json
-  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.json /usr/share/ls2/roles/pub/${PID}.json
+
+# Stop the service if running
+/sbin/stop ${PID} || true
+/usr/bin/killall -9 ${PID} || true
+
+# Remove the upstart script
+rm -f /etc/event.d/${PID} /var/palm/event.d/${PID}
+
+# Install the saverestore executable
+mkdir -p /var/usr/sbin/
+install -m 755 $APPS/usr/palm/applications/${PID}/bin/${PID} /var/usr/sbin/${PID}
+
+# Install the dbus service
+mkdir -p /var/palm/system-services
+cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.service /var/palm/system-services/${PID}.service
+
+# Install the ls2 roles
+if [ -d /var/palm/ls2/roles ] ; then
+  mkdir -p /var/palm/ls2/roles/prv /var/palm/ls2/roles/pub
+  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.json /var/palm/ls2/roles/prv/${PID}.json
+  cp $APPS/usr/palm/applications/${PID}/dbus/${PID}.json /var/palm/ls2/roles/pub/${PID}.json
+  /usr/bin/ls-control scan-services || true
 fi
+
+# Install the upstart script
+mkdir -p /var/palm/event.d
+cp $APPS/usr/palm/applications/${PID}/upstart/${PID} /var/palm/event.d/${PID}
+
+# Start the service
+/sbin/start ${PID}
 
 # Install the saverestore scripts
 mkdir -p /var/svc/${PID}
 tar -C /var/svc/${PID} -zxf $APPS/usr/palm/applications/${PID}/scripts.tgz
-
-# Stop any existing service
-/sbin/stop ${PID} || true
-
-# Install the saverestore executable
-mkdir -p /var/usr/sbin/
-rm -f /var/usr/sbin/${PID}
-install -m 755 $APPS/usr/palm/applications/${PID}/bin/${PID} /var/usr/sbin/${PID}
-
-# Start the service
-/sbin/start ${PID}
 
 exit 0
