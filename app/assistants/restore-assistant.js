@@ -45,8 +45,8 @@ RestoreAssistant.prototype.setup = function() {
 	visible: true,
 	items: [
     { },
-    { label: "Select All", command: "toggleChecked" },
-    { label: "Restore Selected", command: "doRestore" },
+    { label: $L("Select All"), command: "toggleChecked" },
+    { label: $L("Restore Selected"), command: "doRestore" },
     { }
 		]
     }
@@ -77,7 +77,7 @@ RestoreAssistant.prototype.loadList = function() {
 };
 
 RestoreAssistant.prototype.restoreApps = function(event) {
-    this.buttonsModel.items[2].label = "Restoring ...";
+    this.buttonsModel.items[2].label = $L("Restoring ...");
     this.controller.modelChanged( this.buttonsModel );
 
     for (var i = 0; i < this.appListModel.items.length; i++) {
@@ -90,8 +90,8 @@ RestoreAssistant.prototype.restoreApps = function(event) {
 
 RestoreAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) {
-	this.buttonsModel.items[1].label = "Select All";
-	this.buttonsModel.items[2].label = "Restore Selected";
+	this.buttonsModel.items[1].label = $L("Select All");
+	this.buttonsModel.items[2].label = $L("Restore Selected");
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
 	return;
@@ -140,7 +140,7 @@ RestoreAssistant.prototype.handleCommand = function (event) {
 	    this.controller.modelChanged( this.appListModel );
 			
 	    // switch it up
-	    this.buttonsModel.items[1].label = this.toggleOn ? "Select None" : "Select All";
+	    this.buttonsModel.items[1].label = this.toggleOn ? $L("Select None") : $L("Select All");
 	    // Mojo.Log.info( "label: " + this.buttonsModel.items[1].label );
 	    this.controller.modelChanged( this.buttonsModel );
 	    this.toggleOn = !this.toggleOn;

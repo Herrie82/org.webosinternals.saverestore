@@ -45,8 +45,8 @@ SaveAssistant.prototype.setup = function() {
 	visible: true,
 	items: [
     { },
-    { label: "Select None", command: "toggleChecked" },
-    { label: "Save Selected", command: "doSave" },
+    { label: $L("Select None"), command: "toggleChecked" },
+    { label: $L("Save Selected"), command: "doSave" },
     { }
 		]
     }
@@ -78,7 +78,7 @@ SaveAssistant.prototype.loadList = function() {
 };
 
 SaveAssistant.prototype.saveApps = function(event) {
-    this.buttonsModel.items[2].label = "Saving ...";
+    this.buttonsModel.items[2].label = $L("Saving ...");
     this.controller.modelChanged( this.buttonsModel );
 
     for (var i = 0; i < this.appListModel.items.length; i++) {
@@ -91,8 +91,8 @@ SaveAssistant.prototype.saveApps = function(event) {
 
 SaveAssistant.prototype.processApps = function() {
     if (this.processAppsList.length < 1) {
-	this.buttonsModel.items[1].label = "Select All";
-	this.buttonsModel.items[2].label = "Save Selected";
+	this.buttonsModel.items[1].label = $L("Select All");
+	this.buttonsModel.items[2].label = $L("Save Selected");
 	this.controller.modelChanged( this.buttonsModel );
 	this.toggleOn = true;
 	return;
@@ -141,7 +141,7 @@ SaveAssistant.prototype.handleCommand = function (event) {
 	    this.controller.modelChanged( this.appListModel );
 			
 	    // switch it up
-	    this.buttonsModel.items[1].label = this.toggleOn ? "Select None" : "Select All";
+	    this.buttonsModel.items[1].label = this.toggleOn ? $L("Select None") : $L("Select All");
 	    // Mojo.Log.info( "label: " + this.buttonsModel.items[1].label );
 	    this.controller.modelChanged( this.buttonsModel );
 	    this.toggleOn = !this.toggleOn;

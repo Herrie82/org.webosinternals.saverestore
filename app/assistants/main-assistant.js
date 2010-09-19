@@ -165,7 +165,7 @@ MainAssistant.prototype.activate = function(event) {
 	}
 	this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
 	var appController = Mojo.Controller.getAppController();
-	appController.showBanner({ messageText: "Loading archive data ..." }, {}, "initApps");
+	appController.showBanner({ messageText: $L("Loading archive data ...") }, {}, "initApps");
 	appDB.initApps(this.updateList.bind(this));
     }
 };
