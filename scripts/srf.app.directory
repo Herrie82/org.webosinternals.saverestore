@@ -1,0 +1,62 @@
+#!/bin/sh
+
+[ -n "${APPID}" ]     || { echo "srf.app.directory: APPID not defined"     ; exit 1 ; }
+[ -n "${APPDIR}" ]    || { echo "srf.app.directory: APPDIR not defined"    ; exit 1 ; }
+[ -n "${DSTDIR}" ]    || { echo "srf.app.directory: DSTDIR not defined"    ; exit 1 ; }
+[ -n "${SRCDIR}" ]    || { echo "srf.app.directory: SRCDIR not defined"    ; exit 1 ; }
+[ -n "${DIRECTORY}" ] || { echo "srf.app.directory: DIRECTORY not defined" ; exit 1 ; }
+
+# By default the referenced files must exist
+: ${OPTIONAL:="false"} 
+
+[ -d "${APPDIR}" ] || { echo "${APPID} not installed" ; exit 0 ; }
+
+OIFS=$IFS
+IFS=$'\n'
+
+DIRNAME=`echo "${DIRECTORY}" | tr -d ' \t'`
+
+if [ "$1" == "save" ] ; then
+
+    [ -d "${SRCDIR}" ] || \
+	{ [ "${OPTIONAL}" == "true" ] && return 0 ; } || \
+	{ echo "${SRCDIR} not found" ; exit 1 ; }
+
+    [ -d "${SRCDIR}/${DIRECTORY}" ] || \
+	[ "${OPTIONAL}" == "true" ] || \
+	{ echo "${SRCDIR}/${DIRECTORY} not found" ; exit 1 ; }
+
+    mkdir -p ${DSTDIR}
+
+    if [ -d "${SRCDIR}/${DIRECTORY}" ] ; then
+	( cd ${SRCDIR} ; ${ZIP} -q -r ${DSTDIR}/${DIRNAME}.zip "${DIRECTORY}" )
+	( cd ${DSTDIR} ; ls -1d ${DIRNAME}.zip )
+	( cd ${DSTDIR} ; ${ZIP} -q ${DSTDIR}.zip ${DIRNAME}.zip )
+    fi
+
+    rm -rf ${DSTDIR}
+
+elif [ "$1" == "restore" ] ; then
+
+    mkdir -p ${DSTDIR}
+
+    ( cd ${DSTDIR} ; ${UNZIP} -q -o ${DSTDIR}.zip )
+
+    [ -d "${DSTDIR}" ] || \
+	{ [ "${OPTIONAL}" == "true" ] && { rm -rf ${DSTDIR} ; return 0 ; } ; } || \
+	{ echo "${DSTDIR} not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
+
+    [ -f "${DSTDIR}/${DIRNAME}.zip" ] || \
+	[ "${OPTIONAL}" == "true" ] || \
+	{ echo "${DSTDIR}/${DIRNAME}.zip not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
+
+    if [ -f "${DSTDIR}/${DIRNAME}.zip" ] ; then
+	( cd ${SRCDIR} ; ${UNZIP} -q ${DSTDIR}/${DIRNAME}.zip )
+	( cd ${SRCDIR} ; ls -1d "${DIRECTORY}" )
+    fi
+
+    rm -rf ${DSTDIR}
+
+fi
+
+IFS=$OIFS
