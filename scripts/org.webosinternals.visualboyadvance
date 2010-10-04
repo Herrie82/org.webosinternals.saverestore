@@ -5,7 +5,7 @@ APPNAME="VisualBoy Advance"
 
 source `dirname $0`/srf.app.info
 
-DIRECTORIES="sav"
-source `dirname $0`/srf.app.directories
+DIRECTORY="sav"
+source `dirname $0`/srf.app.directory
 
 exit 0
