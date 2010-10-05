@@ -1,0 +1,14 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="putki"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="/media/internal/appdata/com.alphapolygon.putki/Saves"
+DSTSUB="Saves"
+FILES="tunneli.sts"
+
+source `dirname $0`/srf.app.files
+
+exit 0

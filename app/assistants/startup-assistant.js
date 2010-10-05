@@ -9,6 +9,14 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.10', log: [ 'Robustify postinst script',
+                                    'Added french translation support',
+                                    'Added support for saving a single directory',
+                                    'Robustify file-saving script to create the source directory if it does not already exist.  Updated Quick Contacts script accordingly',
+                                    'Applications: Jacksonville, New York Times, TodoTracker (all courtesy of djgardn2), Slide RSS (courtesy of appsotutely), Scratch Word Processor (courtesy of Chakat Silverstreak)',
+                                    'Applications: Astraware Casino (courtesy of Audemars02), Putki, SuperJump (both courtesy of pcworld), VisualBoy Advance (courtesy of rwhitby)',
+                                    'Applications: College Football Live, International Soccer Live, UK Football Live, Womens Basketball Live (all courtesy of MoreSolutions)',
+                                    'Applications: Angry Birds Lite, BFG Maps, BFG Maps Beta, Bluetooth Profiles, Crimson Fields, Frootrees, Lumberjack, Sparkle Lite (all courtesy of StoneRyno)' ] },
 	 { version: '1.0.9', log: [ 'Robustify the installation scripts',
                                     'Applications: Music (Remix), Music Wave Lite, Fuzzies  (all courtesy of mamouton)',
                                     'Applications: Brain Challenge HD, TangramPuzzle Lite, TangramPuzzle (all courtesy of Audemars02)' ] },

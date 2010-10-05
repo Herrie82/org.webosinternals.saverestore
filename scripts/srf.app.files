@@ -17,6 +17,8 @@ fi
 
 [ -d "${APPDIR}" ] || { echo "${APPID} not installed" ; exit 0 ; }
 
+[ -d "${SRCDIR}" ] || { mkdir ${SRCDIR} ; }
+
 if [ "$1" == "save" ] ; then
 
     [ -d "${SRCDIR}" ] || \
