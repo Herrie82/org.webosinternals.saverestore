@@ -51,7 +51,7 @@ elif [ "$1" == "restore" ] ; then
 	{ echo "${DSTDIR}/${DIRNAME}.zip not found" ; rm -rf ${DSTDIR} ; exit 1 ; }
 
     if [ -f "${DSTDIR}/${DIRNAME}.zip" ] ; then
-	( cd ${SRCDIR} ; ${UNZIP} -q ${DSTDIR}/${DIRNAME}.zip )
+	( cd ${SRCDIR} ; ${UNZIP} -q -o ${DSTDIR}/${DIRNAME}.zip )
 	( cd ${SRCDIR} ; ls -1d "${DIRECTORY}" )
     fi
 
