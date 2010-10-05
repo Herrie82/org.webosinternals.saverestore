@@ -1,0 +1,15 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Bluetooth"
+APPDIR="/var/preferences/com.palm.bluetooth/"
+APPNOTE="Device Restart required after restore"
+
+source `dirname $0`/srf.app.info
+
+FILES="prefsDB.sl"
+OPTIONAL=true
+
+source `dirname $0`/srf.app.files
+
+exit 0
