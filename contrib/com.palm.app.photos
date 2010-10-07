@@ -1,0 +1,23 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPDIR="/usr/palm/applications/$APPID"
+APPNAME="Photos (Photo Roll) & Videos (Video Roll)"
+APPNOTE="This ZIPs up all the photos in your Photo Roll and all the Videos in your Video Roll. Only Creates a zip file, and does not restore"
+
+source `dirname $0`/srf.app.info
+
+# If your directory differs from "100PALM", change the DIRECTORY listed below
+
+if [ "$1" == "save" ] ; then
+   SRCDIR="/media/internal/DCIM"
+   DIRECTORY="100PALM"
+   source `dirname $0`/srf.app.directory
+
+fi
+ 
+if [ "$1" == "restore" ] ; then
+   echo Restore of ZIP file is not supported
+fi
+
+exit 0

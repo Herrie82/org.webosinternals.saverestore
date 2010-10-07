@@ -1,6 +1,9 @@
 The scripts included in this directory ( /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib ) are scripts that have been provided in the PreCentral forums but have not been released within the Save/Restore App itself.  These are considered more complex scripts that may not be needed for the general population.
 
-There are currently 3 scripts in this folder:
+There are currently 4 scripts in this folder, plus one executable (sr-acal). 
+
+The 4 scripts are:
+
 1. com.palm.app.backup - Misc OS Backup Files + AutoReplace
     > This file replaces the existing com.palm.app.backup file in the scripts directory (that currently only saves the AutoReplace Dictionary).  This expanded script also saves: a variety of system and phone images that a user may customize, the PalmDatabase.db3, cookies.db, Databases.db, systemprefs.db, and all the /dev/tokens/.  Note that the only the images are included in a restore, not the database files or the tokens
 
@@ -10,6 +13,11 @@ There are currently 3 scripts in this folder:
 3. org.webosinternals.saverestore - ZZZ Save Restore Zip Creation
     > This files creates a ZIP file called saverestore-(timestamp).zip with a zipped up version of your entire save/restore directory [replacing (timestamp) with the actual timestamp]! Right now this is placed in the USB root directory (i.e /media/internal), although you can of course modify this. The script It is named "ZZZ Save Restore Zip creation" so that it appears at the very bottom of the save/restore installed apps list and will therefore will always be run last.
 
+4. com.palm.app.photos - This will ZIP up all the files in your /media/internal/DCIM/100PALM directory.  
+    > This directory contains all the photos you have taken with your Camera and all the videos from your camcorder.  
+    > This can be used to create backups of these directories for uploading to a cloud-storage app while not near a computer
+    > Note, if the directory your files are saved differs from 100PALM (e.g. 101PALM), you will need to edit the script
+  
 In order to get these files into your scripts directory, you need to do one of the following 2 things: 
 
 1) Run the following to command via Command Line (replacing [script name] with the name of the script you want
@@ -18,6 +26,16 @@ In order to get these files into your scripts directory, you need to do one of t
 2) using Internals:
     > Go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/
     > Select each script you want and select "copy" to /var/svc/org.webosinternals.saverestore
+
+
+The one executable (sr-acal) is a way for you to easily run the script to SAVE your preferences for "Advanced Configuration for App Launcher" (acal) patch.  To use this script, you need to do:
+1. copy this script to the root of your device by either:
+     1) Run the following to command via Command Line: cp /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/sr-acal /
+     2) using Internals, activate "Master Mode" in preferences, go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/, and tap sr-acal, "copy" to / (top level).  
+         > Don't forget to unselect Master Mode in Internalz
+2. At any time, load up Terminal and just type (without the ">"):
+    > cd /
+    > sr-acal
 
 Let me know if you have any questions
 Audemars02 in PreCentral Forums

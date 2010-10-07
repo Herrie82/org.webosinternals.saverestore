@@ -9,6 +9,8 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.11', log: [ 'Robustify the Directory script',
+                                    'Added a photos/videos backup script and an executable for App Launcher Advanced Config script in the /contrib (see Readme.txt file in that directory for details)' ] },
 	 { version: '1.0.10', log: [ 'Robustify postinst script',
                                     'Added french translation support',
                                     'Added support for saving a single directory',
