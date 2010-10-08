@@ -1,0 +1,1 @@
+sh -x /var/svc/org.webosinternals.saverestore/org.webosinternals.patches.advanced-configuration-for-system-preferences save

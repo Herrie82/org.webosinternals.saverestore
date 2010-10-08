@@ -1,6 +1,6 @@
 The scripts included in this directory ( /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib ) are scripts that have been provided in the PreCentral forums but have not been released within the Save/Restore App itself.  These are considered more complex scripts that may not be needed for the general population.
 
-There are currently 4 scripts in this folder, plus one executable (sr-acal). 
+There are currently 4 scripts in this folder, plus two executable (sr-acal and sr-acsp). 
 
 The 4 scripts are:
 
@@ -28,14 +28,11 @@ In order to get these files into your scripts directory, you need to do one of t
     > Select each script you want and select "copy" to /var/svc/org.webosinternals.saverestore
 
 
-The one executable (sr-acal) is a way for you to easily run the script to SAVE your preferences for "Advanced Configuration for App Launcher" (acal) patch.  To use this script, you need to do:
-1. copy this script to the root of your device by either:
-     1) Run the following to command via Command Line: cp /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/sr-acal /
-     2) using Internals, activate "Master Mode" in preferences, go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/, and tap sr-acal, "copy" to / (top level).  
-         > Don't forget to unselect Master Mode in Internalz
-2. At any time, load up Terminal and just type (without the ">"):
-    > cd /
-    > sr-acal
+The two executable (sr-acal and sr-acsp) are ways for you to easily run the script to SAVE your preferences for "Advanced Configuration for App Launcher" (acal) patch or "Advanced Configuration for System Preferences" (acsp).  To use these script, you need to do:
+1. copy these script to the /var/home/root directory of your device by either:
+     1) Run the following to command via Command Line: cp /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/sr-acal /var/home/root
+     2) using Internals, go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/, and tap sr-acal or sr-acsp, "copy" to /var/home/root (top level).  
+2. At any time, load up Terminal (you should already be in /var/home/root) and just type "sr-acal" or "sr-acsp" (without the quotes)
 
 Let me know if you have any questions
 Audemars02 in PreCentral Forums

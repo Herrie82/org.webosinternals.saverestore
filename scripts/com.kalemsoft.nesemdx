@@ -1,0 +1,11 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="NesEm"
+
+source `dirname $0`/srf.app.info
+
+DIRECTORY="data/saves"
+source `dirname $0`/srf.app.directory
+
+exit 0
