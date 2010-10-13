@@ -9,6 +9,9 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.13', log: [ 'Application: FitTrack Beta (courtesy of troymiller)',
+                                    'Updated: Advanced Config for System Preferences patch (courtesy of tobias funke)',
+                                    'Robustify file-saving script when creating the source directory if it does not already exist.  ' ] },
 	 { version: '1.0.12', log: [ 'Application: NesEm (courtesy of djgardn2)',
                                     'Patch: Advanced Config for System Preferences (courtesy of tobias funke)',
                                     'Added executable to run Advanced Config for System Preferences to /contrib directory and updated readme file' ] },

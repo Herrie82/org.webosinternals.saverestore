@@ -62,7 +62,7 @@ OPTIONAL=true
 FILES="*"
 source `dirname $0`/srf.app.files
 
-SRCDIR="/etc/palm/autoreplace/fs_ca/"
+SRCDIR="/etc/palm/autoreplace/fr_ca/"
 DSTSUB="fr_ca"
 OPTIONAL=true
 FILES="*"
@@ -70,6 +70,12 @@ source `dirname $0`/srf.app.files
 
 SRCDIR="/etc/palm/autoreplace/fr_fr/"
 DSTSUB="fr_fr"
+OPTIONAL=true
+FILES="*"
+source `dirname $0`/srf.app.files
+
+SRCDIR="/etc/palm/autoreplace/fs_ca/"
+DSTSUB="fs_ca"
 OPTIONAL=true
 FILES="*"
 source `dirname $0`/srf.app.files
