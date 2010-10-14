@@ -14,4 +14,17 @@ QUERY="SELECT $FIELDS FROM com_palm_pim_FolderEntry WHERE messageType like \"%TA
 
 source `dirname $0`/srf.app.query
 
+DATABASE="/var/luna/data/dbdata/PalmDatabase.db3"
+TABLES="MMS"
+FIELDS="messageType,fromAddress,partNumber,partText,uri,timeStamp,deviceTimeStamp"
+QUERY="SELECT $FIELDS FROM com_palm_pim_FolderEntry INNER JOIN com_palm_pim_Part ON com_palm_pim_FolderEntry.id=com_palm_pim_Part.com_palm_pim_FolderEntry_id WHERE messageType like \"%TABLE%\" AND mimeType NOT LIKE \"application/smil\""
+
+source `dirname $0`/srf.app.query
+
+SRCDIR="/media/internal/.attachments"
+DIRECTORY="mms"
+OPTIONAL="true"
+
+source `dirname $0`/srf.app.directory
+
 exit 0

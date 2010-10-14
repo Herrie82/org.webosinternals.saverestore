@@ -9,6 +9,7 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.14', log: [ 'Added support for saving MMS messages' ] },
 	 { version: '1.0.13', log: [ 'Application: FitTrack Beta (courtesy of troymiller)',
                                     'Updated: Advanced Config for System Preferences patch (courtesy of tobias funke)',
                                     'Robustify file-saving script when creating the source directory if it does not already exist.  ' ] },
