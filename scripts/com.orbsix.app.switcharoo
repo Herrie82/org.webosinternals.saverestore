@@ -11,8 +11,6 @@ SRCDIR="/media/internal/switcharoo"
 DSTSUB="switcharoo"
 FILES="*"
 
-[ -d "${SRCDIR}" ] || { mkdir ${SRCDIR} ; }
-
 source `dirname $0`/srf.app.files
 
 exit 0

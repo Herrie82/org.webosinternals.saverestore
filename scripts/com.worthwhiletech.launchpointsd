@@ -10,8 +10,6 @@ SRCDIR="/media/internal/.launchpoint"
 DSTSUB="LaunchPoint"
 FILES="*"
 
-[ -d "${SRCDIR}" ] || { mkdir -p ${SRCDIR} ; }
-
 source `dirname $0`/srf.app.files
 
 exit 0
