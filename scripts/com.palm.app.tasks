@@ -1,0 +1,17 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Tasks"
+APPDIR="/usr/palm/applications/$APPID"
+APPNOTE="Restore not supported yet"
+
+source `dirname $0`/srf.app.info
+
+DATABASE="/var/luna/data/dbdata/PalmDatabase.db3"
+TABLES="Tasks"
+FIELDS="subject,notes,completed,completedDate,priority,dueDate"
+QUERY="SELECT $FIELDS FROM com_palm_pim_Task"
+
+source `dirname $0`/srf.app.query
+
+exit 0
