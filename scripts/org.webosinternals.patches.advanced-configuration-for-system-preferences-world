@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Advanced Configuration for System Preferences (World)"
+
+source `dirname $0`/srf.app.info
+
+FILTER="key LIKE 'contactPrefs' OR key LIKE 'emailPrefs' OR key LIKE 'phonePrefs' OR key LIKE 'msgPrefs' OR key LIKE 'hapticFeedback' OR key LIKE 'wifiKnownNetworks' OR key LIKE 'msgDrafts' OR key LIKE 'notifications' OR key LIKE 'notificationtone' OR key LIKE 'alerttone'"
+
+source `dirname $0`/srf.app.preferences
+
+exit 0

@@ -13,10 +13,10 @@ The 4 scripts are:
 3. org.webosinternals.saverestore - ZZZ Save Restore Zip Creation
     > This files creates a ZIP file called saverestore-(timestamp).zip with a zipped up version of your entire save/restore directory [replacing (timestamp) with the actual timestamp]! Right now this is placed in the USB root directory (i.e /media/internal), although you can of course modify this. The script It is named "ZZZ Save Restore Zip creation" so that it appears at the very bottom of the save/restore installed apps list and will therefore will always be run last.
 
-4. com.palm.app.photos - This will ZIP up all the files in your /media/internal/DCIM/100PALM directory.  
+4. com.palm.app.photos - This will ZIP up all the files in your /media/internal/DCIM/ directory.  
     > This directory contains all the photos you have taken with your Camera and all the videos from your camcorder.  
     > This can be used to create backups of these directories for uploading to a cloud-storage app while not near a computer
-    > Note, if the directory your files are saved differs from 100PALM (e.g. 101PALM), you will need to edit the script
+    > Note, this will save any directory under /DCIM (e.g. 100PALM, 101PALM), including any directories you may have manually added
   
 In order to get these files into your scripts directory, you need to do one of the following 2 things: 
 
@@ -28,13 +28,13 @@ In order to get these files into your scripts directory, you need to do one of t
     > Select each script you want and select "copy" to /var/svc/org.webosinternals.saverestore
 
 
-The two executable (sr-acal and sr-acsp) are ways for you to easily run the script to SAVE your preferences for "Advanced Configuration for App Launcher" (acal) patch or "Advanced Configuration for System Preferences" (acsp).  To use these script, you need to do:
+The three executable (sr-acal, sr-acsp, sr-acsp-w) are ways for you to easily run the script to SAVE your preferences for "Advanced Configuration for App Launcher" (acal) patch or "Advanced Configuration for System Preferences" (acsp).  To use these script, you need to do:
+NOTE: If you are using the World edition of "Advanced Configuration for System Preferences", you need to run the "sr-acsp-w" file
 1. copy these script to the /var/home/root directory of your device by either:
      1) Run the following to command via Command Line: cp /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/sr-acal /var/home/root
-     2) using Internals, go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/, and tap sr-acal or sr-acsp, "copy" to /var/home/root (top level).  
-2. At any time, load up Terminal (you should already be in /var/home/root) and just type "sr-acal" or "sr-acsp" (without the quotes)
+     2) using Internals, go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/, and tap sr-acal or sr-acsp or sr-acsp-w, "copy" to /var/home/root (top level).  
+2. At any time, load up Terminal (you should already be in /var/home/root) and just type "sr-acal" or "sr-acsp" or "sr-acsp-w" (without the quotes)
 
 Let me know if you have any questions
 Audemars02 in PreCentral Forums
 http://forums.precentral.net/webos-internals/237558-save-restore-community-development.html
-

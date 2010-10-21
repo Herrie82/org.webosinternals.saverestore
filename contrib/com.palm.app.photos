@@ -7,11 +7,11 @@ APPNOTE="This ZIPs up all the photos in your Photo Roll and all the Videos in yo
 
 source `dirname $0`/srf.app.info
 
-# If your directory differs from "100PALM", change the DIRECTORY listed below
+# This will save any subfolder under your /media/intenral/DCIM directory
 
 if [ "$1" == "save" ] ; then
-   SRCDIR="/media/internal/DCIM"
-   DIRECTORY="100PALM"
+   SRCDIR="/media/internal"
+   DIRECTORY="DCIM"
    source `dirname $0`/srf.app.directory
 
 fi
