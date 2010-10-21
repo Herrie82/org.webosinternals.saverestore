@@ -9,6 +9,9 @@ function StartupAssistant()
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.16', log: [ 'Patch: Advanced Config Sys Pref-World script',
+                                    'Applications: Astraware Boardgames, Angry Birds (Pixi) (both courtesy of Audemars02), Crosswords (courtesy of tobias funke)',
+                                    'Added executable for ACSP-World in the contrib directory. Updated Photos script and Readme.txt file in contrib directory.' ] },
 	 { version: '1.0.15', log: [ 'Added support for saving Tasks' ] },
 	 { version: '1.0.14', log: [ 'Added support for saving MMS messages' ] },
 	 { version: '1.0.13', log: [ 'Application: FitTrack Beta (courtesy of troymiller)',
