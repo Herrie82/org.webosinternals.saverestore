@@ -1,5 +1,7 @@
-function StartupAssistant()
+function StartupAssistant(changelog)
 {
+    this.justChangelog = changelog;
+
     // on first start, this message is displayed, along with the current version message from below
     this.firstMessage = $L('Here are some tips for first-timers:<ul><li>To see what Save/Restore is able to process, look in the Supported Applications list</li><li>For the subset of those applications that you have installed, Save/Restore can Save Application Data</li><li>For applications that have saved data, Save/Restore can Restore Application Data</li></ul>');
 	
@@ -173,21 +175,22 @@ StartupAssistant.prototype.setup = function()
     this.dataContainer =  this.controller.get('data');
 	
     // set title
-    if (vers.isFirst) {
-	this.titleContainer.innerHTML = $L('Welcome To Save/Restore');
+    if (this.justChangelog) {
+	this.titleContainer.innerHTML = $L('Changelog');
     }
-    else if (vers.isNew) {
-	this.titleContainer.innerHTML = $L('Save/Restore Changelog');
+    else {
+	if (vers.isFirst) {
+	    this.titleContainer.innerHTML = $L('Welcome To Save/Restore');
+	}
+	else if (vers.isNew) {
+	    this.titleContainer.innerHTML = $L('Save/Restore Changelog');
+	}
     }
 	
 	
     // build data
     var html = '';
-    if (vers.isFirst) {
-	html += '<div class="text">' + this.firstMessage + '</div>';
-    }
-    if (vers.isNew) {
-	html += '<div class="text">' + this.secondMessage + '</div>';
+    if (this.justChangelog) {
 	for (var m = 0; m < this.newMessages.length; m++) {
 	    html += Mojo.View.render({object: {title: 'v' + this.newMessages[m].version}, template: 'startup/changeLog'});
 	    html += '<ul>';
@@ -195,6 +198,22 @@ StartupAssistant.prototype.setup = function()
 		html += '<li>' + this.newMessages[m].log[l] + '</li>';
 	    }
 	    html += '</ul>';
+	}
+    }
+    else {
+	if (vers.isFirst) {
+	    html += '<div class="text">' + this.firstMessage + '</div>';
+	}
+	if (vers.isNew) {
+	    html += '<div class="text">' + this.secondMessage + '</div>';
+	    for (var m = 0; m < this.newMessages.length; m++) {
+		html += Mojo.View.render({object: {title: 'v' + this.newMessages[m].version}, template: 'startup/changeLog'});
+		html += '<ul>';
+		for (var l = 0; l < this.newMessages[m].log.length; l++) {
+		    html += '<li>' + this.newMessages[m].log[l] + '</li>';
+		}
+		html += '</ul>';
+	    }
 	}
     }
     
@@ -206,7 +225,9 @@ StartupAssistant.prototype.setup = function()
     this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 	
     // set command menu
-    this.controller.setupWidget(Mojo.Menu.commandMenu, { menuClass: 'no-fade' }, this.cmdMenuModel);
+    if (!this.justChangelog) {
+	this.controller.setupWidget(Mojo.Menu.commandMenu, { menuClass: 'no-fade' }, this.cmdMenuModel);
+    }
 	
     // set this scene's default transition
     this.controller.setDefaultTransition(Mojo.Transition.zoomFade);
