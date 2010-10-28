@@ -3,7 +3,7 @@
 APPID=`basename $0`
 APPNAME="Messaging"
 APPDIR="/usr/palm/applications/$APPID"
-APPNOTE="Restore not supported yet"
+APPNOTE="Restore not supported yet.  Actually attachments files are not backed up by the script.  To backup these files, copy the /.attachments directory from the USB drive to your computer"
 
 source `dirname $0`/srf.app.info
 
@@ -21,10 +21,10 @@ QUERY="SELECT $FIELDS FROM com_palm_pim_FolderEntry INNER JOIN com_palm_pim_Part
 
 source `dirname $0`/srf.app.query
 
-SRCDIR="/media/internal/.attachments"
-DIRECTORY="mms"
-OPTIONAL="true"
-
-source `dirname $0`/srf.app.directory
+# SRCDIR="/media/internal/.attachments"
+# DIRECTORY="mms"
+# OPTIONAL="true"
+# 
+# source `dirname $0`/srf.app.directory
 
 exit 0

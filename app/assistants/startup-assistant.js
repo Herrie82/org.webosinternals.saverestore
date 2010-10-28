@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.0.18', log: [ 'No longer saves file attachments from MMS messages. You will need to manually back up those files from /attachments directory on the USB drive' ] },
 	 { version: '1.0.17', log: [ 'Added a Changelog button to the Help scene' ] },
 	 { version: '1.0.16', log: [ 'Patch: Advanced Config Sys Pref-World script',
 				     'Applications: Astraware Boardgames, Angry Birds (Pixi) (both courtesy of Audemars02), Crosswords (courtesy of tobias funke)',
