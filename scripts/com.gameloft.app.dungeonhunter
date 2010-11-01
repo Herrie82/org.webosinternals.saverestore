@@ -6,7 +6,7 @@ APPNAME="Dungeon Hunter"
 source `dirname $0`/srf.app.info
 
 SRCDIR="$APPDIR/dungeonhunter/data"
-FILES="DQM_*.savegame"
+FILES="DQM_*.savegame DQM_*.savegame.bak"
 
 source `dirname $0`/srf.app.files
 

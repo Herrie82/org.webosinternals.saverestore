@@ -5,7 +5,8 @@ APPNAME="NesEm"
 
 source `dirname $0`/srf.app.info
 
-DIRECTORY="data/saves"
+SRCDIR="$APPDIR/data"
+DIRECTORY="saves"
 source `dirname $0`/srf.app.directory
 
 exit 0
