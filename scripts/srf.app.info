@@ -10,6 +10,20 @@
 ZIP=/media/cryptofs/apps/usr/bin/zip
 UNZIP=/media/cryptofs/apps/usr/bin/unzip
 
+# Calculate some version numbers
+WEBOS_VERSION=`grep PRODUCT_VERSION_STRING /etc/palm-build-info | sed -e 's/.* webOS \([0-9.]*\).*/\1/'`
+
+# Support version comparisons
+vercmp() {
+    expr '(' "$1" : '\([^.]*\)' ')' '-' '(' "$2" : '\([^.]*\)' ')' '|' \
+	'(' "$1" : '[^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.]\([^.]*\)' ')' '|' \
+	'(' "$1" : '[^.]*[.][^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.][^.]*[.]\([^.]*\)' ')' '|' \
+	'(' "$1" : '[^.]*[.][^.]*[.][^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.][^.]*[.][^.]*[.]\([^.]*\)' ')'
+}
+
+[ -n "$MIN_WEBOS_VERSION" ] && [ "`vercmp $WEBOS_VERSION $MIN_WEBOS_VERSION`" == "-1" ] && exit 0
+[ -n "$MAX_WEBOS_VERSION" ] && [ "`vercmp $WEBOS_VERSION $MAX_WEBOS_VERSION`" == "1"  ] && exit 0
+
 # Only keep the most recent archive
 MOSTRECENT=
 TIMESTAMP=
