@@ -1,5 +1,7 @@
 #!/bin/sh
 
+MAX_WEBOS_VERSION="1.4.5"
+
 APPID=`basename $0`
 APPNAME="AutoReplace Dictionary Backup (all languages)"
 APPNOTE="Luna Restart required after restore."

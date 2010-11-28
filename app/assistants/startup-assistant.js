@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.2.0', log: [ 'Added support for scripts that are dependent upon the webOS version' ] },
 	 { version: '1.1.0', log: [ 'Rolled up all the beta release features for a public release' ] },
 	 { version: '1.0.19', log: [ 'Applications: Whats for dinner? Premium (courtesy of rksand), NesEm (Updated), Dungeon Hunter (Updated), WOG O.S.K. (all courtesy of djgardn2)' ] },
 	 { version: '1.0.18', log: [ 'No longer saves file attachments from MMS messages. You will need to manually back up those files from /attachments directory on the USB drive' ] },

@@ -27,9 +27,13 @@ OPTIONAL=true
 
 source `dirname $0`/srf.app.files
 
-APPID="luna-applauncher"
-OPTIONAL=false
+if `webos_version_le 1.4.5` ; then
+    
+    APPID="luna-applauncher"
+    OPTIONAL=false
+    
+    source `dirname $0`/srf.app.databases
 
-source `dirname $0`/srf.app.databases
+fi
 
 exit 0

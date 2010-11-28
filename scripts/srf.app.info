@@ -17,12 +17,36 @@ WEBOS_VERSION=`grep PRODUCT_VERSION_STRING /etc/palm-build-info | sed -e 's/.* w
 vercmp() {
     expr '(' "$1" : '\([^.]*\)' ')' '-' '(' "$2" : '\([^.]*\)' ')' '|' \
 	'(' "$1" : '[^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.]\([^.]*\)' ')' '|' \
-	'(' "$1" : '[^.]*[.][^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.][^.]*[.]\([^.]*\)' ')' '|' \
-	'(' "$1" : '[^.]*[.][^.]*[.][^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.][^.]*[.][^.]*[.]\([^.]*\)' ')'
+	'(' "$1" : '[^.]*[.][^.]*[.]\([^.]*\)' ')' '-' '(' "$2" : '[^.]*[.][^.]*[.]\([^.]*\)' ')'
 }
 
 [ -n "$MIN_WEBOS_VERSION" ] && [ "`vercmp $WEBOS_VERSION $MIN_WEBOS_VERSION`" == "-1" ] && exit 0
 [ -n "$MAX_WEBOS_VERSION" ] && [ "`vercmp $WEBOS_VERSION $MAX_WEBOS_VERSION`" == "1"  ] && exit 0
+
+webos_version_lt() {
+    [ "`vercmp $WEBOS_VERSION $1`" == "-1" ] && return 0
+    return 1
+}
+
+webos_version_le() {
+    [ "`vercmp $WEBOS_VERSION $1`" != "1" ] && return 0
+    return 1
+}
+
+webos_version_eq() {
+    [ "`vercmp $WEBOS_VERSION $1`" == "0" ] && return 0
+    return 1
+}
+
+webos_version_ge() {
+    [ "`vercmp $WEBOS_VERSION $1`" != "-1" ] && return 0
+    return 1
+}
+
+webos_version_gt() {
+    [ "`vercmp $WEBOS_VERSION $1`" == "1" ] && return 0
+    return 1
+}
 
 # Only keep the most recent archive
 MOSTRECENT=
