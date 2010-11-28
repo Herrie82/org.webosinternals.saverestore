@@ -369,6 +369,9 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   // Was there an error in accessing any of the files?
   bool error = false;
 
+  // Length of buffer before the last command
+  int lastlen = 0;
+
   // Initialise the command to read the list of config files.
   sprintf(command, "/bin/ls -1 %s 2>&1", scriptdir);
 
@@ -389,6 +392,7 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 
   // Initialise the output message.
   strcpy(buffer, "{");
+  lastlen = strlen(buffer);
 
   // Loop through the list of files in the scripts directory.
   while (fgets( filename, sizeof filename, fp)) {
@@ -421,21 +425,24 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 
       // Initialise the output message.
       strcpy(buffer, "{");
+      lastlen = strlen(buffer);
     }
 
     // Chomp the newline
     char *nl = strchr(filename,'\n'); if (nl) *nl = 0;
 
-    // Ignore the arch.conf file
+    // Ignore the saverestore function files
     if (!strncmp(filename, "srf.", 4)) continue;
 
     // Start or continue the JSON array
     if (first) {
       strcat(buffer, "\"scripts\": [");
+      lastlen = strlen(buffer);
       first = false;
     }
-    else {
+    else if (strlen(buffer) > lastlen) {
       strcat(buffer, ", ");
+      lastlen = strlen(buffer);
     }
 
     // Initialise the command to read the contents of the file.
