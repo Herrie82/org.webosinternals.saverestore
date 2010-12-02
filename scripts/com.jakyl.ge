@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Ground Effect"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="/var/palm/jail/$APPID/"
+FILES="settings"
+
+source `dirname $0`/srf.app.files
+
+exit 0
