@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.2.3', log: [ 'Application: Pronto Dial (courtesy of malpha)' ] },
 	 { version: '1.2.2', log: [ 'Applications: Ground Effect, TileStorm, TileStorm Eire, Rock Band' ] },
 	 { version: '1.2.0', log: [ 'Added support for scripts that are dependent upon the webOS version' ] },
 	 { version: '1.1.0', log: [ 'Rolled up all the beta release features for a public release' ] },
