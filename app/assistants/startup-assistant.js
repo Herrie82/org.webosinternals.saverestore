@@ -11,6 +11,8 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.2.4', log: [ 'Now distinguishes internal and external databases with the same name',
+				    'Affects My WebOS Apps and perhaps other scripts - please do a backup to ensure you have both databases saved correctly' ] },
 	 { version: '1.2.3', log: [ 'Application: Pronto Dial (courtesy of malpha)' ] },
 	 { version: '1.2.2', log: [ 'Applications: Ground Effect, TileStorm, TileStorm Eire, Rock Band' ] },
 	 { version: '1.2.0', log: [ 'Added support for scripts that are dependent upon the webOS version' ] },
