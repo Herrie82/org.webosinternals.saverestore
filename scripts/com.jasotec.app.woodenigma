@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Woodenigma"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="levels.txt"
+
+source `dirname $0`/srf.app.files
+
+exit 0
