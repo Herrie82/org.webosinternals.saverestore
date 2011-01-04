@@ -11,6 +11,8 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.2.7', log: [ 'Applications: InContact Plus, InContact (both courtesy of ryanjduffy), EVAC, Dough (both courtesy of Carl Spakler), EZ Shop List (courtesy of crabbz), Dead Runner (courtesy of Audemars02)',
+				    'Applications: Feeder, Reboxed, Word Whirl, Gamer Friends for PSN, Tangram, Tilt Origami, Wobble Words, ExZeus arcade, Scrabble, Quell, Tradewinds 2 (all courtesy of malpha)' ] },
 	 { version: '1.2.6', log: [ 'Applications: Angry Birds Seasons' ] },
 	 { version: '1.2.5', log: [ 'Applications: DigiPay, Woodenigma, Ancient Frog' ] },
 	 { version: '1.2.4', log: [ 'Now distinguishes internal and external databases with the same name',

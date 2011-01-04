@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Scrabble"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/Game"
+FILES=" scrabble01 scrabble02"
+
+source `dirname $0`/srf.app.files
+
+exit 0

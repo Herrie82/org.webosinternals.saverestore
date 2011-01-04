@@ -1,0 +1,20 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="EVAC"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="save*"
+
+source `dirname $0`/srf.app.files
+
+SRCDIR="$APPDIR/res/ui"
+FILES="*"
+
+source `dirname $0`/srf.app.files
+
+source `dirname $0`/srf.app.cookies
+
+exit 0
