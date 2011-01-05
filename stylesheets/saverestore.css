@@ -335,3 +335,12 @@ body.palm-dark .app-list .group-source
 	padding: 0px 0px 0px 5px;
 	float:left;
 }
+
+.prefs #autoSaveTime, .prefs #autoSaveFrequency {
+	float:right;
+}
+
+.prefs #autoSaveTime .label, .prefs #autoSaveFrequency .label {
+	padding-top:0px;
+}
+

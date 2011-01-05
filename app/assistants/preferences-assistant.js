@@ -8,6 +8,8 @@ function PreferencesAssistant()
 	this.secretString = '';
 	this.secretAnswer = 'iknowwhatimdoing';
 	
+	this.autoSavePropertyChangeHandler = this.onAutoSaveChange.bind(this);
+	
 	// setup menu
 	this.menuModel =
 	{
@@ -20,7 +22,17 @@ function PreferencesAssistant()
 			}
 		]
 	}
-
+	
+	if(this.prefs.autoSave === undefined) {
+	  this.prefs.autoSave = false;
+	  this.prefs.autoSaveTime = new Date();
+	  this.prefs.autoSaveTime.setMinutes(Math.round(this.prefs.autoSaveTime.getMinutes()*4/60)*15); // rounding to nearest 15 minute interval
+	  this.prefs.autoSaveFrequency = 1;
+	} else {
+	  // have to parse date because time picker expects a date object
+	  // will be converted back to string on cookie.put
+	  this.prefs.autoSaveTime = new Date(this.prefs.autoSaveTime);
+	}
 }
 
 PreferencesAssistant.prototype.setup = function()
@@ -64,12 +76,21 @@ PreferencesAssistant.prototype.setup = function()
 		// hide secret group
 		this.controller.get('secretPreferences').style.display = 'none';
 		
+		this.controller.setupWidget("autoSave", {"label":$L("Auto Save"),"modelProperty":"autoSave"}, this.prefs);
+		this.controller.setupWidget("autoSaveDrawer", {"unstyled":true}, {open:(this.prefs.autoSave === true)});
+		this.controller.setupWidget("autoSaveTime", {"label":$L("At"),"modelProperty":"autoSaveTime"}, this.prefs);
+		this.controller.setupWidget("autoSaveFrequency", {"label":$L("Every N Days"),"modelProperty":"autoSaveFrequency","min":1,"max":30}, this.prefs);
+		
 	}
 	catch (e)
 	{
 		Mojo.Log.logException(e, 'preferences#setup');
 	}
 
+}
+
+PreferencesAssistant.prototype.onAutoSaveChange = function(e) {
+	this.controller.get("autoSaveDrawer").mojo.setOpenState(e.value);
 }
 
 PreferencesAssistant.prototype.themeChanged = function(event)
@@ -127,12 +148,20 @@ PreferencesAssistant.prototype.alertMessage = function(title, message)
     });
 }
 
-PreferencesAssistant.prototype.activate = function(event) {}
+PreferencesAssistant.prototype.activate = function(event) {
+	this.controller.listen(this.controller.get("autoSave"), Mojo.Event.propertyChange, this.autoSavePropertyChangeHandler);
+}
 
 PreferencesAssistant.prototype.deactivate = function(event)
 {
+	this.controller.stopListening(this.controller.get("autoSave"), Mojo.Event.propertyChange, this.autoSavePropertyChangeHandler);
 	// reload global storage of preferences when we get rid of this stage
 	var tmp = prefs.get(true);
+	this.prefs.autoSaveTime = this.prefs.autoSaveTime.toLocaleString();
+	this.cookie.put(this.prefs);
+	
+	// schedule or cancel auto save timer based on autoSave preference
+	Mojo.Controller.getAppController().assistant[(this.prefs.autoSave) ? "scheduleAutoSave" : "cancelAutoSave"]();
 }
 
 PreferencesAssistant.prototype.cleanup = function(event) {}
