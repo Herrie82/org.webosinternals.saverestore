@@ -35,5 +35,9 @@
     {
         "scenes": "help",
         "source": "app/assistants/help-assistant.js"
-    }
+    },
+	{
+		"scenes": "autosave",
+		"source": "app/assistants/autosave-assistant.js"
+	}
 ]

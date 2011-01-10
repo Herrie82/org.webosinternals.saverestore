@@ -24,7 +24,16 @@ AppAssistant.prototype.handleLaunch = function(params)
 	    }
 	} else {
 	    if (params.action === "autoSave") {
-		this.executeAutoSave();
+			if(params.autoSave === "startup") {
+				var dash = Mojo.Controller.getAppController().getStageProxy("autosave-dash");
+				if (dash) {
+					dash.activate();
+				}
+			} else if(params.autoSave === "complete") {
+				return false;
+			} else {
+				this.executeAutoSave();				
+			}
 	    }
 	}
     }
@@ -39,33 +48,13 @@ AppAssistant.prototype.executeAutoSave = function() {
     if (p.autoSave && (p.autoSaveFrequency > 0)) {
 	this.scheduleAutoSave();
     }
-    
-    if (appDB.loadedApps) {
-	this.saveApps();
-    } else {
-	appDB.initApps(this.saveApps.bind(this));
-    }
-};
-
-AppAssistant.prototype.saveApps = function(e) {
-  
-    if (e && e.returnValue === false) {
-	Mojo.Log.error("error saving app=%j",e);
-    }
-          
-    if (!this.autoSaveApps) {
-	this.autoSaveApps = appDB.appsSaved;
-    }
-  
-    if (this.autoSaveApps.length < 1) {
-	return;
-    }
-  
-    var a = this.autoSaveApps.pop();
-    if (this.subscription) {
-	this.subscription.cancel();
-    }
-    this.subscription = SaveRestoreService.save( this.saveApps.bind(this), a );
+	
+	Mojo.Controller.getAppController().createStageWithCallback(
+		{name: "autosave-dash", lightweight: true},
+	    function(stageController){
+    		stageController.pushScene('autosave');
+		},
+		'dashboard');
 };
 
 AppAssistant.prototype.cancelAutoSave = function() {
@@ -91,6 +80,7 @@ AppAssistant.prototype.scheduleAutoSave = function() {
 	var t = new Date(p.autoSaveTime);
 	when.setHours(t.getHours());
 	when.setMinutes(t.getMinutes());
+	when.setSeconds(0);
 	when.setDate(when.getDate()+parseInt(p.autoSaveFrequency))
     
 	    var at = (when.getUTCMonth()+1)+"/"+when.getUTCDate()+"/"+when.getUTCFullYear()+" "+when.getUTCHours()+":"+when.getUTCMinutes()+":00";
@@ -104,7 +94,7 @@ AppAssistant.prototype.scheduleAutoSave = function() {
 			"params": '{"id":"' + Mojo.appInfo.id + '","params":{"action":"autoSave"}}',
 			"at": at
 			},
-		    onSuccess:function() { Mojo.Log.info("autoSave scheduled"); },
+		    onSuccess:function() { Mojo.Log.info("Auto-Save scheduled for ", when); },
 		    onFailure: function(e) { Mojo.Log.error("alarm failed %j",e); }
 	});
     } catch(e) {
@@ -112,7 +102,7 @@ AppAssistant.prototype.scheduleAutoSave = function() {
     }
 }
 
-    AppAssistant.prototype.launchFirstScene = function(controller)
+AppAssistant.prototype.launchFirstScene = function(controller)
 {
     vers.init();
     if (vers.showStartupScene()) {
