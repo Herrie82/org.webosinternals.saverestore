@@ -81,7 +81,12 @@ AppAssistant.prototype.scheduleAutoSave = function() {
 	when.setHours(t.getHours());
 	when.setMinutes(t.getMinutes());
 	when.setSeconds(0);
-	when.setDate(when.getDate()+parseInt(p.autoSaveFrequency));
+	
+	// if frequency = 1 and when > now, schedule auto save for later today
+	// otherwise, add frequency to current date
+	if (when < new Date() || p.autoSaveFrequency > 1) {
+		when.setDate(when.getDate() + parseInt(p.autoSaveFrequency));
+	}
     
 	    var at = (when.getUTCMonth()+1)+"/"+when.getUTCDate()+"/"+when.getUTCFullYear()+" "+when.getUTCHours()+":"+when.getUTCMinutes()+":00";
 
