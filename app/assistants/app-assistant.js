@@ -25,11 +25,11 @@ AppAssistant.prototype.handleLaunch = function(params)
 	} else {
 	    if (params.action === "autoSave") {
 			if(params.autoSave === "startup") {
-				var dash = Mojo.Controller.getAppController().getStageProxy("autosave-dash");
+				var dash = Mojo.Controller.getAppController().getStageProxy(dashStageName);
 				if (dash) {
 					dash.activate();
 				}
-			} else if(params.autoSave === "complete") {
+			} else if(params.autoSave === "complete" || params.autoSave === "scheduled") {
 				return false;
 			} else {
 				this.executeAutoSave();				
@@ -50,7 +50,7 @@ AppAssistant.prototype.executeAutoSave = function() {
     }
 	
 	Mojo.Controller.getAppController().createStageWithCallback(
-		{name: "autosave-dash", lightweight: true},
+		{name: dashStageName, lightweight: true},
 	    function(stageController){
     		stageController.pushScene('autosave');
 		},
@@ -58,7 +58,7 @@ AppAssistant.prototype.executeAutoSave = function() {
 };
 
 AppAssistant.prototype.cancelAutoSave = function() {
-  
+	
     new Mojo.Service.Request("palm://com.palm.power/timeout", {
 	    method: "clear",
 	    parameters: {
@@ -81,20 +81,24 @@ AppAssistant.prototype.scheduleAutoSave = function() {
 	when.setHours(t.getHours());
 	when.setMinutes(t.getMinutes());
 	when.setSeconds(0);
-	when.setDate(when.getDate()+parseInt(p.autoSaveFrequency))
+	when.setDate(when.getDate()+parseInt(p.autoSaveFrequency));
     
 	    var at = (when.getUTCMonth()+1)+"/"+when.getUTCDate()+"/"+when.getUTCFullYear()+" "+when.getUTCHours()+":"+when.getUTCMinutes()+":00";
 
 	new Mojo.Service.Request("palm://com.palm.power/timeout", {
 		method: "set",
 		    parameters: {
-		    "wakeup": false,
+		    "wakeup": true,
 			"key": "org.webosinternals.saverestore.autoSave",
 			"uri": "palm://com.palm.applicationManager/launch",
 			"params": '{"id":"' + Mojo.appInfo.id + '","params":{"action":"autoSave"}}',
 			"at": at
 			},
-		    onSuccess:function() { Mojo.Log.info("Auto-Save scheduled for ", when); },
+		    onSuccess:function() {
+				var pad = function(n) { return (n<10) ? "0"+n : n; }
+				var shortDate = pad(when.getDate()) + "/" + pad(when.getMonth()+1) + "/" + when.getFullYear() + " " + pad(when.getHours()) + ":" + pad(when.getMinutes());
+				Mojo.Controller.getAppController().showBanner($L("Next Auto-Save: ") + shortDate, {action:"autoSave",autoSave:"scheduled"}, "autoSave"); 
+			},
 		    onFailure: function(e) { Mojo.Log.error("alarm failed %j",e); }
 	});
     } catch(e) {

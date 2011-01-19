@@ -43,12 +43,12 @@ AutosaveAssistant.prototype.saveApps = function(e) {
   
     if (this.apps.length < 1) {
 	// shutdown
-	Mojo.Controller.getAppController().closeAllStages();
+	Mojo.Controller.getAppController().closeStage(dashStageName)
 	
 	return;
     }
   
-    var a = this.apps.pop();
+    var a = this.apps.shift();
     if (this.subscription) {
 	this.subscription.cancel();
     }
