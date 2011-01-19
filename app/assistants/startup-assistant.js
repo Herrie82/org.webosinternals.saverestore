@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.3.0', log: [ 'Rolled up all the beta release features for a public release' ] },
 	 { version: '1.2.9', log: [ 'Added dashboard for auto-save and fixed scheduling (courtesy of ryanjduffy)' ] },
 	 { version: '1.2.8', log: [ 'Added scheduled backups (courtesy of ryanjduffy)' ] },
 	 { version: '1.2.7', log: [ 'Applications: InContact Plus, InContact (both courtesy of ryanjduffy), EVAC, Dough (both courtesy of Carl Spakler), EZ Shop List (courtesy of crabbz), Dead Runner (courtesy of Audemars02)',
