@@ -1,7 +1,7 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="College Football Live!"
+APPNAME="Definitive Saved by the Bell Quiz Full"
 
 source `dirname $0`/srf.app.info
 

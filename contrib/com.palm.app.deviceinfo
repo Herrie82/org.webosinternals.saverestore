@@ -19,22 +19,37 @@ source `dirname $0`/srf.app.files
 SRCDIR="/usr/palm/applications/com.palm.app.phone/images"
 DSTSUB="phoneimages"
 
-FILES="backdrop*.png* phone-menu-short-fade.png* list-section-line.png*"
+if `webos_version_lt 2.0.0` ; then
+    
+   FILES="backdrop*.png* phone-menu-short-fade.png* list-section-line.png*"
+
+fi
+
+if `webos_version_ge 2.0.0` ; then
+
+   FILES="backdrop*.png* list-section-line.png*"
+
+fi
 
 source `dirname $0`/srf.app.files
 
 # Save PalmDatabase.db3, but do not restore
-SRCDIR="/var/luna/data/dbdata"
-FILES="PalmDatabase.db3"
-DSTSUB="dbdata"
+if `webos_version_lt 2.0.0` ; then
 
-if [ "$1" == "save" ] ; then
-   source `dirname $0`/srf.app.files
+	SRCDIR="/var/luna/data/dbdata"
+	FILES="PalmDatabase.db3"
+	DSTSUB="dbdata"
+
+	if [ "$1" == "save" ] ; then
+	   source `dirname $0`/srf.app.files
+	fi
+
+	if [ "$1" == "restore" ] ; then
+	   echo "PalmDatabase.db3 not restored"
+	fi
+
 fi
 
-if [ "$1" == "restore" ] ; then
-   echo "PalmDatabase.db3 not restored"
-fi
 
 # Save cookies.db and databases.db, but do not restore
 SRCDIR="/var/palm/data/"

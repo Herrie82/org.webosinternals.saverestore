@@ -1,7 +1,7 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="College Football Live!"
+APPNAME="Carbon"
 
 source `dirname $0`/srf.app.info
 
