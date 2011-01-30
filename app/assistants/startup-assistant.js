@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.3.2', log: [ 'Keep the device awake during scheduled auto-save (courtesy of MetaView)' ] },
 	 { version: '1.3.1', log: [ 'Applications: Backup, Device Info (in Contrib directory.  See readme.txt file in that directory for details) (all courtesy of Audemars02)',
 				     'Applications: Launcher (Updated for 2.0), Need for Speed (Spanish), Carbon, Foursquare (beta), Ace Casino, Definitive Saved by the Bell Quiz Full, freeTether (all courtesy of Audemars02)',
 				     'Applications: Baseball Live, Basketball Live, Womens College Basketball Live, Womens Basketball Live, US Soccer Live, UK Football Live, Sports Live, International Soccer Live, Hockey Live, Football Live, Euro Football Live, College Football Live, College Basketball Live (all courtesy of MoreSolutions)',

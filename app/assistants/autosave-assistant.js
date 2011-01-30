@@ -44,7 +44,16 @@ AutosaveAssistant.prototype.saveApps = function(e) {
     if (this.apps.length < 1) {
 	// shutdown
 	Mojo.Controller.getAppController().closeStage(dashStageName)
-	
+
+	this.controller.serviceRequest("palm://com.palm.power/com/palm/power", {
+		method: "activityEnd",
+		parameters: {
+			id: Mojo.appInfo.id
+		},
+		onSuccess: function() {},
+		onFailure: function() {}
+	});
+
 	return;
     }
   
@@ -54,6 +63,17 @@ AutosaveAssistant.prototype.saveApps = function(e) {
     }
 	
 	this.updateStatus(a);
+
+	// keep the device from sleeping (max 15 minutes)
+	this.controller.serviceRequest("palm://com.palm.power/com/palm/power", {
+		method: "activityStart",
+		parameters: {
+			id: Mojo.appInfo.id,
+			duration_ms: "900000"
+		},
+		onSuccess: function() {},
+		onFailure: function() {}
+	});
 	
 	Mojo.Log.info("Saving",a);
     this.subscription = SaveRestoreService.save( this.saveApps.bind(this), a );
