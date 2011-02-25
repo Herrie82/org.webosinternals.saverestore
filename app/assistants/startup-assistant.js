@@ -11,6 +11,10 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.3.4', log: [ 'Applications: Clipboard for webOS, A+ Student Organizer Trial (both courtesy of Audemars02), Poker Session Tracker (courtesy of iamthedood), ColorHarmony (courtesy of rretsiem)',
+                             'Applications: Backgammon, Bible Reader, Blink, Blink (free), Chess for webOS, chess.com, ColorJunction, DasTelefonbuch, Galcon, Labyrinth, Mazer, Palm Developer Day 2010 Schedule, ' +
+                             'Pandablast, Plumbers Nightmare (Lite), PreJvm, Simple Bible, Tile Breaker, Tile Breaker (Lite), Titan Stopwatch, TuneIn by RadioTime, Virus Defense, Virus Defense (Lite), VLC Remote, ' +
+				     'VLC Remote (free), webOS Blog, webOS roundup, YouTube Mini, YouTube Mini (Free) (all courtesy of pcworld)' ] },
 	 { version: '1.3.3', log: [ 'Applications: Clipboard for webOS, Carbon Beta (courtesy of Audemars02)' ] },
 	 { version: '1.3.2', log: [ 'Keep the device awake during scheduled auto-save (courtesy of MetaView)' ] },
 	 { version: '1.3.1', log: [ 'Applications: Backup, Device Info (in Contrib directory.  See readme.txt file in that directory for details) (all courtesy of Audemars02)',

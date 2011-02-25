@@ -1,0 +1,14 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Simple Bible"
+
+source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.cookies
+
+SRCDIR="/media/internal"
+DIRECTORY="SimpleBible"
+source `dirname $0`/srf.app.directory
+
+exit 0

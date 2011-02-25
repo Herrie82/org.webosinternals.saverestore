@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Labyrinth"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="game_state.txt"
+
+source `dirname $0`/srf.app.files
+
+exit 0
