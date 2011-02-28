@@ -2,6 +2,7 @@
 
 APPID=`basename $0`
 APPNAME="Preware"
+APPNOTE="Device Reboot required after restore"
 
 source `dirname $0`/srf.app.info
 
