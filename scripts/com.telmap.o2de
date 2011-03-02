@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Telmap O2 Germany"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+DIRECTORY="data"
+source `dirname $0`/srf.app.directory
+
+exit 0

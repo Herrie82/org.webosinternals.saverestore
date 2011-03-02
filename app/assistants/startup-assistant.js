@@ -11,6 +11,9 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.3.5', log: [ 'Applications: Done, Count Down Clock, Geocaching for Webos (all courtesy of MaPhi)',
+                             'Applications: Astraware Mahjong (courtesy of capt4chris), ICE - In Case of Emergency (courtesy of RickNeff), Fling (courtesy of malpha)',
+				    'Applications: Amigo, Bahnfahren, Dict.cc Translator, Forums, Free Klondike Solitaire, Glow Hockey, Glow Hockey FREE, Leo Dictionary, Nodoze, Plasma Cannon, Precentral News (unofficial), Premote , Raging Thunder 2, Rockus Racer Expansion Pack, Snake, Space Sheep, Space Sheep Lite, SWR3-Elchradio, Telmap O2 Germany, Znax (all courtesy of pcworld)' ] },
 	 { version: '1.3.4', log: [ 'Applications: Clipboard for webOS, A+ Student Organizer Trial (both courtesy of Audemars02), Poker Session Tracker (courtesy of iamthedood), ColorHarmony (courtesy of rretsiem)',
                              'Applications: Backgammon, Bible Reader, Blink, Blink (free), Chess for webOS, chess.com, ColorJunction, DasTelefonbuch, Galcon, Labyrinth, Mazer, Palm Developer Day 2010 Schedule, ' +
                              'Pandablast, Plumbers Nightmare (Lite), PreJvm, Simple Bible, Tile Breaker, Tile Breaker (Lite), Titan Stopwatch, TuneIn by RadioTime, Virus Defense, Virus Defense (Lite), VLC Remote, ' +

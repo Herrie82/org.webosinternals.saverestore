@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Raging Thunder 2"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="rt2save.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Znax"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES="data.xml"
+
+source `dirname $0`/srf.app.files
+
+exit 0
