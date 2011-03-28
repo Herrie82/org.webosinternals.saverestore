@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Bubbbles"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/save"
+FILES="keepme state scores"
+
+source `dirname $0`/srf.app.files
+
+exit 0

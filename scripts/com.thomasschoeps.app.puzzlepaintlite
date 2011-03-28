@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Puzzle Paint Lite"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+DIRECTORY="save"
+source `dirname $0`/srf.app.directory
+
+exit 0
