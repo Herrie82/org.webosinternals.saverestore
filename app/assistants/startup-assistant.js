@@ -11,6 +11,9 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.3.6', log: [ 'Applications: Airplanes, Beat Box, BibleZ (pro), BibleZ, Bubbles (free), Buka, Buka (Lite), gpsDashboard Free, gpsDashboard, Helicopter 3D, Hit the dots, Hyperspace Tournament, Labyrinth Lite, Metronome, Navit, Puzzle Paint (Lite), Puzzle Paint, Radiant, Radiant (Lite), Relego, Rhythm News, Solitaire, SuperNES, Wetter.com, World Time (Lite), World Time (Pro), zcorder  (all courtesy of pcworld)',
+                             'Applications: Brothers In Arms 2 (updated), InterfaceLift, Worms (all courtesy of djgardn2), Go To Demo, Go To Lite, Go To tool (all courtesy of markpowers)',
+				    'Applications: Azkend, Heroes of Kalevala, Just Draw (all courtesy of sunmorgus), SiteStatus (courtesy of pcimino)' ] },
 	 { version: '1.3.5', log: [ 'Applications: Done, Count Down Clock, Geocaching for Webos (all courtesy of MaPhi)',
                              'Applications: Astraware Mahjong (courtesy of capt4chris), ICE - In Case of Emergency (courtesy of RickNeff), Fling (courtesy of malpha)',
 				    'Applications: Amigo, Bahnfahren, Dict.cc Translator, Forums, Free Klondike Solitaire, Glow Hockey, Glow Hockey FREE, Leo Dictionary, Nodoze, Plasma Cannon, Precentral News (unofficial), Premote , Raging Thunder 2, Rockus Racer Expansion Pack, Snake, Space Sheep, Space Sheep Lite, SWR3-Elchradio, Telmap O2 Germany, Znax (all courtesy of pcworld)' ] },
