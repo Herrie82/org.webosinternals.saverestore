@@ -29,7 +29,8 @@ In order to get these files into your scripts directory, you need to do one of t
 
 
 The three executable (sr-acal, sr-acsp, sr-acsp-w) are ways for you to easily run the script to SAVE your preferences for "Advanced Configuration for App Launcher" (acal) patch or "Advanced Configuration for System Preferences" (acsp).  To use these script, you need to do:
-NOTE: If you are using the World edition of "Advanced Configuration for System Preferences", you need to run the "sr-acsp-w" file
+NOTE1: If you are using the World edition of "Advanced Configuration for System Preferences", you need to run the "sr-acsp-w" file
+NOTE2: These only work in webOS 1.4.5 and lower.  These scripts are not currently compatible with webOS 2.0 and higher
 1. copy these script to the /var/home/root directory of your device by either:
      1) Run the following to command via Command Line: cp /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/sr-acal /var/home/root
      2) using Internals, go to /media/cryptofs/apps/usr/palm/applications/org.webosinternals.saverestore/contrib/, and tap sr-acal or sr-acsp or sr-acsp-w, "copy" to /var/home/root (top level).  
