@@ -4,7 +4,7 @@ function MainAssistant() {
 	[
 	 {weight: 30, text: $L('The Open Source Solution')},
 	 {weight: 15, text: $L('Do It Before It Is Too Late')},
-	 {weight: 6, text: $L("<a href=\"http://donate.webos-internals.org/\">Donated</a> To WebOS Internals Lately?")},
+	 {weight: 6, text: $L("<a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HLSTYY3RCKVY2\">Donated</a> To WebOS Internals Lately?")},
 	 {weight:  2, text: $L('Random Taglines Are Awesome')},
 	 {weight:  2, text: $L('We Know Palm Loves Save/Restore')},
 	 {weight:  2, text: $L('Now With More Cowbell')}
