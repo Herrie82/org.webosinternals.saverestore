@@ -11,6 +11,9 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.3.9', log: [ 'Applications: Safe Wallet (courtesy of Audemars02), Koto Player (courtesy of fxspec06), CryptoNotes (courtesy of hboisvert), ToDo Classic (courtesy of hboisvert)',
+                             'Applications: FitTrack, Headlines, Slice It (all courtesy of malpha), Kookaroo, LumenCalc, SiteStatusPro (all courtesy of pcimino)',
+				    'Applications: Bills Vs Income, Blox, Chemistry Encyclopedia, Click Trainer, Dashboard Utilities, GeoStrings, Marquees ROCK, Music (Remix), Quick Post, Todays Tasks, WikiXplorer, ZIP Code Tools (all courtesy of djgardn2)' ] },
 	 { version: '1.3.8', log: [ 'Applications: Angry Birds Rio, Supersonic (all courtesy of Audemars02)',
 				    'Updated Device Info and Backup scripts in Contrib directory for webOS 2.0 changes.  Added Max webOS 1.4.5 version to Advanced Patches scripts.' ] },
 	 { version: '1.3.6', log: [ 'Applications: Airplanes, Beat Box, BibleZ (pro), BibleZ, Bubbles (free), Buka, Buka (Lite), gpsDashboard Free, gpsDashboard, Helicopter 3D, Hit the dots, Hyperspace Tournament, Labyrinth Lite, Metronome, Navit, Puzzle Paint (Lite), Puzzle Paint, Radiant, Radiant (Lite), Relego, Rhythm News, Solitaire, SuperNES, Wetter.com, World Time (Lite), World Time (Pro), zcorder  (all courtesy of pcworld)',
