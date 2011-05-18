@@ -140,7 +140,7 @@ bool dummy_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   LSError lserror;
   LSErrorInit(&lserror);
 
-  if (!LSMessageReply(lshandle, message, "{\"returnValue\": true}", &lserror)) goto error;
+  if (!LSMessageRespond(message, "{\"returnValue\": true}", &lserror)) goto error;
 
   return true;
  error:
@@ -158,7 +158,7 @@ bool version_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   LSError lserror;
   LSErrorInit(&lserror);
 
-  if (!LSMessageReply(lshandle, message, "{\"returnValue\": true, \"version\": \"" VERSION "\", \"apiVersion\": \"" API_VERSION "\"}", &lserror)) goto error;
+  if (!LSMessageRespond(message, "{\"returnValue\": true, \"version\": \"" VERSION "\", \"apiVersion\": \"" API_VERSION "\"}", &lserror)) goto error;
 
   return true;
  error:
@@ -186,7 +186,7 @@ static bool passthrough(char *message) {
 
 //
 // Run a shell command, and return the output in-line in a buffer for returning to webOS.
-// If lshandle, message and subscriber are defined, then also send back status messages.
+// If message and subscriber are defined, then also send back status messages.
 // The global run_command_buffer must be initialised before calling this function.
 // The return value says whether the command executed successfully or not.
 //
@@ -272,7 +272,7 @@ static bool run_command(char *command, bool escape) {
 // The additional text  will not be escaped.
 // The return value is from the LSMessageReply call, not related to the command execution.
 //
-static bool report_command_failure(LSHandle* lshandle, LSMessage *message, char *command, char *stdErrText, char *additional) {
+static bool report_command_failure(LSMessage *message, char *command, char *stdErrText, char *additional) {
   LSError lserror;
   LSErrorInit(&lserror);
 
@@ -302,7 +302,7 @@ static bool report_command_failure(LSHandle* lshandle, LSMessage *message, char 
   fprintf(stderr, "Message is %s\n", buffer);
 
   // and send it.
-  if (!LSMessageReply(lshandle, message, buffer, &lserror)) goto error;
+  if (!LSMessageRespond(message, buffer, &lserror)) goto error;
 
   return true;
  error:
@@ -315,7 +315,7 @@ static bool report_command_failure(LSHandle* lshandle, LSMessage *message, char 
 //
 // Run a simple shell command, and return the output to webOS.
 //
-static bool simple_command(LSHandle* lshandle, LSMessage *message, char *command) {
+static bool simple_command(LSMessage *message, char *command) {
   LSError lserror;
   LSErrorInit(&lserror);
 
@@ -331,7 +331,7 @@ static bool simple_command(LSHandle* lshandle, LSMessage *message, char *command
     fprintf(stderr, "Message is %s\n", run_command_buffer);
 
     // and send it to webOS.
-    if (!LSMessageReply(lshandle, message, run_command_buffer, &lserror)) goto error;
+    if (!LSMessageRespond(message, run_command_buffer, &lserror)) goto error;
   }
   else {
 
@@ -339,7 +339,7 @@ static bool simple_command(LSHandle* lshandle, LSMessage *message, char *command
     strcat(run_command_buffer, "]");
 
     // and use it in a failure report message.
-    if (!report_command_failure(lshandle, message, command, run_command_buffer+11, NULL)) goto end;
+    if (!report_command_failure(message, command, run_command_buffer+11, NULL)) goto end;
   }
 
   return true;
@@ -353,7 +353,7 @@ static bool simple_command(LSHandle* lshandle, LSMessage *message, char *command
 //
 // Get the list of saverestore scripts, and return them.
 //
-bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+void *list_thread(void *arg) {
   LSError lserror;
   LSErrorInit(&lserror);
 
@@ -372,6 +372,8 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   // Length of buffer before the last command
   int lastlen = 0;
 
+  LSMessage *message = (LSMessage *)arg;
+
   // Initialise the command to read the list of config files.
   sprintf(command, "/bin/ls -1 %s 2>&1", scriptdir);
 
@@ -382,13 +384,13 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   if (!fp) {
 
     // then report the error to webOS.
-    if (!report_command_failure(lshandle, message, command, NULL, NULL)) goto end;
+    if (!report_command_failure(message, command, NULL, NULL)) goto end;
 
     // The error report has been sent, so return to webOS.
-    return true;
+    return;
   }
 
-  if (!LSMessageReply(lshandle, message, "{\"stage\": \"start\", \"returnValue\": true}", &lserror)) goto error;
+  if (!LSMessageRespond(message, "{\"stage\": \"start\", \"returnValue\": true}", &lserror)) goto error;
 
   // Initialise the output message.
   strcpy(buffer, "{");
@@ -418,7 +420,7 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
       fprintf(stderr, "Message is %s\n", buffer);
 
       // Return the results to webOS.
-      if (!LSMessageReply(lshandle, message, buffer, &lserror)) goto error;
+      if (!LSMessageRespond(message, buffer, &lserror)) goto error;
 
       // This is now the first line of output
       first = true;
@@ -479,7 +481,33 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
   fprintf(stderr, "Message is %s\n", buffer);
 
   // Return the results to webOS.
-  if (!LSMessageReply(lshandle, message, buffer, &lserror)) goto error;
+  if (!LSMessageRespond(message, buffer, &lserror)) goto error;
+
+ end:
+  LSMessageUnref(message);
+  return;
+
+ error:
+  LSErrorPrint(&lserror, stderr);
+  LSErrorFree(&lserror);
+  goto end;
+}
+
+//
+// Get the list of saverestore scripts, and return them.
+//
+bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
+  LSError lserror;
+  LSErrorInit(&lserror);
+
+  pthread_t tid;
+
+  LSMessageRef(message);
+
+  // Report that the update operaton has begun
+  if (!LSMessageRespond(message, "{\"stage\": \"start\", \"returnValue\": true}", &lserror)) goto error;
+
+  pthread_create(&tid, NULL, list_thread, (void *)message);
 
   return true;
  error:
@@ -492,7 +520,7 @@ bool list_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
 //
 // Run command to save or restore.
 //
-bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char *subcommand) {
+bool saverestore_method(LSMessage *message, void *ctx, char *subcommand) {
   LSError lserror;
   LSErrorInit(&lserror);
 
@@ -503,7 +531,7 @@ bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char 
   json_t *object = json_parse_document(LSMessageGetPayload(message));
   json_t *id = json_find_first_label(object, "id");               
   if (!id || (id->child->type != JSON_STRING) || (strspn(id->child->text, ALLOWED_CHARS) != strlen(id->child->text))) {
-    if (!LSMessageReply(lshandle, message,
+    if (!LSMessageRespond(message,
 			"{\"returnValue\": false, \"errorCode\": -1, \"errorText\": \"Invalid or missing id\"}",
 			&lserror)) goto error;
     return true;
@@ -512,7 +540,7 @@ bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char 
   // Store the command, so it can be used in the error report if necessary
   sprintf(command, "%s/%s %s 2>&1", scriptdir, id->child->text, subcommand);
   
-  return simple_command(lshandle, message, command);
+  return simple_command(message, command);
 
  error:
   LSErrorPrint(&lserror, stderr);
@@ -522,11 +550,11 @@ bool saverestore_method(LSHandle* lshandle, LSMessage *message, void *ctx, char 
 }
 
 bool save_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
-  return saverestore_method(lshandle, message, ctx, "save");
+  return saverestore_method(message, ctx, "save");
 }
 
 bool restore_method(LSHandle* lshandle, LSMessage *message, void *ctx) {
-  return saverestore_method(lshandle, message, ctx, "restore");
+  return saverestore_method(message, ctx, "restore");
 }
 
 //

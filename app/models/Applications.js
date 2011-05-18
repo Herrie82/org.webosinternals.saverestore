@@ -11,9 +11,6 @@ function Applications(){
     // all applications with saved data
     this.appsSaved = [];
 	
-    // load state placeholders - may want a better way
-    this.loadedApps = this.loadedScripts = false;
-
     // we'll need this for the subscription based services
     this.subscription = false;
 
@@ -38,15 +35,8 @@ Apps.initApps = function( callback ) {
     // all applications with saved data
     this.appsSaved = [];
 	
-    // load state placeholders - may want a better way
-    this.loadedApps = this.loadedScripts = false;
-
-    // cancel the last subscription, this may not be needed
-    if (this.subscription) {
-	this.subscription.cancel();
-    }
-	
     // load up the installed applications
+    if (this.subscription) this.subscription.cancel();
     this.subscription = SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
 }
 
@@ -69,6 +59,8 @@ Apps.sortApps = function(a, b) {
 // handles returned apps from the server
 Apps.loadApps = function( data, callback ) {
 	
+    var final = false;
+
     if (data.apps) {
 	var apps = data.apps;
 	for (var i = 0; i < apps.length; i++) {
@@ -79,20 +71,14 @@ Apps.loadApps = function( data, callback ) {
 	}
 
 	if (!data.stage || (data.stage == "end")) {
-	    // we loaded apps
-	    this.loadedApps = true;
-
-	    // cancel the last subscription, this may not be needed
-	    if (this.subscription) {
-		this.subscription.cancel();
-	    }
-	
 	    // load up the available applications
+	    if (this.subscription) this.subscription.cancel();
 	    this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
 	}
     }
     else if (data.scripts) {
 	var scripts = data.scripts;
+	var installed = arrayToObject( this.appsInstalled );
 	for (var i = 0; i < scripts.length; i++) {
 	    var script = scripts[i];
 	    this.appsWithScripts.push( script.id );
@@ -100,39 +86,24 @@ Apps.loadApps = function( data, callback ) {
 	    if( script.saved ) this.appsSaved.push( script.id );
 	    // information from the scripts has more fields
 	    this.appsInformation[script.id] = script;
+	    // push on appsAvailable
+	    if (script.id in installed) this.appsAvailable.push( script.id );
 	}
 
 	if (!data.stage || (data.stage == "end")) {
-	    // we loaded scripts
-	    this.loadedScripts = true;
-
-	    // cancel the last subscription, this may not be needed
-	    if (this.subscription) {
-		this.subscription.cancel();
-	    }
-	
 	    // sort the list of supported apps
 	    this.appsWithScripts.sort(this.sortApps);
 
 	    // sort the list of saved apps
 	    this.appsSaved.sort(this.sortApps);
+
+	    // fully loaded
+	    this.reload = false;
+
+	    final = true;
 	}
     }
-	
-    // Mojo.Log.info( "loaded apps: " + this.loadedApps + "; loaded scripts: " + this.loadedScripts );
 
-    if (this.loadedApps && this.loadedScripts) {
-	// map which apps we actually CAN work with
-	var installed = arrayToObject( this.appsInstalled );
-	for (var i = 0; i < this.appsWithScripts.length; i++) {
-	    var appid = this.appsWithScripts[i];
-	    if (appid in installed) this.appsAvailable.push( appid );
-	}
-
-	// fully loaded
-	this.reload = false;
-
-	// Update the relevant screen
-	if (callback) callback();
-    }
+    // Update the relevant screen
+    if (callback) callback(final);
 }

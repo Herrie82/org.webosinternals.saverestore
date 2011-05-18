@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.4.0', log: [ 'Now incrementally loads the set of application scripts' ] },
 	 { version: '1.3.9', log: [ 'Applications: Safe Wallet (courtesy of Audemars02), Koto Player (courtesy of fxspec06), CryptoNotes (courtesy of hboisvert), ToDo Classic (courtesy of hboisvert)',
                              'Applications: FitTrack, Headlines, Slice It (all courtesy of malpha), Kookaroo, LumenCalc, SiteStatusPro (all courtesy of pcimino)',
 				    'Applications: Bills Vs Income, Blox, Chemistry Encyclopedia, Click Trainer, Dashboard Utilities, GeoStrings, Marquees ROCK, Music (Remix), Quick Post, Todays Tasks, WikiXplorer, ZIP Code Tools (all courtesy of djgardn2)' ] },
