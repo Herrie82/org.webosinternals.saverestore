@@ -11,6 +11,9 @@ function Applications(){
     // all applications with saved data
     this.appsSaved = [];
 	
+    // Have apps been loaded?
+    this.loadedApps = false;
+
     // we'll need this for the subscription based services
     this.subscription = false;
 
@@ -35,6 +38,8 @@ Apps.initApps = function( callback ) {
     // all applications with saved data
     this.appsSaved = [];
 	
+    this.loadedApps = false;
+
     // load up the installed applications
     if (this.subscription) this.subscription.cancel();
     this.subscription = SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
@@ -112,6 +117,7 @@ Apps.loadScripts = function( data, callback ) {
 
 	// fully loaded
 	this.reload = false;
+	this.loadedApps = true;
 
 	final = true;
     }
