@@ -390,8 +390,6 @@ void *list_thread(void *arg) {
     return;
   }
 
-  if (!LSMessageRespond(message, "{\"stage\": \"start\", \"returnValue\": true}", &lserror)) goto error;
-
   // Initialise the output message.
   strcpy(buffer, "{");
   lastlen = strlen(buffer);

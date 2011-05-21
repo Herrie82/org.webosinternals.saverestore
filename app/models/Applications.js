@@ -59,8 +59,6 @@ Apps.sortApps = function(a, b) {
 // handles returned apps from the server
 Apps.loadApps = function( data, callback ) {
 	
-    var final = false;
-
     if (data.apps) {
 	var apps = data.apps;
 	for (var i = 0; i < apps.length; i++) {
@@ -70,13 +68,21 @@ Apps.loadApps = function( data, callback ) {
 	    if (!this.appsInformation[app.id]) this.appsInformation[app.id] = app;
 	}
 
-	if (!data.stage || (data.stage == "end")) {
-	    // load up the available applications
-	    if (this.subscription) this.subscription.cancel();
-	    this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
-	}
+	// load up the available applications
+	if (this.subscription) this.subscription.cancel();
+	this.subscription = SaveRestoreService.list( this.loadScripts.bindAsEventListener(this, callback) );
     }
-    else if (data.scripts) {
+
+    // Update the relevant screen
+    if (callback) callback(false);
+};
+
+// handles returned apps from the server
+Apps.loadScripts = function( data, callback ) {
+	
+    var final = false;
+
+    if (data.scripts) {
 	var scripts = data.scripts;
 	var installed = arrayToObject( this.appsInstalled );
 	for (var i = 0; i < scripts.length; i++) {
@@ -89,21 +95,28 @@ Apps.loadApps = function( data, callback ) {
 	    // push on appsAvailable
 	    if (script.id in installed) this.appsAvailable.push( script.id );
 	}
+    }
 
-	if (!data.stage || (data.stage == "end")) {
-	    // sort the list of supported apps
-	    this.appsWithScripts.sort(this.sortApps);
+    if (!data.stage || (data.stage == "end")) {
+	// sort the list of supported apps
+	this.appsWithScripts.sort(this.sortApps);
 
-	    // sort the list of saved apps
-	    this.appsSaved.sort(this.sortApps);
+	// sort the list of installed apps
+	this.appsInstalled.sort(this.sortApps);
+	
+	// sort the list of available apps
+	this.appsAvailable.sort(this.sortApps);
+	
+	// sort the list of saved apps
+	this.appsSaved.sort(this.sortApps);
 
-	    // fully loaded
-	    this.reload = false;
+	// fully loaded
+	this.reload = false;
 
-	    final = true;
-	}
+	final = true;
     }
 
     // Update the relevant screen
     if (callback) callback(final);
 }
+

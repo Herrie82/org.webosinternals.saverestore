@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.4.1', log: [ 'Fixed auto-save and sorting of apps in the save and installed scenes' ] },
 	 { version: '1.4.0', log: [ 'Now incrementally loads the set of application scripts' ] },
 	 { version: '1.3.9', log: [ 'Applications: Safe Wallet (courtesy of Audemars02), Koto Player (courtesy of fxspec06), CryptoNotes (courtesy of hboisvert), ToDo Classic (courtesy of hboisvert)',
                              'Applications: FitTrack, Headlines, Slice It (all courtesy of malpha), Kookaroo, LumenCalc, SiteStatusPro (all courtesy of pcimino)',
