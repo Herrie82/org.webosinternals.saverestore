@@ -42,7 +42,13 @@ MainAssistant.prototype.setup = function() {
     this.controller.get('subTitle').innerHTML = $L('The Open Source Solution');	
 
     // get elements
-    this.overlay = 	   this.controller.get('overlay'); this.overlay.hide();
+	var spnTop = parseInt((this.controller.window.innerHeight - 128) / 2) + "px",
+		spnLeft = parseInt((this.controller.window.innerWidth - 128) / 2) + "px";
+	this.controller.setupWidget('overlay',{spinnerSize: 'large'},{spinning: false});
+    this.overlay = this.controller.get('overlay');
+	this.overlay.style.top = spnTop;
+	this.overlay.style.left = spnLeft;
+
     this.versionElement =  this.controller.get('version');
     this.subTitleElement = this.controller.get('subTitle');
     this.listElement =     this.controller.get('mainList');
@@ -112,7 +118,7 @@ MainAssistant.prototype.updateList = function(final)
     this.mainModel.items[3].pkgCount = appDB.appsInstalled.length;
     this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
 
-    if (final) this.overlay.hide();
+    if (final) this.overlay.mojo.stop();
 };
     
 MainAssistant.prototype.getRandomSubTitle = function()
@@ -171,7 +177,7 @@ MainAssistant.prototype.activate = function(event) {
 	this.listElement.mojo.noticeUpdatedItems(0, this.mainModel.items);
 	var appController = Mojo.Controller.getAppController();
 	appController.showBanner({ messageText: $L("Loading archive data ...") }, {}, "initApps");
-	this.overlay.show();
+	this.overlay.mojo.start();
 	appDB.initApps(this.updateList.bind(this));
     }
 };
