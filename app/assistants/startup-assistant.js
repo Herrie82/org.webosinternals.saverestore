@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.4.3', log: [ 'Change scrim to Mojo spinner on Main during load' ] },
 	 { version: '1.4.2', log: [ 'Better fix for auto-save' ] },
 	 { version: '1.4.1', log: [ 'Fixed auto-save and sorting of apps in the save and installed scenes' ] },
 	 { version: '1.4.0', log: [ 'Now incrementally loads the set of application scripts' ] },
