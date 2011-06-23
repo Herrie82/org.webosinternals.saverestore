@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.4.5', log: [ 'Added support for devices with no back gesture' ] },
 	 { version: '1.4.4', log: [ 'Applications: Add Pad, Convertor, GPS Fix, Grooveshark, Hopper, phnx, Touchnote, Universe Browser, Voice Memos, Voices, WhitePages (all courtesy of Audemars02)' ] },
 	 { version: '1.4.3', log: [ 'Change scrim to Mojo spinner on Main during load' ] },
 	 { version: '1.4.2', log: [ 'Better fix for auto-save' ] },
@@ -215,10 +216,14 @@ StartupAssistant.prototype.setup = function()
     // get elements
     this.titleContainer = this.controller.get('title');
     this.dataContainer =  this.controller.get('data');
+    this.backElement = this.controller.get('title');
 	
     // set title
     if (this.justChangelog) {
 	this.titleContainer.innerHTML = $L('Changelog');
+	// setup back tap
+	this.backTapHandler = this.backTap.bindAsEventListener(this);
+	this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
     }
     else {
 	if (vers.isFirst) {
@@ -285,6 +290,13 @@ StartupAssistant.prototype.showContinue = function()
 {
     // show the command menu
     this.controller.setMenuVisible(Mojo.Menu.commandMenu, true);
+};
+
+StartupAssistant.prototype.backTap = function(event)
+{
+    if (this.justChangelog) {
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad') this.controller.stageController.popScene();
+    }
 };
 
 StartupAssistant.prototype.handleCommand = function(event)

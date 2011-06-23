@@ -12,6 +12,11 @@ HelpAssistant.prototype.setup = function()
 	
 	this.controller.get('appname').innerHTML = Mojo.appInfo.title;
 	this.controller.get('appdetails').innerHTML = Mojo.appInfo.version + $L(' by WebOS Internals');
+
+	// Add back button functionality for the TouchPad
+	this.backElement = this.controller.get('icon');
+	this.backTapHandler = this.backTap.bindAsEventListener(this);
+	this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
 	
 	this.supportModel = 
 	{
@@ -90,9 +95,17 @@ HelpAssistant.prototype.listTapHandler = function(event)
 	}
 }
 
+HelpAssistant.prototype.backTap = function(event)
+{
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad') {
+	this.controller.stageController.popScene();
+    }
+};
+
 HelpAssistant.prototype.activate = function(event) {}
 HelpAssistant.prototype.deactivate = function(event) {}
 HelpAssistant.prototype.cleanup = function(event)
 {
+	this.controller.stopListening(this.backElement, Mojo.Event.tap, this.backTapHandler);
 	this.controller.stopListening('supportList', Mojo.Event.listTap, this.listTapHandler.bindAsEventListener(this));
 }

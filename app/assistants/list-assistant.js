@@ -31,6 +31,11 @@ ListAssistant.prototype.setup = function() {
     this.appListModel = { items: [] };
     this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
 	
+    // Add back button functionality for the TouchPad
+    this.backElement = this.controller.get('listTitle');
+    this.backTapHandler = this.backTap.bindAsEventListener(this);
+    this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
+
     // load up
     this.loadList();
 };
@@ -42,6 +47,13 @@ ListAssistant.prototype.loadList = function() {
 	this.appListModel.items.push( { appname: app.title, appid: app.id, summary: app.note, checked: true } );
     }
     this.controller.modelChanged( this.appListModel );
+};
+
+ListAssistant.prototype.backTap = function(event)
+{
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad') {
+	this.controller.stageController.popScene();
+    }
 };
 
 ListAssistant.prototype.handleCommand = function (event) {
@@ -75,4 +87,5 @@ ListAssistant.prototype.deactivate = function(event) {
 ListAssistant.prototype.cleanup = function(event) {
     /* this function should do any cleanup needed before the scene is destroyed as 
        a result of being popped off the scene stack */
+    this.controller.stopListening(this.backElement, Mojo.Event.tap, this.backTapHandler);
 };
