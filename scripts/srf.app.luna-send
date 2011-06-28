@@ -1,0 +1,29 @@
+#!/bin/sh
+
+[ -n "$APPID" ]   || { echo "srf.app.luna-send: APPID not defined"   ; exit 1 ; }
+[ -n "$APPDIR" ]  || { echo "srf.app.luna-send: APPDIR not defined"  ; exit 1 ; }
+[ -n "$DSTDIR" ]  || { echo "srf.app.luna-send: DSTDIR not defined"  ; exit 1 ; }
+
+[ -n "$URI" ]     || { echo "srf.app.luna-send: URI not defined"     ; exit 1 ; }
+[ -n "$MESSAGE" ] || { echo "srf.app.luna-send: MESSAGE not defined" ; exit 1 ; }
+[ -n "$FILE" ]    || { echo "srf.app.luna-send: FILE not defined"    ; exit 1 ; }
+
+[ -d $APPDIR ] || { echo "$APPID not installed" ; exit 0 ; }
+
+if [ "$1" == "save" ] ; then
+
+    mkdir -p ${DSTDIR}
+
+    luna-send -n 1 "$URI" "$MESSAGE" > $DSTDIR/$FILE
+
+    ( cd $DSTDIR ; ls -1 $FILE )
+
+    ( cd $DSTDIR ; ${ZIP} -q ${DSTDIR}.zip $FILE )
+
+    rm -rf $DSTDIR
+
+elif [ "$1" == "restore" ] ; then
+
+    { echo "Restore not supported yet" ; exit 1 ; }
+
+fi

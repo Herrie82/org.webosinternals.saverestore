@@ -75,7 +75,7 @@ Apps.loadApps = function( data, callback ) {
 
 	// load up the available applications
 	if (this.subscription) this.subscription.cancel();
-	this.subscription = SaveRestoreService.list( this.loadScripts.bindAsEventListener(this, callback) );
+	this.subscription = SaveRestoreService.list(this.loadScripts.bindAsEventListener(this, callback));
     }
 
     // Update the relevant screen
@@ -92,13 +92,15 @@ Apps.loadScripts = function( data, callback ) {
 	var installed = arrayToObject( this.appsInstalled );
 	for (var i = 0; i < scripts.length; i++) {
 	    var script = scripts[i];
-	    this.appsWithScripts.push( script.id );
-	    // check if we have save info for this script
-	    if( script.saved ) this.appsSaved.push( script.id );
-	    // information from the scripts has more fields
-	    this.appsInformation[script.id] = script;
-	    // push on appsAvailable
-	    if (script.id in installed) this.appsAvailable.push( script.id );
+	    if (script.id) {
+		this.appsWithScripts.push( script.id );
+		// check if we have save info for this script
+		if (script.saved) this.appsSaved.push( script.id );
+		// information from the scripts has more fields
+		this.appsInformation[script.id] = script;
+		// push on appsAvailable
+		if (script.id in installed) this.appsAvailable.push(script.id);
+	    }
 	}
     }
 

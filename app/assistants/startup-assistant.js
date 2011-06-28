@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.4.6', log: [ 'Added support for saving Text Assist entries' ] },
 	 { version: '1.4.5', log: [ 'Added support for devices with no back gesture' ] },
 	 { version: '1.4.4', log: [ 'Applications: Add Pad, Convertor, GPS Fix, Grooveshark, Hopper, phnx, Touchnote, Universe Browser, Voice Memos, Voices, WhitePages (all courtesy of Audemars02)' ] },
 	 { version: '1.4.3', log: [ 'Change scrim to Mojo spinner on Main during load' ] },
