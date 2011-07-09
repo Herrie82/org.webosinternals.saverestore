@@ -97,9 +97,7 @@ HelpAssistant.prototype.listTapHandler = function(event)
 
 HelpAssistant.prototype.backTap = function(event)
 {
-    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad') {
-	this.controller.stageController.popScene();
-    }
+    this.controller.stageController.popScene();
 };
 
 HelpAssistant.prototype.activate = function(event) {}

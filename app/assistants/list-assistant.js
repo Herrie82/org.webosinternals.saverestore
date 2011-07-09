@@ -32,7 +32,11 @@ ListAssistant.prototype.setup = function() {
     this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
 	
     // Add back button functionality for the TouchPad
-    this.backElement = this.controller.get('listTitle');
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+	Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+	this.backElement = this.controller.get('back');
+    else
+	this.backElement = this.controller.get('header');
     this.backTapHandler = this.backTap.bindAsEventListener(this);
     this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
 
@@ -51,9 +55,7 @@ ListAssistant.prototype.loadList = function() {
 
 ListAssistant.prototype.backTap = function(event)
 {
-    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad') {
-	this.controller.stageController.popScene();
-    }
+    this.controller.stageController.popScene();
 };
 
 ListAssistant.prototype.handleCommand = function (event) {

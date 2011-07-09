@@ -47,18 +47,21 @@ Apps.initApps = function( callback ) {
 
 Apps.sortApps = function(a, b) {
 
-    strA = appDB.appsInformation[a].title;
-    strB = appDB.appsInformation[b].title;
-    if (strA && strB) {
-	strA = strA.toLowerCase();
-	strB = strB.toLowerCase();
-	return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
+    if (appDB.appsInformation[a] && appDB.appsInformation[b]) {
+	strA = appDB.appsInformation[a].title;
+	strB = appDB.appsInformation[b].title;
+	if (strA && strB) {
+	    strA = strA.toLowerCase();
+	    strB = strB.toLowerCase();
+	    return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
+	}
+	else {
+	    strA = appDB.appsInformation[a].id;
+	    strB = appDB.appsInformation[b].id;
+	    return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
+	}
     }
-    else {
-	strA = appDB.appsInformation[a].id;
-	strB = appDB.appsInformation[b].id;
-	return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
-    }
+
 };
 
 // handles returned apps from the server
@@ -106,16 +109,20 @@ Apps.loadScripts = function( data, callback ) {
 
     if (!data.stage || (data.stage == "end")) {
 	// sort the list of supported apps
-	this.appsWithScripts.sort(this.sortApps);
+	if (this.appsWithScripts.length)
+	    this.appsWithScripts.sort(this.sortApps);
 
 	// sort the list of installed apps
-	this.appsInstalled.sort(this.sortApps);
+	if (this.appsInstalled.length)
+	    this.appsInstalled.sort(this.sortApps);
 	
 	// sort the list of available apps
-	this.appsAvailable.sort(this.sortApps);
+	if (this.appsAvailable.length)
+	    this.appsAvailable.sort(this.sortApps);
 	
 	// sort the list of saved apps
-	this.appsSaved.sort(this.sortApps);
+	if (this.appsSaved.length)
+	    this.appsSaved.sort(this.sortApps);
 
 	// fully loaded
 	this.reload = false;

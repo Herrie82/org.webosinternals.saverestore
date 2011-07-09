@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.4.8', log: [ 'Added back buttons for devices with no back gesture' ] },
 	 { version: '1.4.7', log: [ 'Applications: Angry Birds HD, Angry Birds Rio HD (courtesy of Audemars02)' ] },
 	 { version: '1.4.6', log: [ 'Added support for saving Text Assist entries' ] },
 	 { version: '1.4.5', log: [ 'Added support for devices with no back gesture' ] },
@@ -213,12 +214,24 @@ function StartupAssistant(changelog)
 StartupAssistant.prototype.setup = function()
 {
     // set theme because this can be the first scene pushed
-    this.controller.document.body.className = prefs.get().theme;
+	var deviceTheme = '';
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'Pixi' ||
+		Mojo.Environment.DeviceInfo.modelNameAscii == 'Veer')
+		deviceTheme += ' small-device';
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+		Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+		deviceTheme += ' no-gesture';
+    this.controller.document.body.className = prefs.get().theme + deviceTheme;
 	
     // get elements
     this.titleContainer = this.controller.get('title');
     this.dataContainer =  this.controller.get('data');
-    this.backElement = this.controller.get('title');
+	
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+	    Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+	    this.backElement = this.controller.get('back');
+	else
+	    this.backElement = this.controller.get('header');
 	
     // set title
     if (this.justChangelog) {
@@ -228,6 +241,7 @@ StartupAssistant.prototype.setup = function()
 	this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
     }
     else {
+	this.controller.get('back').hide();
 	if (vers.isFirst) {
 	    this.titleContainer.innerHTML = $L('Welcome To Save/Restore');
 	}
@@ -284,8 +298,10 @@ StartupAssistant.prototype.setup = function()
 
 StartupAssistant.prototype.activate = function(event)
 {
-    // start continue button timer
-    this.timer = this.controller.window.setTimeout(this.showContinue.bind(this), 5 * 1000);
+    if (!this.justChangelog) {
+	// start continue button timer
+	this.timer = this.controller.window.setTimeout(this.showContinue.bind(this), 5 * 1000);
+    }
 };
 
 StartupAssistant.prototype.showContinue = function()
@@ -297,7 +313,7 @@ StartupAssistant.prototype.showContinue = function()
 StartupAssistant.prototype.backTap = function(event)
 {
     if (this.justChangelog) {
-	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad') this.controller.stageController.popScene();
+	this.controller.stageController.popScene();
     }
 };
 
@@ -318,4 +334,14 @@ StartupAssistant.prototype.handleCommand = function(event)
 	break;
 	}
     }
-}
+};
+
+StartupAssistant.prototype.cleanup = function(event)
+{
+	if (this.justChangelog)
+		this.controller.stopListening(this.backElement,  Mojo.Event.tap, this.backTapHandler);
+};
+
+// Local Variables:
+// tab-width: 4
+// End:
