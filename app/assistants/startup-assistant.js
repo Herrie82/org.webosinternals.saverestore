@@ -11,7 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
-	 { version: '1.4.9', log: [ 'Applications: Secure Store 2' ] },
+	 { version: '1.4.9', log: [ 'Applications: SecuStore 2' ] },
 	 { version: '1.4.8', log: [ 'Added back buttons for devices with no back gesture' ] },
 	 { version: '1.4.7', log: [ 'Applications: Angry Birds HD, Angry Birds Rio HD (courtesy of Audemars02)' ] },
 	 { version: '1.4.6', log: [ 'Added support for saving Text Assist entries' ] },
