@@ -1,0 +1,16 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="DORK 1"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR"
+FILES=" "
+#source `dirname $0`/srf.app.files
+
+source `dirname $0`/srf.app.databases
+
+#source `dirname $0`/srf.app.cookies
+
+exit 0
