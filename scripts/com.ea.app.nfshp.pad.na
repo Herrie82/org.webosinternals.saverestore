@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Need For Speed Hot Pursuit (TouchPad)"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/var"
+FILES="Cheats.sb Core.sb Options.sb Multiplayer.sb Tweaks.sb nfshp_save.sb"
+
+source `dirname $0`/srf.app.files
+
+exit 0
