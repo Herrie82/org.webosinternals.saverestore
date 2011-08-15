@@ -2,6 +2,7 @@
 
 APPID=`basename $0`
 APPNAME="Robotek HD"
+APPNOTE="Restore only works with the same device. You can NOT transfer backups to a different device, even running the same webOS profile"
 
 source `dirname $0`/srf.app.info
 
