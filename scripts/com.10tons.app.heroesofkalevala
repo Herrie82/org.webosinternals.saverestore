@@ -1,0 +1,20 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Heroes of Kalevala"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="$APPDIR/MythPeople/Heroes_of_Kalevala/profiles/saves"
+DSTSUB="saves"
+FILES="save-game-*.dat"
+
+source `dirname $0`/srf.app.files
+
+SRCDIR="$APPDIR/MythPeople/Heroes_of_Kalevala/profiles"
+DSTSUB="profiles"
+FILES="*.xml"
+
+source `dirname $0`/srf.app.files
+
+exit 0

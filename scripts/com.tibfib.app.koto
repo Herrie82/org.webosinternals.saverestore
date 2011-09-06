@@ -1,0 +1,11 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Koto Player"
+APPNOTE="Luna Restart required after restore. Note script only saves app Cookies, not data stored to db8"
+
+source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.cookies
+
+exit 0

@@ -5,12 +5,33 @@ function StartupAssistant(changelog)
     // on first start, this message is displayed, along with the current version message from below
     this.firstMessage = $L('Here are some tips for first-timers:<ul><li>To see what Save/Restore is able to process, look in the Supported Applications list</li><li>For the subset of those applications that you have installed, Save/Restore can Save Application Data</li><li>For applications that have saved data, Save/Restore can Restore Application Data</li></ul>');
 	
-    this.secondMessage = $L('We hope you enjoy being able to manage your application data.<br>Please consider making a <a href=http://www.webos-internals.org/wiki/WebOS_Internals:Site_support>donation</a> if you wish to show your appreciation.');
+    this.secondMessage = $L('We hope you enjoy being able to manage your application data.<br>Please consider making a <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HLSTYY3RCKVY2\">donation</a> if you wish to show your appreciation.');
 	
     // on new version start
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.5.3', log: [ 'Added AppNote for Robotek HD script to indicate restore only works with the same device' ] },
+	 { version: '1.5.2', log: [ 'Applications: intervalGym, Jamwam Jog, Power Nap, ZenSearch (all courtesy of irateb), Need For Speed Hot Pursuit (TouchPad) (courtesy of A.Stice), FlightView, Gowalla, Open Table, Robotek HD, Slice It HD, Spare Time, Wall Switch (all courtesy of Audemars02)' ] },
+	 { version: '1.5.1', log: [ 'Applications: Trip Traq - HBLR, Trip Traq - BART, Pane Free, Multi Pane (all courtesy of appsotutely), Clock In, Clock In Trial, Gizmo, BeamOut, Days Gone By, Days To Come (all courtesy of djgardn2), DORK 1 (courtesy of lordbah), FitTrack Trial, MiniSquadron (both courtesy of malpha), Super Ads (courtesy of Audemars02)' ] },
+	 { version: '1.5.0', log: [ 'Applications: SecuStore 2, SecuStore 2 (Trial)' ] },
+	 { version: '1.4.8', log: [ 'Added back buttons for devices with no back gesture' ] },
+	 { version: '1.4.7', log: [ 'Applications: Angry Birds HD, Angry Birds Rio HD (courtesy of Audemars02)' ] },
+	 { version: '1.4.6', log: [ 'Added support for saving Text Assist entries' ] },
+	 { version: '1.4.5', log: [ 'Added support for devices with no back gesture' ] },
+	 { version: '1.4.4', log: [ 'Applications: Add Pad, Convertor, GPS Fix, Grooveshark, Hopper, phnx, Touchnote, Universe Browser, Voice Memos, Voices, WhitePages (all courtesy of Audemars02)' ] },
+	 { version: '1.4.3', log: [ 'Change scrim to Mojo spinner on Main during load' ] },
+	 { version: '1.4.2', log: [ 'Better fix for auto-save' ] },
+	 { version: '1.4.1', log: [ 'Fixed auto-save and sorting of apps in the save and installed scenes' ] },
+	 { version: '1.4.0', log: [ 'Now incrementally loads the set of application scripts' ] },
+	 { version: '1.3.9', log: [ 'Applications: Safe Wallet (courtesy of Audemars02), Koto Player (courtesy of fxspec06), CryptoNotes (courtesy of hboisvert), ToDo Classic (courtesy of hboisvert)',
+                             'Applications: FitTrack, Headlines, Slice It (all courtesy of malpha), Kookaroo, LumenCalc, SiteStatusPro (all courtesy of pcimino)',
+				    'Applications: Bills Vs Income, Blox, Chemistry Encyclopedia, Click Trainer, Dashboard Utilities, GeoStrings, Marquees ROCK, Music (Remix), Quick Post, Todays Tasks, WikiXplorer, ZIP Code Tools (all courtesy of djgardn2)' ] },
+	 { version: '1.3.8', log: [ 'Applications: Angry Birds Rio, Supersonic (all courtesy of Audemars02)',
+				    'Updated Device Info and Backup scripts in Contrib directory for webOS 2.0 changes.  Added Max webOS 1.4.5 version to Advanced Patches scripts.' ] },
+	 { version: '1.3.6', log: [ 'Applications: Airplanes, Beat Box, BibleZ (pro), BibleZ, Bubbles (free), Buka, Buka (Lite), gpsDashboard Free, gpsDashboard, Helicopter 3D, Hit the dots, Hyperspace Tournament, Labyrinth Lite, Metronome, Navit, Puzzle Paint (Lite), Puzzle Paint, Radiant, Radiant (Lite), Relego, Rhythm News, Solitaire, SuperNES, Wetter.com, World Time (Lite), World Time (Pro), zcorder  (all courtesy of pcworld)',
+                             'Applications: Brothers In Arms 2 (updated), InterfaceLift, Worms (all courtesy of djgardn2), Go To Demo, Go To Lite, Go To tool (all courtesy of markpowers)',
+				    'Applications: Azkend, Heroes of Kalevala, Just Draw (all courtesy of sunmorgus), SiteStatus (courtesy of pcimino)' ] },
 	 { version: '1.3.5', log: [ 'Applications: Done, Count Down Clock, Geocaching for Webos (all courtesy of MaPhi)',
                              'Applications: Astraware Mahjong (courtesy of capt4chris), ICE - In Case of Emergency (courtesy of RickNeff), Fling (courtesy of malpha)',
 				    'Applications: Amigo, Bahnfahren, Dict.cc Translator, Forums, Free Klondike Solitaire, Glow Hockey, Glow Hockey FREE, Leo Dictionary, Nodoze, Plasma Cannon, Precentral News (unofficial), Premote , Raging Thunder 2, Rockus Racer Expansion Pack, Snake, Space Sheep, Space Sheep Lite, SWR3-Elchradio, Telmap O2 Germany, Znax (all courtesy of pcworld)' ] },
@@ -197,17 +218,34 @@ function StartupAssistant(changelog)
 StartupAssistant.prototype.setup = function()
 {
     // set theme because this can be the first scene pushed
-    this.controller.document.body.className = prefs.get().theme;
+	var deviceTheme = '';
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'Pixi' ||
+		Mojo.Environment.DeviceInfo.modelNameAscii == 'Veer')
+		deviceTheme += ' small-device';
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+		Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+		deviceTheme += ' no-gesture';
+    this.controller.document.body.className = prefs.get().theme + deviceTheme;
 	
     // get elements
     this.titleContainer = this.controller.get('title');
     this.dataContainer =  this.controller.get('data');
 	
+	if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+	    Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+	    this.backElement = this.controller.get('back');
+	else
+	    this.backElement = this.controller.get('header');
+	
     // set title
     if (this.justChangelog) {
 	this.titleContainer.innerHTML = $L('Changelog');
+	// setup back tap
+	this.backTapHandler = this.backTap.bindAsEventListener(this);
+	this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
     }
     else {
+	this.controller.get('back').hide();
 	if (vers.isFirst) {
 	    this.titleContainer.innerHTML = $L('Welcome To Save/Restore');
 	}
@@ -264,14 +302,23 @@ StartupAssistant.prototype.setup = function()
 
 StartupAssistant.prototype.activate = function(event)
 {
-    // start continue button timer
-    this.timer = this.controller.window.setTimeout(this.showContinue.bind(this), 5 * 1000);
+    if (!this.justChangelog) {
+	// start continue button timer
+	this.timer = this.controller.window.setTimeout(this.showContinue.bind(this), 5 * 1000);
+    }
 };
 
 StartupAssistant.prototype.showContinue = function()
 {
     // show the command menu
     this.controller.setMenuVisible(Mojo.Menu.commandMenu, true);
+};
+
+StartupAssistant.prototype.backTap = function(event)
+{
+    if (this.justChangelog) {
+	this.controller.stageController.popScene();
+    }
 };
 
 StartupAssistant.prototype.handleCommand = function(event)
@@ -291,4 +338,14 @@ StartupAssistant.prototype.handleCommand = function(event)
 	break;
 	}
     }
-}
+};
+
+StartupAssistant.prototype.cleanup = function(event)
+{
+	if (this.justChangelog)
+		this.controller.stopListening(this.backElement,  Mojo.Event.tap, this.backTapHandler);
+};
+
+// Local Variables:
+// tab-width: 4
+// End:

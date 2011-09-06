@@ -11,7 +11,17 @@ source `dirname $0`/srf.app.info
 SRCDIR="/usr/palm/sysmgr/images/"
 DSTSUB="sysimages"
 
-FILES="palm-logo.png* palm-logo-bright.png* screen-lock-padlock*.png screen-lock-target-scrim.png screen-lock-wallpaper-mask*.png"
+if `webos_version_lt 2.0.0` ; then
+    
+	FILES="palm-logo.png* palm-logo-bright.png* screen-lock-padlock*.png screen-lock-target-scrim.png screen-lock-wallpaper-mask*.png"
+
+fi
+
+if `webos_version_ge 2.0.0` ; then
+
+	FILES="hp-logo.png* hp-logo-bright.png* screen-lock-padlock*.png screen-lock-target-scrim.png screen-lock-wallpaper-mask*.png"
+
+fi
 
 source `dirname $0`/srf.app.files
 
@@ -32,6 +42,16 @@ if `webos_version_ge 2.0.0` ; then
 fi
 
 source `dirname $0`/srf.app.files
+
+# Save/restore other phone-related personalized files
+if `webos_version_ge 2.0.0` ; then
+	SRCDIR="/usr/palm/applications/com.palm.app.phone/images/framework"
+	DSTSUB="framework"
+
+	FILES="*"
+
+	source `dirname $0`/srf.app.files
+fi
 
 # Save PalmDatabase.db3, but do not restore
 if `webos_version_lt 2.0.0` ; then

@@ -11,8 +11,8 @@ function Applications(){
     // all applications with saved data
     this.appsSaved = [];
 	
-    // load state placeholders - may want a better way
-    this.loadedApps = this.loadedScripts = false;
+    // Have apps been loaded?
+    this.loadedApps = false;
 
     // we'll need this for the subscription based services
     this.subscription = false;
@@ -38,32 +38,30 @@ Apps.initApps = function( callback ) {
     // all applications with saved data
     this.appsSaved = [];
 	
-    // load state placeholders - may want a better way
-    this.loadedApps = this.loadedScripts = false;
+    this.loadedApps = false;
 
-    // cancel the last subscription, this may not be needed
-    if (this.subscription) {
-	this.subscription.cancel();
-    }
-	
     // load up the installed applications
+    if (this.subscription) this.subscription.cancel();
     this.subscription = SaveRestoreService.listApps( this.loadApps.bindAsEventListener(this, callback) );
 }
 
 Apps.sortApps = function(a, b) {
 
-    strA = appDB.appsInformation[a].title;
-    strB = appDB.appsInformation[b].title;
-    if (strA && strB) {
-	strA = strA.toLowerCase();
-	strB = strB.toLowerCase();
-	return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
+    if (appDB.appsInformation[a] && appDB.appsInformation[b]) {
+	strA = appDB.appsInformation[a].title;
+	strB = appDB.appsInformation[b].title;
+	if (strA && strB) {
+	    strA = strA.toLowerCase();
+	    strB = strB.toLowerCase();
+	    return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
+	}
+	else {
+	    strA = appDB.appsInformation[a].id;
+	    strB = appDB.appsInformation[b].id;
+	    return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
+	}
     }
-    else {
-	strA = appDB.appsInformation[a].id;
-	strB = appDB.appsInformation[b].id;
-	return ((strA < strB) ? -1 : ((strA > strB) ? 1 : 0));
-    }
+
 };
 
 // handles returned apps from the server
@@ -78,61 +76,62 @@ Apps.loadApps = function( data, callback ) {
 	    if (!this.appsInformation[app.id]) this.appsInformation[app.id] = app;
 	}
 
-	if (!data.stage || (data.stage == "end")) {
-	    // we loaded apps
-	    this.loadedApps = true;
-
-	    // cancel the last subscription, this may not be needed
-	    if (this.subscription) {
-		this.subscription.cancel();
-	    }
-	
-	    // load up the available applications
-	    this.subscription = SaveRestoreService.list( this.loadApps.bindAsEventListener(this, callback) );
-	}
+	// load up the available applications
+	if (this.subscription) this.subscription.cancel();
+	this.subscription = SaveRestoreService.list(this.loadScripts.bindAsEventListener(this, callback));
     }
-    else if (data.scripts) {
+
+    // Update the relevant screen
+    if (callback) callback(false);
+};
+
+// handles returned apps from the server
+Apps.loadScripts = function( data, callback ) {
+	
+    var final = false;
+
+    if (data.scripts) {
 	var scripts = data.scripts;
+	var installed = arrayToObject( this.appsInstalled );
 	for (var i = 0; i < scripts.length; i++) {
 	    var script = scripts[i];
-	    this.appsWithScripts.push( script.id );
-	    // check if we have save info for this script
-	    if( script.saved ) this.appsSaved.push( script.id );
-	    // information from the scripts has more fields
-	    this.appsInformation[script.id] = script;
-	}
-
-	if (!data.stage || (data.stage == "end")) {
-	    // we loaded scripts
-	    this.loadedScripts = true;
-
-	    // cancel the last subscription, this may not be needed
-	    if (this.subscription) {
-		this.subscription.cancel();
+	    if (script.id) {
+		this.appsWithScripts.push( script.id );
+		// check if we have save info for this script
+		if (script.saved) this.appsSaved.push( script.id );
+		// information from the scripts has more fields
+		this.appsInformation[script.id] = script;
+		// push on appsAvailable
+		if (script.id in installed) this.appsAvailable.push(script.id);
 	    }
-	
-	    // sort the list of supported apps
-	    this.appsWithScripts.sort(this.sortApps);
-
-	    // sort the list of saved apps
-	    this.appsSaved.sort(this.sortApps);
 	}
     }
-	
-    // Mojo.Log.info( "loaded apps: " + this.loadedApps + "; loaded scripts: " + this.loadedScripts );
 
-    if (this.loadedApps && this.loadedScripts) {
-	// map which apps we actually CAN work with
-	var installed = arrayToObject( this.appsInstalled );
-	for (var i = 0; i < this.appsWithScripts.length; i++) {
-	    var appid = this.appsWithScripts[i];
-	    if (appid in installed) this.appsAvailable.push( appid );
-	}
+    if (!data.stage || (data.stage == "end")) {
+	// sort the list of supported apps
+	if (this.appsWithScripts.length)
+	    this.appsWithScripts.sort(this.sortApps);
+
+	// sort the list of installed apps
+	if (this.appsInstalled.length)
+	    this.appsInstalled.sort(this.sortApps);
+	
+	// sort the list of available apps
+	if (this.appsAvailable.length)
+	    this.appsAvailable.sort(this.sortApps);
+	
+	// sort the list of saved apps
+	if (this.appsSaved.length)
+	    this.appsSaved.sort(this.sortApps);
 
 	// fully loaded
 	this.reload = false;
+	this.loadedApps = true;
 
-	// Update the relevant screen
-	if (callback) callback();
+	final = true;
     }
+
+    // Update the relevant screen
+    if (callback) callback(final);
 }
+

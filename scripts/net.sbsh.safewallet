@@ -1,0 +1,16 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Safe Wallet"
+
+source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.cookies
+
+SRCDIR="/media/internal/appdata/net.sbsh.safewallet"
+DSTSUB="safewallet"
+FILES="*"
+
+source `dirname $0`/srf.app.files
+
+exit 0

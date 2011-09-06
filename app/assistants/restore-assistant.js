@@ -33,6 +33,15 @@ RestoreAssistant.prototype.setup = function() {
     // setup menu
     this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
 
+    // Add back button functionality for the TouchPad
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+	Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+	this.backElement = this.controller.get('back');
+    else
+	this.backElement = this.controller.get('header');
+    this.backTapHandler = this.backTap.bindAsEventListener(this);
+    this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
+
     // initialize our list
     this.appListAttr = { itemTemplate: "app-list/row-template-toggle" };//, dividerTemplate: "app-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
     this.appListModel = { items: [] };
@@ -122,6 +131,11 @@ RestoreAssistant.prototype.processCallback = function(e, item) {
     this.processApps();
 };
 
+RestoreAssistant.prototype.backTap = function(event)
+{
+    this.controller.stageController.popScene();
+};
+
 RestoreAssistant.prototype.handleCommand = function (event) {
 
     if (event.type === Mojo.Event.command) {
@@ -176,6 +190,7 @@ RestoreAssistant.prototype.deactivate = function(event) {
 };
 
 RestoreAssistant.prototype.cleanup = function(event) {
+    this.controller.stopListening(this.backElement, Mojo.Event.tap, this.backTapHandler);
     // cancel the last subscription, this may not be needed
     if (this.subscription) {
 	this.subscription.cancel();

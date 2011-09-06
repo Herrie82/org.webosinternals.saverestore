@@ -43,6 +43,10 @@ PreferencesAssistant.prototype.setup = function()
     this.controller.get('secret-stuff').innerHTML = $L('Secret Stuff');
     this.controller.get('secret-options').innerHTML = $L('This version has no secret options.');
 
+    // Add back button functionality for the TouchPad
+    this.backElement = this.controller.get('icon');
+    this.backTapHandler = this.backTap.bindAsEventListener(this);
+    this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
 
     try {
 	// setup menu
@@ -95,8 +99,20 @@ PreferencesAssistant.prototype.onAutoSaveChange = function(e) {
 PreferencesAssistant.prototype.themeChanged = function(event)
 {
     // set the theme right away with the body class
-    this.controller.document.body.className = event.value;
+    var deviceTheme = '';
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'Pixi' ||
+	Mojo.Environment.DeviceInfo.modelNameAscii == 'Veer')
+	deviceTheme += ' small-device';
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+	Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+	deviceTheme += ' no-gesture';
+    this.controller.document.body.className = event.value + deviceTheme;
     this.cookie.put(this.prefs);
+};
+
+PreferencesAssistant.prototype.backTap = function(event)
+{
+    this.controller.stageController.popScene();
 };
 
 PreferencesAssistant.prototype.handleCommand = function(event)
@@ -157,4 +173,6 @@ PreferencesAssistant.prototype.deactivate = function(event)
     Mojo.Controller.getAppController().assistant[(this.prefs.autoSave) ? "scheduleAutoSave" : "cancelAutoSave"]();
 };
 
-PreferencesAssistant.prototype.cleanup = function(event) {};
+PreferencesAssistant.prototype.cleanup = function(event) {
+    this.controller.stopListening(this.backElement, Mojo.Event.tap, this.backTapHandler);
+};

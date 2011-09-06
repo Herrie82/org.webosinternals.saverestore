@@ -16,7 +16,7 @@ AutosaveAssistant.prototype.setup = function() {
 		this.saveApps();
     } else {
 		Mojo.Log.info("calling initApps");
-		appDB.initApps(this.saveApps.bind(this));
+		appDB.initApps(this.doneInitApps.bind(this));
     }
 }
 
@@ -28,6 +28,12 @@ AutosaveAssistant.prototype.updateStatus = function(appId) {
 	this.controller.modelChanged(this.progressModel);
 	
 	this.controller.get("currentAppName").update(this.progressModel.title);	
+}
+
+AutosaveAssistant.prototype.doneInitApps = function(final) {
+    if (final) {
+	this.saveApps();
+    }
 }
 
 AutosaveAssistant.prototype.saveApps = function(e) {

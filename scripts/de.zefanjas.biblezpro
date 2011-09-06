@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="BibleZ Pro"
+
+source `dirname $0`/srf.app.info
+
+source `dirname $0`/srf.app.cookies
+
+source `dirname $0`/srf.app.databases 
+
+exit 0

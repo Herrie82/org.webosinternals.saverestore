@@ -1,43 +1,79 @@
 function InstalledAssistant() {
-	this.boundFunctions = new Array();
-	//this.boundFunctions['getList'] = this.getList.bind(this);
+    this.boundFunctions = new Array();
+
+    // setup menu
+    this.menuModel = {
+	visible: true,
+	items:
+	[
+    {
+	label: $L("Preferences"),
+	command: 'do-prefs'
+    },
+    {
+	label: $L("Help"),
+	command: 'do-help'
+    }
+	 ]
+    };
 }
 
 InstalledAssistant.prototype.setup = function() {
-	// initialize our list
-	this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "app-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
-	this.appListModel = { items: [] };
-	this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
-	
-	// load up
-	//SaveRestoreService.listApps(this.boundFunctions['getList']);
-	this.loadList();
-};
 
-/*
-InstalledAssistant.prototype.getList = function(data) {
-	if( data.apps ){
-		var apps = data.apps;
-		Mojo.Log.info( "We got back " + apps.length + " apps" );
-		for( var i = 0; i < apps.length; i++ ){
-			var app = apps[i];
-			this.appListModel.items.push( { appname: app.title, appid: app.id } );
-		}
-		this.controller.modelChanged( this.appListModel );
-	}else{
-		Mojo.Log.error( "list returned error!" );
-		dumpObject(data);
-	}
+    this.titleElement = this.controller.get('listTitle');
+    this.titleElement.innerHTML = $L("Installed Applications");
+
+    // setup menu
+    this.controller.setupWidget(Mojo.Menu.appMenu, { omitDefaultItems: true }, this.menuModel);
+
+    // initialize our list
+    this.appListAttr = { itemTemplate: "app-list/row-template" };//, dividerTemplate: "app-list/divider", dividerFunction: this.boundFunctions['dividerFunc']
+    this.appListModel = { items: [] };
+    this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
+	
+    // Add back button functionality for the TouchPad
+    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+	Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
+	this.backElement = this.controller.get('back');
+    else
+	this.backElement = this.controller.get('header');
+    this.backTapHandler = this.backTap.bindAsEventListener(this);
+    this.controller.listen(this.backElement, Mojo.Event.tap, this.backTapHandler);
+
+    // load up
+    this.loadList();
 };
-*/
 
 InstalledAssistant.prototype.loadList = function() {
-	var apps = appDB.appsInstalled;
-	for( var i = 0; i < apps.length; i++ ){
-		var app = appDB.appsInformation[apps[i]];
-		this.appListModel.items.push( { appname: app.title, appid: app.id, checked: true } );
+    var apps = appDB.appsInstalled;
+    for( var i = 0; i < apps.length; i++ ){
+	var app = appDB.appsInformation[apps[i]];
+	this.appListModel.items.push( { appname: app.title, appid: app.id, checked: true } );
+    }
+    this.controller.modelChanged( this.appListModel );
+};
+
+InstalledAssistant.prototype.backTap = function(event)
+{
+    this.controller.stageController.popScene();
+};
+
+InstalledAssistant.prototype.handleCommand = function (event) {
+
+    if (event.type === Mojo.Event.command) {
+	switch (event.command) {
+	case 'do-prefs': {
+	    this.controller.stageController.pushScene('preferences');
+	    break;
 	}
-	this.controller.modelChanged( this.appListModel );
+	case 'do-help': {
+	    this.controller.stageController.pushScene('help');
+	    break;
+	}
+	default:
+	break;
+	}
+    }
 };
 
 InstalledAssistant.prototype.activate = function(event) {
@@ -53,4 +89,5 @@ InstalledAssistant.prototype.deactivate = function(event) {
 InstalledAssistant.prototype.cleanup = function(event) {
 	/* this function should do any cleanup needed before the scene is destroyed as 
 	   a result of being popped off the scene stack */
+    this.controller.stopListening(this.backElement, Mojo.Event.tap, this.backTapHandler);
 };
