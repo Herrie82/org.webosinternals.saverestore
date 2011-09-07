@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.5.4', log: [ 'Applications: Launcher (3.0 update), Beyond Ynth, Sparkle HD, Quell HD (all courtesy of Audemars02), Blocked (courtesy of stickb0y)' ] },
 	 { version: '1.5.3', log: [ 'Added AppNote for Robotek HD script to indicate restore only works with the same device' ] },
 	 { version: '1.5.2', log: [ 'Applications: intervalGym, Jamwam Jog, Power Nap, ZenSearch (all courtesy of irateb), Need For Speed Hot Pursuit (TouchPad) (courtesy of A.Stice), FlightView, Gowalla, Open Table, Robotek HD, Slice It HD, Spare Time, Wall Switch (all courtesy of Audemars02)' ] },
 	 { version: '1.5.1', log: [ 'Applications: Trip Traq - HBLR, Trip Traq - BART, Pane Free, Multi Pane (all courtesy of appsotutely), Clock In, Clock In Trial, Gizmo, BeamOut, Days Gone By, Days To Come (all courtesy of djgardn2), DORK 1 (courtesy of lordbah), FitTrack Trial, MiniSquadron (both courtesy of malpha), Super Ads (courtesy of Audemars02)' ] },

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Beyond Ynth HD"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="/media/internal/appdata/$APPID"
+FILES="*"
+
+source `dirname $0`/srf.app.files
+
+exit 0

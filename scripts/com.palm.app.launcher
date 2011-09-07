@@ -37,7 +37,7 @@ if `webos_version_lt 2.0.0` ; then
 
 fi
 
-if `webos_version_ge 2.0.0` ; then
+if `webos_version_ge 2.0.0` && `webos_version_lt 3.0.0`; then
 
 	SRCDIR="/var/luna/preferences"
 	DSTSUB="launcher"
@@ -45,6 +45,23 @@ if `webos_version_ge 2.0.0` ; then
 	OPTIONAL=false
 
 	source `dirname $0`/srf.app.files
+
+fi
+
+if `webos_version_ge 3.0.0`; then
+
+	SRCDIR="/var/luna/preferences"
+	DIRECTORY="launcher3"
+
+    if [ "$1" == "restore" ] ; then
+       [ -f "$SRCDIR/${DIRECTORY}.zip" ] && { rm "$SRCDIR/${DIRECTORY}.zip" ; }
+       ${ZIP} -q ${SRCDIR}/${DIRECTORY}.zip ${SRCDIR}/${DIRECTORY}/*
+       rm ${SRCDIR}/${DIRECTORY}/*
+    fi
+
+	source `dirname $0`/srf.app.directory
+
+        
 
 fi
 
