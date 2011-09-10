@@ -30,13 +30,20 @@ if [ "$1" == "save" ] ; then
 
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
-	if expr "$db" : "ext:.*" >/dev/null ; then
-	    LOC=$APPSTORE/$ORIGIN/$FILE
-	    APPID=ext-`expr "$db" : "ext:\(.*\)"`
-	else
-	    LOC=$DBSTORE/$ORIGIN/$FILE
-	    APPID=$db
-	fi
+	case "$db" in
+	    "ext:"* )
+		LOC=$APPSTORE/$ORIGIN/$FILE
+		APPID=ext-`expr "$db" : "ext:\(.*\)"`
+		;;
+	    "["* )
+		LOC=$DBSTORE/$ORIGIN/$FILE
+		APPID=obj-`echo "$db" | tr -d '[ ]'`
+		;;
+	    * )
+		LOC=$DBSTORE/$ORIGIN/$FILE
+		APPID=$db
+		;;
+	esac
 	cp $LOC $DSTDIR/$APPID
 	( cd $DSTDIR ; ls -1 $APPID )
 	( cd $DSTDIR ; ${ZIP} -q ${DSTDIR}.zip $APPID )
@@ -50,13 +57,20 @@ elif [ "$1" == "restore" ] ; then
 
     for db in $DATABASES ; do
 	FILE=`sqlite3 $PALMDB "SELECT path FROM Databases WHERE origin = \"$ORIGIN\" AND name = \"$db\""`
-	if expr "$db" : "ext:.*" >/dev/null ; then
-	    LOC=$APPSTORE/$ORIGIN
-	    APPID=ext-`expr "$db" : "ext:\(.*\)"`
-	else
-	    LOC=$DBSTORE/$ORIGIN
-	    APPID=$db
-	fi
+	case "$db" in
+	    "ext:"* )
+		LOC=$APPSTORE/$ORIGIN
+		APPID=ext-`expr "$db" : "ext:\(.*\)"`
+		;;
+	    "["* )
+		LOC=$DBSTORE/$ORIGIN
+		APPID=obj-`echo "$db" | tr -d '[ ]'`
+		;;
+	    * )
+		LOC=$DBSTORE/$ORIGIN
+		APPID=$db
+		;;
+	esac
 
 	( cd $DSTDIR ; ${UNZIP} -q -o ${DSTDIR}.zip $APPID )
 
