@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Quell HD"
+
+source `dirname $0`/srf.app.info 
+
+SRCDIR="$APPDIR"
+FILES="quell.sav"
+
+source `dirname $0`/srf.app.files
+
+exit 0

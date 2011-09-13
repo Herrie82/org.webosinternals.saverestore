@@ -1,0 +1,13 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Sparkle HD"
+
+source `dirname $0`/srf.app.info
+
+SRCDIR="media/internal/appdata/$APPID/MythPeople/Sparkle_HD/user"
+FILES="game_progress_*.dat profiles.dat"
+
+source `dirname $0`/srf.app.files
+
+exit 0
