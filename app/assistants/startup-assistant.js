@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.5.6', log: [ 'Application: podFrenzy (courtesy of Audemars02)' ] },
 	 { version: '1.5.5', log: [ 'Application: Angry Birds Seasons HD (courtesy of Audemars02)' ] },
 	 { version: '1.5.4', log: [ 'Applications: Launcher (3.0 update), Beyond Ynth, Sparkle HD, Quell HD (all courtesy of Audemars02), Blocked (courtesy of stickb0y)' ] },
 	 { version: '1.5.3', log: [ 'Added AppNote for Robotek HD script to indicate restore only works with the same device' ] },
