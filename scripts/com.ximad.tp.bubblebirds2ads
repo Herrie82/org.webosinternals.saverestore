@@ -1,0 +1,12 @@
+#!/bin/sh
+
+APPID=`basename $0`
+APPNAME="Bubble Birds 2.0"
+
+source `dirname $0`/srf.app.info
+
+FILTER="key LIKE 'SavedGame' OR key LIKE 'ScoresBubbleBirds' OR key LIKE 'SavedTotalGame' OR key LIKE 'SoundEnabled' OR key LIKE 'BirdsSpeed'"
+
+source `dirname $0`/srf.app.preferences
+
+exit 0
