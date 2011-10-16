@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.5.8', log: [ 'Applications: Quell Reflect HD' ] },
 	 { version: '1.5.7', log: [ 'Application: Bug Village' ] },
 	 { version: '1.5.6', log: [ 'Application: podFrenzy (courtesy of Audemars02)' ] },
 	 { version: '1.5.5', log: [ 'Application: Angry Birds Seasons HD (courtesy of Audemars02)' ] },
