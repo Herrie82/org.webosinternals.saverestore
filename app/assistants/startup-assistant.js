@@ -11,7 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
-	 { version: '1.5.8', log: [ 'Applications: Quell Reflect HD, No Gravity, Asphalt6, Bubble Birds 2.0, Bubble Birds 2.0 Premium' ] },
+	 { version: '1.5.8', log: [ 'Applications: Quell Reflect HD, No Gravity, Asphalt6, Bubble Birds 2.0, Bubble Birds 2.0 Premium, Glyder 2 HD' ] },
 	 { version: '1.5.7', log: [ 'Application: Bug Village' ] },
 	 { version: '1.5.6', log: [ 'Application: podFrenzy (courtesy of Audemars02)' ] },
 	 { version: '1.5.5', log: [ 'Application: Angry Birds Seasons HD (courtesy of Audemars02)' ] },
