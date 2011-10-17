@@ -1,12 +1,12 @@
 #!/bin/sh
 
 APPID=`basename $0`
-APPNAME="Quell"
+APPNAME="Aftermath XHD"
 
-source `dirname $0`/srf.app.info 
+source `dirname $0`/srf.app.info
 
 SRCDIR="$APPDIR"
-FILES="quell*.sav"
+FILES="Profile* Options.xml"
 
 source `dirname $0`/srf.app.files
 
