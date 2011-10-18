@@ -32,7 +32,7 @@ ListAssistant.prototype.setup = function() {
     this.controller.setupWidget( "appList", this.appListAttr, this.appListModel );
 	
     // Add back button functionality for the TouchPad
-    if (Mojo.Environment.DeviceInfo.modelNameAscii == 'TouchPad' ||
+    if (Mojo.Environment.DeviceInfo.modelNameAscii.indexOf('TouchPad') == 0 ||
 	Mojo.Environment.DeviceInfo.modelNameAscii == 'Emulator')
 	this.backElement = this.controller.get('back');
     else
