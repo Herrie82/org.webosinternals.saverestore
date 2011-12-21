@@ -11,6 +11,7 @@ function StartupAssistant(changelog)
     this.newMessages =
 	[
 	 // Don't forget the comma on all but the last entry
+	 { version: '1.6.0', log: [ 'Rolled up all the beta release features for a public release' ] },
 	 { version: '1.5.9', log: [ 'Applications: Aftermath XHD, Totemo HD (both courtesy of Audemars02), Pink Pad (both courtesy of marysm), Market Pulse HD, SportsLive HD (both courtesy of MoreSolutions), Data Manager, Data Manager Demo (both courtesy of sidamos), Quell, Quell Reflect (updates courtesy of stickb0y)' ] },
 	 { version: '1.5.8', log: [ 'Applications: Quell Reflect HD, No Gravity, Asphalt6, Bubble Birds 2.0, Bubble Birds 2.0 Premium, Glyder 2 HD' ] },
 	 { version: '1.5.7', log: [ 'Application: Bug Village' ] },
