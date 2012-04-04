@@ -111,6 +111,46 @@ if [ "$1" == "restore" ] ; then
    echo "/dev/tokens/* not restored"
 fi
 
+# Save/restore 1.5 images
+# Save/restore a variety of user-updated personalized files (boot logo, lock screen)
+SRCDIR="/usr/palm/sysmgr/images/1.5/"
+DSTSUB="sysimages15"
+OPTIONAL=true
+
+if `webos_version_lt 2.0.0` ; then
+    
+	FILES="palm-logo.png* palm-logo-bright.png* screen-lock-padlock*.png screen-lock-target-scrim.png screen-lock-wallpaper-mask*.png"
+
+fi
+
+if `webos_version_ge 2.0.0` ; then
+
+	FILES="hp-logo.png* hp-logo-bright.png* screen-lock-padlock*.png screen-lock-target-scrim.png screen-lock-wallpaper-mask*.png"
+
+fi
+
+source `dirname $0`/srf.app.files
+
+# Save/restore a variety of phone-related personalized files
+SRCDIR="/usr/palm/applications/com.palm.app.phone/images/1.5"
+DSTSUB="phoneimages15"
+OPTIONAL=true
+
+if `webos_version_lt 2.0.0` ; then
+    
+   FILES="backdrop*.png* phone-menu-short-fade.png* list-section-line.png*"
+
+fi
+
+if `webos_version_ge 2.0.0` ; then
+
+   FILES="backdrop*.png* list-section-line.png*"
+
+fi
+
+source `dirname $0`/srf.app.files
+
+
 OPTIONAL=false
 
 exit 0
